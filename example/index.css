@@ -1,0 +1,81 @@
+
+body {
+    padding: 40px 20px;
+}
+
+h1 {
+    padding: 0;
+    margin: 0 0 20px 0;
+    font-size: 24px;
+    text-align: center;
+}
+
+form {
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 500px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    color: #333;
+    box-shadow: 0 0 15px -4px #999;
+    border-radius: 3px;
+}
+
+.field {
+    padding: 10px 0;
+}
+
+input[type=text],
+input[type=password] {
+    border: 1px solid #CCC;
+    height: 20px;
+}
+
+select {
+    margin-left: 8px;
+}
+
+input.error {
+    border-color: #FAA;
+}
+
+label.error {
+    color: red;
+    display: block;
+    padding-top: 5px;
+}
+
+.form-data {
+    white-space: pre;
+    font-family: monospace;
+    border-top: 1px dashed #999;
+    padding-top: 15px;
+    margin-top: 15px;
+}
+
+.fielset {
+    background-color: #f4f4f4;
+    margin-top: 15px;
+    padding: 0 10px;
+    border-radius: 3px;
+    box-shadow: 0 0 5px 0px #DDD;
+}
+
+.remove {
+    float: right;
+    margin: 10px 0;
+    background-color: #DDD;
+    border-radius: 50%;
+    height: 18px;
+    width: 18px;
+    line-height: 18px;
+    border: 1px solid #CCC;
+    font-size: 10px;
+    text-align: center;
+    text-decoration: none;
+    color: #000;
+}
+
+.remove:hover {
+    background: #CCC;
+}

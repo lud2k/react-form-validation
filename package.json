@@ -1,0 +1,36 @@
+{
+  "name": "react-form-validation",
+  "version": "1.0.0",
+  "description": "Form validation for React",
+  "main": "index.js",
+  "author": "Ludovic Cabre",
+  "license": "MIT",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react",
+    "form",
+    "validation",
+    "reactjs"
+  ],
+  "devDependencies": {
+    "babelify": "^6.1.2",
+    "browserify": "^10.2.4",
+    "browserify-shim": "^3.8.9",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.1.0",
+    "gulp-browserify": "^0.5.1",
+    "gulp-clean": "^0.3.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-watch": "^4.3.5"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browserify-shim": {
+    "react": "global:React"
+  }
+}
