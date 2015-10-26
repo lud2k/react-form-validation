@@ -539,7 +539,7 @@ module.exports = React.createClass({
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var React = (typeof window !== "undefined" ? window.React : typeof global !== "undefined" ? global.React : null),
+var React = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null),
     ListenerMixin = require('./listener-mixin.js');
 
 module.exports = React.createClass({
@@ -715,7 +715,7 @@ module.exports = Field;
 (function (global){
 'use strict';
 
-var React = (typeof window !== "undefined" ? window.React : typeof global !== "undefined" ? global.React : null);
+var React = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
 
 /**
  * Form component.
@@ -778,7 +778,7 @@ module.exports.ListenerMixin = require('./listener-mixin.js');
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var React = (typeof window !== "undefined" ? window.React : typeof global !== "undefined" ? global.React : null),
+var React = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null),
     ListenerMixin = require('./listener-mixin.js');
 
 module.exports = React.createClass({
@@ -890,7 +890,7 @@ module.exports.Select = require('./select.js');
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var React = (typeof window !== "undefined" ? window.React : typeof global !== "undefined" ? global.React : null),
+var React = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null),
     FieldMixin = require('./field-mixin.js'),
     ListenerMixin = require('./listener-mixin.js');
 
@@ -1625,7 +1625,7 @@ module.exports = Rules;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var React = (typeof window !== "undefined" ? window.React : typeof global !== "undefined" ? global.React : null),
+var React = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null),
     FieldMixin = require('./field-mixin.js');
 
 module.exports = React.createClass({

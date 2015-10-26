@@ -15,15 +15,6 @@ gulp.task('clean', function() {
 });
 
 /**
- * Copies the files from the example to the dist directory
- */
-gulp.task('copy', ['clean'], function() {
-    // copy the html file
-    return gulp.src(['src/*.css', 'src/*.html', 'src/*.svg'])
-        .pipe(gulp.dest('dist'));
-});
-
-/**
  * Compiles JSX files into normal JavaScript.
  */
 gulp.task('compile', ['clean'], function() {
@@ -47,7 +38,7 @@ gulp.task('textify', ['clean'], function() {
 /**
  * Packages all files into one big JavaScript file usable in the browser.
  */
-gulp.task('browserify', ['copy', 'compile', 'textify'], function() {
+gulp.task('browserify', ['compile', 'textify'], function() {
     return gulp.src('dist/js/index.js')
         .pipe(browserify({
             transform: [stringify(), 'babelify']
