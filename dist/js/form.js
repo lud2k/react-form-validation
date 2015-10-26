@@ -21,7 +21,7 @@ module.exports = React.createClass({
     /**
      * Called when the form is submitted.
      */
-    onSubmit: function(event) {
+    onSubmit: function onSubmit(event) {
         event.preventDefault();
 
         // validate form, then call callback
@@ -31,19 +31,17 @@ module.exports = React.createClass({
         }
 
         // scroll to error
-        if (this.props.scrollToError) {
-            // TODO: find first error then .scrollIntoView();
-        }
+        if (this.props.scrollToError) {}
     },
 
     /**
      * Renders the component.
      */
-    render: function() {
-        return (
-            <form className={this.props.className} noValidate={true} onSubmit={this.onSubmit}>
-                {this.props.children}
-            </form>
+    render: function render() {
+        return React.createElement(
+            'form',
+            { className: this.props.className, noValidate: true, onSubmit: this.onSubmit },
+            this.props.children
         );
     }
 });
@@ -56,3 +54,5 @@ module.exports.FieldMixin = require('./field-mixin.js');
 module.exports.Rules = require('./rules.js');
 module.exports.Select = require('./select.js');
 module.exports.ListenerMixin = require('./listener-mixin.js');
+
+// TODO: find first error then .scrollIntoView();

@@ -1,5 +1,7 @@
 'use strict';
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var React = require('react'),
     FieldMixin = require('./field-mixin.js');
 
@@ -25,7 +27,7 @@ module.exports = React.createClass({
     /**
      * Returns the value of the input.
      */
-    getValue: function() {
+    getValue: function getValue() {
         var element = React.findDOMNode(this);
         return element.value;
     },
@@ -33,14 +35,14 @@ module.exports = React.createClass({
     /**
      * Called when the value of the input has changed.
      */
-    onChange: function() {
+    onChange: function onChange() {
         this.validateField(true);
     },
 
     /**
      * Returns the component's className.
      */
-    rootClassName: function(fieldState) {
+    rootClassName: function rootClassName(fieldState) {
         var ret = [];
         if (this.props.className) {
             ret.push(this.props.className);
@@ -57,13 +59,13 @@ module.exports = React.createClass({
     /**
      * Renders the select.
      */
-    render: function() {
+    render: function render() {
         var fieldState = this.props.form.getFieldState(this);
-        return (
-            <select {...this.props} className={this.rootClassName(fieldState)}
-                    onChange={this.onChange} onBlur={this.onBlur}>
-                {this.props.children}
-            </select>
+        return React.createElement(
+            'select',
+            _extends({}, this.props, { className: this.rootClassName(fieldState),
+                onChange: this.onChange, onBlur: this.onBlur }),
+            this.props.children
         );
     }
 

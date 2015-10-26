@@ -1,601 +1,11 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-'use strict';
-
-var Form = require('../src/form.js'),
-    FieldMixin = Form.FieldMixin,
-    Error = Form.Error;
-
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'BirthdateField',
-
-    /**
-     * Make this component a "Field".
-     *
-     * Component will require the following props:
-     *   - form, the form owning the component
-     *   - name, the name of this component in the form.
-     *
-     * Component will require the following methods:
-     *   - getValue(), should return the value of the current component.
-     */
-    mixins: [FieldMixin],
-
-    /**
-     * Returns the value of the component. This will be used during form validation to
-     * check that the value is valid.
-     * This component a Date object as value.
-     */
-    getValue: function getValue() {
-        var day = React.findDOMNode(this.refs.day).value,
-            month = React.findDOMNode(this.refs.month).value,
-            year = React.findDOMNode(this.refs.year).value;
-        if (day && month && year) {
-            return new Date(year, month, day);
-        }
-    },
-
-    /**
-     * Called when one of the <select> selection has changed.
-     * We need to tell the form that our custom component value has changed.
-     */
-    onChange: function onChange() {
-        if (this.props.form) {
-            this.props.form.onChange(this);
-        }
-    },
-
-    /**
-     * Renders the options for the day <select>.
-     */
-    renderDayOptions: function renderDayOptions() {
-        var ret = [];
-        ret.push(React.createElement(
-            'option',
-            { key: -1, value: '' },
-            'Day'
-        ));
-        for (var i = 1; i < 32; i++) {
-            ret.push(React.createElement(
-                'option',
-                { key: i, value: i },
-                i
-            ));
-        }
-        return ret;
-    },
-
-    /**
-     * Renders the options for the month <select>.
-     */
-    renderMonthOptions: function renderMonthOptions() {
-        return [React.createElement(
-            'option',
-            { key: -1, value: '' },
-            'Month'
-        ), React.createElement(
-            'option',
-            { key: 0, value: 0 },
-            'January'
-        ), React.createElement(
-            'option',
-            { key: 1, value: 1 },
-            'February'
-        ), React.createElement(
-            'option',
-            { key: 2, value: 2 },
-            'March'
-        ), React.createElement(
-            'option',
-            { key: 3, value: 3 },
-            'April'
-        ), React.createElement(
-            'option',
-            { key: 4, value: 4 },
-            'May'
-        ), React.createElement(
-            'option',
-            { key: 5, value: 5 },
-            'June'
-        ), React.createElement(
-            'option',
-            { key: 6, value: 6 },
-            'July'
-        ), React.createElement(
-            'option',
-            { key: 7, value: 7 },
-            'August'
-        ), React.createElement(
-            'option',
-            { key: 8, value: 8 },
-            'September'
-        ), React.createElement(
-            'option',
-            { key: 9, value: 9 },
-            'October'
-        ), React.createElement(
-            'option',
-            { key: 10, value: 10 },
-            'November'
-        ), React.createElement(
-            'option',
-            { key: 11, value: 11 },
-            'December'
-        )];
-    },
-
-    /**
-     * Renders the options for the year <select>.
-     */
-    renderYearOptions: function renderYearOptions() {
-        var ret = [],
-            currentYear = new Date().getFullYear();
-        ret.push(React.createElement(
-            'option',
-            { key: -1, value: '' },
-            'Year'
-        ));
-        for (var i = 0; i < 100; i++) {
-            var year = currentYear - i;
-            ret.push(React.createElement(
-                'option',
-                { key: year, value: year },
-                year
-            ));
-        }
-        return ret;
-    },
-
-    /**
-     * Renders the component.
-     */
-    render: function render() {
-        return React.createElement(
-            'div',
-            { className: 'field' },
-            'Birthdate:',
-            React.createElement(
-                'select',
-                { name: 'day', ref: 'day', onChange: this.onChange },
-                this.renderDayOptions()
-            ),
-            React.createElement(
-                'select',
-                { name: 'month', ref: 'month', onChange: this.onChange },
-                this.renderMonthOptions()
-            ),
-            React.createElement(
-                'select',
-                { name: 'year', ref: 'year', onChange: this.onChange },
-                this.renderYearOptions()
-            ),
-            React.createElement(Error, { forName: this.props.name, form: this.props.form })
-        );
-    }
-});
-
-},{"../src/form.js":9}],2:[function(require,module,exports){
-'use strict';
-
-var Form = require('../src/form.js'),
-    Input = Form.Input,
-    Error = Form.Error;
-
-/**
- * This example shows the basic and also advance features of react-form-validation.
- */
-var RegistrationForm = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'Child',
-
-    /**
-     * Renders the child form.
-     */
-    render: function render() {
-        var form = this.props.form;
-        return React.createElement(
-            'div',
-            { className: 'fielset child' },
-            React.createElement(
-                'a',
-                { href: '#', className: 'remove', onClick: this.props.onClickRemove.bind(this, this) },
-                'X'
-            ),
-            React.createElement(
-                'div',
-                { className: 'field' },
-                'Name: ',
-                React.createElement(Input, { name: 'name', type: 'text', form: form }),
-                React.createElement(Error, { forName: 'name', form: form })
-            ),
-            React.createElement(
-                'div',
-                { className: 'field' },
-                'Password: ',
-                React.createElement(Input, { name: 'password', type: 'text', form: form }),
-                React.createElement(Error, { forName: 'password', form: form })
-            ),
-            React.createElement(
-                'div',
-                { className: 'field' },
-                'Confirm Password: ',
-                React.createElement(Input, { name: 'confirmPassword', type: 'text', form: form }),
-                React.createElement(Error, { forName: 'confirmPassword', form: form })
-            )
-        );
-    }
-});
-
-},{"../src/form.js":9}],3:[function(require,module,exports){
-'use strict';
-
-var Form = require('../src/form.js'),
-    Rules = Form.Rules;
-
-/**
- * Registers a rule for validating password.
- */
-Rules.register('customUsername', function () {
-    return {
-        check: function check(value) {
-            if (!value || value.length < 5) {
-                return 'length';
-            }
-            if (!/[0-9]+$/.test(value)) {
-                return 'syntax';
-            }
-            return true;
-        },
-        messages: {
-            length: 'Username should be at least 5 characters',
-            syntax: 'Username should end with numbers'
-        }
-    };
-});
-
-/**
- * Registers a rule for validating password.
- */
-Rules.register('minLikes', function (min) {
-    return {
-        check: function check(value) {
-            if (!value || value.length < min) {
-                return false;
-            }
-            return true;
-        },
-        message: 'You have to pick at least ' + min + ' likes'
-    };
-});
-
-},{"../src/form.js":9}],4:[function(require,module,exports){
-
-// render page
-'use strict';
-
-var Registration = require('./registration.js');
-React.render(React.createElement(Registration, null), document.getElementById('registration-form'));
-
-},{"./registration.js":5}],5:[function(require,module,exports){
-'use strict';
-
-var BirthdateField = require('./birthdate-field.js'),
-    CustomRules = require('./custom-rules.js'),
-    Child = require('./child.js'),
-    Form = require('../src/form.js'),
-    Input = Form.Input,
-    Select = Form.Select,
-    Rules = Form.Rules,
-    Error = Form.Error;
-
-/**
- * This example shows the basic and also advance features of react-form-validation.
- */
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'Registration',
-
-    /**
-     * Returns the initial state of our component.
-     */
-    getInitialState: function getInitialState() {
-        return {
-            form: this.createForm(),
-            children: [1]
-        };
-    },
-
-    /**
-     * Called when the user clicks on the "Add" link.
-     */
-    onClickAddChild: function onClickAddChild(event) {
-        event.preventDefault();
-
-        // add an extra child id in the list of children
-        var children = this.state.children,
-            last = children.length ? children[children.length - 1] : null;
-        this.setState({
-            children: children.concat(last ? last + 1 : 1)
-        });
-    },
-
-    /**
-     * Called when the user clicks on the remove link of a child
-     */
-    onClickRemoveChild: function onClickRemoveChild(child) {
-        event.preventDefault();
-
-        var children = this.state.children,
-            index = children.indexOf(child);
-        this.setState({
-            children: children.slice(0, index).concat(children.slice(index + 1))
-        });
-    },
-
-    /**
-     * Creates a form instance that will be given to all fields of the page.
-     * The form instance manages the form state and its validation.
-     */
-    createForm: function createForm() {
-        return new Form.Instance({
-            fields: {
-                name: Rules.required(),
-                // customUsername is a custom rule defined in custom-rules.js
-                username: Rules.required().customUsername(),
-                email: Rules.required().email(),
-                password: Rules.required().password(),
-                confirmPassword: Rules.equals('password'),
-                birthdate: Rules.required().minAge(13),
-                likes: Rules.custom(function (value, context) {
-                    var type = context.getFieldValue('type');
-                    if (type === 'male') {
-                        // minLikes is a custom rule defined in custom-rules.js
-                        return Rules.minLikes(2);
-                    } else if (type === 'female') {
-                        return Rules.minLikes(3);
-                    }
-                }),
-                terms: Rules.onlyIf(function (value, context) {
-                    return context.getFieldValue('type') === 'male';
-                }).required('You have to agree to the terms and conditions'),
-                child: {
-                    name: Rules.required(),
-                    password: Rules.required().password(),
-                    confirmPassword: Rules.equals('password')
-                } /*,
-                  childrenCount: {
-                     virtual: true,
-                     rules: function(data) {
-                         console.log('data', data);
-                     }
-                  }*/
-            }
-        });
-    },
-
-    /**
-     * Called when the form is submitted (either the user has pressed enter or clicked the
-     * save button).
-     */
-    onSubmit: function onSubmit(valid, data) {
-        this.setState({
-            data: data,
-            valid: valid
-        });
-    },
-
-    /**
-     * Renders the child account fields.
-     */
-    renderChildAccountFields: function renderChildAccountFields(form) {
-        var ret = [],
-            children = this.state.children;
-        for (var i = 0; i < children.length; i++) {
-            var formPart = form.fieldset('child', i);
-            ret.push(React.createElement(
-                'div',
-                { className: 'fielset child', key: children[i] },
-                React.createElement(
-                    'a',
-                    { href: '#', className: 'remove',
-                        onClick: this.onClickRemoveChild.bind(this, children[i]) },
-                    'X'
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'field' },
-                    'Name: ',
-                    React.createElement(Input, { name: 'name', type: 'text', form: formPart }),
-                    React.createElement(Error, { forName: 'name', form: formPart })
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'field' },
-                    'Password: ',
-                    React.createElement(Input, { name: 'password', type: 'text', form: formPart }),
-                    React.createElement(Error, { forName: 'password', form: formPart })
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'field' },
-                    'Confirm Password: ',
-                    React.createElement(Input, { name: 'confirmPassword', type: 'text', form: formPart }),
-                    React.createElement(Error, { forName: 'confirmPassword', form: formPart })
-                )
-            ));
-        }
-        return ret;
-    },
-
-    /**
-     * Returns the state of the form when submitted
-     */
-    renderSubmittedState: function renderSubmittedState() {
-        if (this.state.valid !== undefined) {
-            return React.createElement(
-                'div',
-                { className: 'form-data' },
-                'Valid: ',
-                this.state.valid.toString(),
-                React.createElement('br', null),
-                'Data: ',
-                React.createElement('br', null),
-                JSON.stringify(this.state.data, null, 4)
-            );
-        }
-    },
-
-    /**
-     * Renders the form.
-     */
-    render: function render() {
-        var form = this.state.form;
-        return React.createElement(
-            Form,
-            { form: form, onSubmit: this.onSubmit },
-            React.createElement(
-                'h1',
-                null,
-                'Registration Form Example'
-            ),
-            React.createElement(Input, { name: 'id', type: 'hidden', defaultValue: '123', form: form }),
-            React.createElement(
-                'div',
-                { className: 'field' },
-                'Name: ',
-                React.createElement(Input, { name: 'name', type: 'text', form: form }),
-                React.createElement(Error, { forName: 'name', form: form })
-            ),
-            React.createElement(
-                'div',
-                { className: 'field' },
-                'Username: ',
-                React.createElement(Input, { name: 'username', type: 'text', form: form, rules: Rules.required() }),
-                React.createElement(Error, { forName: 'username', form: form })
-            ),
-            React.createElement(
-                'div',
-                { className: 'field' },
-                'Email: ',
-                React.createElement(Input, { name: 'email', type: 'text', form: form }),
-                React.createElement(Error, { forName: 'email', form: form })
-            ),
-            React.createElement(
-                'div',
-                { className: 'field' },
-                'Password: ',
-                React.createElement(Input, { name: 'password', type: 'password', form: form }),
-                React.createElement(Error, { forName: 'password', form: form })
-            ),
-            React.createElement(
-                'div',
-                { className: 'field' },
-                'Confirm Password: ',
-                React.createElement(Input, { name: 'confirmPassword', type: 'password', form: form }),
-                React.createElement(Error, { forName: 'confirmPassword', form: form })
-            ),
-            React.createElement(BirthdateField, { name: 'birthdate', form: form }),
-            React.createElement(
-                'div',
-                { className: 'field' },
-                React.createElement(
-                    'label',
-                    null,
-                    React.createElement(Input, { name: 'type', type: 'radio', form: form, value: 'male' }),
-                    ' Male'
-                ),
-                React.createElement(
-                    'label',
-                    null,
-                    React.createElement(Input, { name: 'type', type: 'radio', form: form, value: 'female' }),
-                    ' Female'
-                ),
-                React.createElement(Error, { forName: 'type', form: form })
-            ),
-            React.createElement(
-                'div',
-                { className: 'field' },
-                'Likes:',
-                React.createElement('br', null),
-                React.createElement(
-                    'label',
-                    null,
-                    React.createElement(Input, { name: 'likes', type: 'checkbox', value: 'movies', form: form }),
-                    ' Movies'
-                ),
-                React.createElement('br', null),
-                React.createElement(
-                    'label',
-                    null,
-                    React.createElement(Input, { name: 'likes', type: 'checkbox', value: 'books', form: form }),
-                    ' Books'
-                ),
-                React.createElement('br', null),
-                React.createElement(
-                    'label',
-                    null,
-                    React.createElement(Input, { name: 'likes', type: 'checkbox', value: 'sports', form: form }),
-                    ' Sports'
-                ),
-                React.createElement('br', null),
-                React.createElement(
-                    'label',
-                    null,
-                    React.createElement(Input, { name: 'likes', type: 'checkbox', value: 'shows', form: form }),
-                    ' Shows'
-                ),
-                React.createElement('br', null),
-                React.createElement(Error, { forName: 'likes', form: form })
-            ),
-            React.createElement(
-                'div',
-                { className: 'field' },
-                'Child accounts [ ',
-                React.createElement(
-                    'a',
-                    { href: '#', onClick: this.onClickAddChild },
-                    'Add'
-                ),
-                ' ]:',
-                React.createElement('br', null),
-                this.renderChildAccountFields(form),
-                React.createElement(Error, { forName: 'childrenCount', form: form })
-            ),
-            React.createElement(
-                'div',
-                { className: 'field' },
-                React.createElement(Input, { name: 'terms', type: 'checkbox', value: 'accept', form: form }),
-                'Accept Terms',
-                React.createElement(Error, { forName: 'terms', form: form })
-            ),
-            React.createElement(
-                'div',
-                { className: 'actions' },
-                React.createElement(
-                    'button',
-                    { type: 'submit' },
-                    'Register'
-                )
-            ),
-            this.renderSubmittedState()
-        );
-    }
-});
-
-},{"../src/form.js":9,"./birthdate-field.js":1,"./child.js":2,"./custom-rules.js":3}],6:[function(require,module,exports){
+!function(e){if("object"==typeof exports)module.exports=e();else if("function"==typeof define&&define.amd)define(e);else{var o;"undefined"!=typeof window?o=window:"undefined"!=typeof global?o=global:"undefined"!=typeof self&&(o=self),o.FormValidation=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 (function (global){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var React = (typeof window !== "undefined" ? window.React : typeof global !== "undefined" ? global.React : null),
-    ListenerMixin = require('./listener-mixin.js');
+    ListenerMixin = _dereq_('./listener-mixin.js');
 
 module.exports = React.createClass({
     /**
@@ -607,6 +17,14 @@ module.exports = React.createClass({
      * Mixins
      */
     mixins: [ListenerMixin],
+
+    /**
+     * Properties type.
+     */
+    propTypes: {
+        form: React.PropTypes.any.isRequired,
+        forName: React.PropTypes.string.isRequired
+    },
 
     /**
      * Returns the initial state of the component.
@@ -648,7 +66,21 @@ module.exports = React.createClass({
 });
 
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./listener-mixin.js":12}],7:[function(require,module,exports){
+},{"./listener-mixin.js":9}],2:[function(_dereq_,module,exports){
+'use strict';
+
+module.exports.Error = _dereq_('./error.js');
+module.exports.FieldMixin = _dereq_('./field-mixin.js');
+module.exports.Field = _dereq_('./field.js');
+module.exports.Form = _dereq_('./form.js');
+module.exports.Hint = _dereq_('./hint.js');
+module.exports.Input = _dereq_('./input.js');
+module.exports.Instance = _dereq_('./instance.js');
+module.exports.ListenerMixin = _dereq_('./listener-mixin.js');
+module.exports.Rules = _dereq_('./rules.js');
+module.exports.Select = _dereq_('./select.js');
+
+},{"./error.js":1,"./field-mixin.js":3,"./field.js":4,"./form.js":5,"./hint.js":6,"./input.js":7,"./instance.js":8,"./listener-mixin.js":9,"./rules.js":10,"./select.js":11}],3:[function(_dereq_,module,exports){
 'use strict';
 
 /**
@@ -693,7 +125,7 @@ module.exports = {
     }
 };
 
-},{}],8:[function(require,module,exports){
+},{}],4:[function(_dereq_,module,exports){
 'use strict';
 
 /**
@@ -761,7 +193,7 @@ Field.prototype.getState = function () {
 
 module.exports = Field;
 
-},{}],9:[function(require,module,exports){
+},{}],5:[function(_dereq_,module,exports){
 (function (global){
 'use strict';
 
@@ -777,6 +209,13 @@ module.exports = React.createClass({
     displayName: 'Form',
 
     /**
+     * Properties type.
+     */
+    propTypes: {
+        form: React.PropTypes.any.isRequired
+    },
+
+    /**
      * Called when the form is submitted.
      */
     onSubmit: function onSubmit(event) {
@@ -784,7 +223,9 @@ module.exports = React.createClass({
 
         // validate form, then call callback
         var result = this.props.form.validate(undefined, true);
-        this.props.onSubmit(result.valid, result.data, this.props.form);
+        if (this.props.onSubmit) {
+            this.props.onSubmit(result.valid, result.data, this.props.form);
+        }
 
         // scroll to error
         if (this.props.scrollToError) {}
@@ -802,27 +243,127 @@ module.exports = React.createClass({
     }
 });
 
-module.exports.Form = require('./form.js');
-module.exports.Instance = require('./instance.js');
-module.exports.Input = require('./input.js');
-module.exports.Error = require('./error.js');
-module.exports.FieldMixin = require('./field-mixin.js');
-module.exports.Rules = require('./rules.js');
-module.exports.Select = require('./select.js');
-module.exports.ListenerMixin = require('./listener-mixin.js');
+module.exports.Form = _dereq_('./form.js');
+module.exports.Instance = _dereq_('./instance.js');
+module.exports.Input = _dereq_('./input.js');
+module.exports.Error = _dereq_('./error.js');
+module.exports.FieldMixin = _dereq_('./field-mixin.js');
+module.exports.Rules = _dereq_('./rules.js');
+module.exports.Select = _dereq_('./select.js');
+module.exports.ListenerMixin = _dereq_('./listener-mixin.js');
 
 // TODO: find first error then .scrollIntoView();
 
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./error.js":6,"./field-mixin.js":7,"./form.js":9,"./input.js":10,"./instance.js":11,"./listener-mixin.js":12,"./rules.js":13,"./select.js":14}],10:[function(require,module,exports){
+},{"./error.js":1,"./field-mixin.js":3,"./form.js":5,"./input.js":7,"./instance.js":8,"./listener-mixin.js":9,"./rules.js":10,"./select.js":11}],6:[function(_dereq_,module,exports){
 (function (global){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var React = (typeof window !== "undefined" ? window.React : typeof global !== "undefined" ? global.React : null),
-    FieldMixin = require('./field-mixin.js'),
-    ListenerMixin = require('./listener-mixin.js');
+    ListenerMixin = _dereq_('./listener-mixin.js');
+
+module.exports = React.createClass({
+    /**
+     * Name of the component.
+     */
+    displayName: 'Hint',
+
+    /**
+     * Mixins
+     */
+    mixins: [ListenerMixin],
+
+    /**
+     * Properties type.
+     */
+    propTypes: {
+        display: React.PropTypes.string,
+        text: React.PropTypes.string,
+        form: React.PropTypes.any.isRequired,
+        forName: React.PropTypes.string.isRequired
+    },
+
+    /**
+     * Returns the default props.
+     */
+    getDefaultProps: function getDefaultProps() {
+        return {
+            display: 'pristine|valid'
+        };
+    },
+
+    /**
+     * Returns the initial state of the component.
+     */
+    getInitialState: function getInitialState() {
+        return {
+            state: this.props.form.getFieldStateByName(this.props.forName),
+            display: this.parseDisplayString(this.props.display)
+        };
+    },
+
+    /**
+     * Called when the component's props have changed.
+     */
+    componentWillReceiveProps: function componentWillReceiveProps(newProps) {
+        if (newProps.display !== this.props.display) {
+            this.setState({
+                display: this.parseDisplayString(newProps.display)
+            });
+        }
+    },
+
+    /**
+     * Converts the display property to an object.
+     */
+    parseDisplayString: function parseDisplayString(display) {
+        var ret = {};
+        (display || '').split(/[\|,]/).forEach(function (item) {
+            ret[item] = true;
+        });
+        return ret;
+    },
+
+    /**
+     * Called by the listener mixin when the form is validated.
+     */
+    formDidValidate: function formDidValidate(result) {
+        this.setState({
+            state: this.props.form.getFieldStateByName(this.props.forName)
+        });
+    },
+
+    /**
+     * Renders the input.
+     */
+    render: function render() {
+        var display = this.state.display,
+            state = this.state.state;
+        if (display.error && state.valid === false || display.pristine && state.validated !== true || display.valid && state.valid === true) {
+            return React.createElement(
+                'label',
+                _extends({ className: 'hint' }, this.props, { form: null }),
+                this.props.text || this.props.children
+            );
+        } else {
+            return null;
+        }
+    }
+
+});
+
+}).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./listener-mixin.js":9}],7:[function(_dereq_,module,exports){
+(function (global){
+'use strict';
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var React = (typeof window !== "undefined" ? window.React : typeof global !== "undefined" ? global.React : null),
+    FieldMixin = _dereq_('./field-mixin.js'),
+    ListenerMixin = _dereq_('./listener-mixin.js');
 
 module.exports = React.createClass({
     /**
@@ -834,6 +375,14 @@ module.exports = React.createClass({
      * Mixins.
      */
     mixins: [FieldMixin, ListenerMixin],
+
+    /**
+     * Properties type.
+     */
+    propTypes: {
+        form: React.PropTypes.any.isRequired,
+        name: React.PropTypes.string.isRequired
+    },
 
     /**
      * Called to check if the field is checked.
@@ -923,12 +472,12 @@ module.exports = React.createClass({
 // TODO: implement getting the field state
 
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./field-mixin.js":7,"./listener-mixin.js":12}],11:[function(require,module,exports){
+},{"./field-mixin.js":3,"./listener-mixin.js":9}],8:[function(_dereq_,module,exports){
 'use strict';
 
-var Field = require('./field.js'),
-    Rules = require('./rules.js'),
-    ValidationContext = require('./validation-context.js');
+var Field = _dereq_('./field.js'),
+    Rules = _dereq_('./rules.js'),
+    ValidationContext = _dereq_('./validation-context.js');
 
 /**
  * Instance class.
@@ -1292,7 +841,7 @@ Instance.prototype.validate = function (target, force) {
 
 module.exports = Instance;
 
-},{"./field.js":8,"./rules.js":13,"./validation-context.js":15}],12:[function(require,module,exports){
+},{"./field.js":4,"./rules.js":10,"./validation-context.js":12}],9:[function(_dereq_,module,exports){
 'use strict';
 
 /**
@@ -1324,7 +873,7 @@ module.exports = {
     }
 };
 
-},{}],13:[function(require,module,exports){
+},{}],10:[function(_dereq_,module,exports){
 'use strict';
 
 var EMAIL_REGEXP = new RegExp('^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]' + '{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$');
@@ -1462,6 +1011,30 @@ Rules.register('email', function () {
 });
 
 /**
+ * Registers a rule for validating an integer.
+ */
+Rules.register('integer', function (message) {
+    return {
+        check: function check(value) {
+            return /^[0-9]+$/.test(value);
+        },
+        message: message || 'This is not a valid integer'
+    };
+});
+
+/**
+ * Registers a rule for validating using regexes.
+ */
+Rules.register('regex', function (regex, message) {
+    return {
+        check: function check(value) {
+            return regex.test(value);
+        },
+        message: message || 'This field does not match ' + regex
+    };
+});
+
+/**
  * Registers a rule for checking that something equals something else.
  */
 Rules.register('equals', function (otherFieldName) {
@@ -1521,14 +1094,14 @@ Rules.register('minAge', function (minAge) {
  */
 module.exports = Rules;
 
-},{}],14:[function(require,module,exports){
+},{}],11:[function(_dereq_,module,exports){
 (function (global){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var React = (typeof window !== "undefined" ? window.React : typeof global !== "undefined" ? global.React : null),
-    FieldMixin = require('./field-mixin.js');
+    FieldMixin = _dereq_('./field-mixin.js');
 
 module.exports = React.createClass({
     /**
@@ -1540,6 +1113,14 @@ module.exports = React.createClass({
      * Mixins.
      */
     mixins: [FieldMixin],
+
+    /**
+     * Properties type.
+     */
+    propTypes: {
+        form: React.PropTypes.any.isRequired,
+        name: React.PropTypes.string.isRequired
+    },
 
     /**
      * Returns the value of the input.
@@ -1589,7 +1170,7 @@ module.exports = React.createClass({
 });
 
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./field-mixin.js":7}],15:[function(require,module,exports){
+},{"./field-mixin.js":3}],12:[function(_dereq_,module,exports){
 'use strict';
 
 /**
@@ -1632,4 +1213,6 @@ ValidationContext.prototype.getData = function () {
 
 module.exports = ValidationContext;
 
-},{}]},{},[4])
+},{}]},{},[2])
+(2)
+});

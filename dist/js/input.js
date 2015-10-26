@@ -1,5 +1,7 @@
 'use strict';
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var React = require('react'),
     FieldMixin = require('./field-mixin.js'),
     ListenerMixin = require('./listener-mixin.js');
@@ -26,7 +28,7 @@ module.exports = React.createClass({
     /**
      * Called to check if the field is checked.
      */
-    isChecked: function() {
+    isChecked: function isChecked() {
         var type = this.props.type;
         if (type === 'checkbox' || type === 'radio') {
             var element = React.findDOMNode(this);
@@ -37,7 +39,7 @@ module.exports = React.createClass({
     /**
      * Called to check if the field is a list.
      */
-    isList: function() {
+    isList: function isList() {
         var type = this.props.type;
         return type === 'checkbox';
     },
@@ -45,7 +47,7 @@ module.exports = React.createClass({
     /**
      * Returns the value of the input.
      */
-    getValue: function() {
+    getValue: function getValue() {
         var element = React.findDOMNode(this);
         return element.value;
     },
@@ -53,7 +55,7 @@ module.exports = React.createClass({
     /**
      * Called when the value of the input has changed.
      */
-    onChange: function(event) {
+    onChange: function onChange(event) {
         this.validateField();
 
         // call parent prop
@@ -66,7 +68,7 @@ module.exports = React.createClass({
      * Called when the field looses focus.
      * This forces validation of the field.
      */
-    onBlur: function() {
+    onBlur: function onBlur() {
         this.validateField(true);
 
         // call parent prop
@@ -78,14 +80,12 @@ module.exports = React.createClass({
     /**
      * Called by the listener mixin after the form is validated.
      */
-    formDidValidate: function() {
-        // TODO: implement getting the field state
-    },
+    formDidValidate: function formDidValidate() {},
 
     /**
      * Returns the component's className.
      */
-    className: function(fieldState) {
+    className: function className(fieldState) {
         var ret = [];
         if (this.props.className) {
             ret.push(this.props.className);
@@ -102,10 +102,12 @@ module.exports = React.createClass({
     /**
      * Renders the input.
      */
-    render: function() {
+    render: function render() {
         var fieldState = this.props.form.getFieldState(this);
-        return <input {...this.props} className={this.className(fieldState)}
-            onChange={this.onChange} onBlur={this.onBlur} form={null} />;
+        return React.createElement('input', _extends({}, this.props, { className: this.className(fieldState),
+            onChange: this.onChange, onBlur: this.onBlur, form: null }));
     }
 
 });
+
+// TODO: implement getting the field state

@@ -26,7 +26,7 @@ gulp.task('compile', ['clean'], function() {
  * Packages all files into one big JavaScript file usable in the browser.
  */
 gulp.task('browserify', ['clean'], function() {
-    return gulp.src('src/form.js')
+    return gulp.src('src/index.js')
         .pipe(browserify({
             transform: ['babelify'],
             standalone: 'FormValidation'
@@ -73,4 +73,4 @@ gulp.task('example-dev', ['example-build'], function() {
 /**
  * Default task.
  */
-gulp.task('default', ['compile', 'browserify', 'example']);
+gulp.task('build', ['compile', 'browserify']);

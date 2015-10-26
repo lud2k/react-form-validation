@@ -1,12 +1,11 @@
 'use strict';
 
-var EMAIL_REGEXP = new RegExp('^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]' +
-        '{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$');
+var EMAIL_REGEXP = new RegExp('^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]' + '{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$');
 
 /**
  * Constructor of the Rules class.
  */
-var Rules = function(config) {
+var Rules = function Rules(config) {
     this.rules = [];
 };
 
@@ -18,24 +17,24 @@ Rules.OPTIONAL_EXCEPTION = 'OPTIONAL_EXCEPTION';
 /**
  * Registers a new rule.
  */
-Rules.register = function(name, rule) {
-    Rules.prototype[name] = function() {
+Rules.register = function (name, rule) {
+    Rules.prototype[name] = function () {
         this.rules.push(rule.apply(null, arguments));
         return this;
     };
-    Rules[name] = function() {
+    Rules[name] = function () {
         var rules = new Rules();
         rules[name].apply(rules, arguments);
         return rules;
-    }
-}
+    };
+};
 
 /**
  * Validates that the rules are all valid
  */
-Rules.prototype.validate = function(value, context) {
+Rules.prototype.validate = function (value, context) {
     try {
-        for (var i=0; i<this.rules.length; i++) {
+        for (var i = 0; i < this.rules.length; i++) {
             var rule = this.rules[i],
                 valid = rule.check(value, context);
 
@@ -49,10 +48,10 @@ Rules.prototype.validate = function(value, context) {
                 return {
                     error: valid,
                     message: valid === false ? rule.message : rule.messages[valid]
-                }
+                };
             }
         }
-    } catch(e) {
+    } catch (e) {
         if (e !== Rules.OPTIONAL_EXCEPTION) {
             throw e;
         }
@@ -63,9 +62,9 @@ Rules.prototype.validate = function(value, context) {
 /**
  * Registers a rule that
  */
-Rules.register('onlyIf', function(fn) {
+Rules.register('onlyIf', function (fn) {
     return {
-        check: function(value, context) {
+        check: function check(value, context) {
             var res = fn(value, context);
             if (!res) {
                 throw Rules.OPTIONAL_EXCEPTION;
@@ -78,9 +77,9 @@ Rules.register('onlyIf', function(fn) {
 /**
  * Registers a rule for optional values.
  */
-Rules.register('optional', function() {
+Rules.register('optional', function () {
     return {
-        check: function(value) {
+        check: function check(value) {
             if (value === undefined || value === '') {
                 throw Rules.OPTIONAL_EXCEPTION;
             }
@@ -92,9 +91,9 @@ Rules.register('optional', function() {
 /**
  * Registers a rule for optional values.
  */
-Rules.register('custom', function(fn) {
+Rules.register('custom', function (fn) {
     return {
-        check: function(value, context) {
+        check: function check(value, context) {
             return fn(value, context) || true;
         }
     };
@@ -103,21 +102,18 @@ Rules.register('custom', function(fn) {
 /**
  * Registers a rule that checks if something is not empty.
  */
-Rules.register('required', function(message) {
+Rules.register('required', function (message) {
     return {
-        check: function(value) {
+        check: function check(value) {
             if (Array.isArray(value)) {
                 // check array not empty
                 return value.length > 0;
-
             } else if (typeof value === 'string' || value instanceof String) {
                 // check string not empty
                 return value.length > 0;
-
             } else if (value !== undefined && value !== null) {
                 // value is defined
                 return true;
-
             } else {
                 return false;
             }
@@ -129,9 +125,9 @@ Rules.register('required', function(message) {
 /**
  * Registers a rule for validating an email.
  */
-Rules.register('email', function() {
+Rules.register('email', function () {
     return {
-        check: function(value) {
+        check: function check(value) {
             return EMAIL_REGEXP.test(value);
         },
         message: 'This is not a valid email address'
@@ -141,9 +137,9 @@ Rules.register('email', function() {
 /**
  * Registers a rule for validating an integer.
  */
-Rules.register('integer', function(message) {
+Rules.register('integer', function (message) {
     return {
-        check: function(value) {
+        check: function check(value) {
             return /^[0-9]+$/.test(value);
         },
         message: message || 'This is not a valid integer'
@@ -153,21 +149,21 @@ Rules.register('integer', function(message) {
 /**
  * Registers a rule for validating using regexes.
  */
-Rules.register('regex', function(regex, message) {
+Rules.register('regex', function (regex, message) {
     return {
-        check: function(value) {
+        check: function check(value) {
             return regex.test(value);
         },
-        message: message || ('This field does not match ' + regex)
+        message: message || 'This field does not match ' + regex
     };
 });
 
 /**
  * Registers a rule for checking that something equals something else.
  */
-Rules.register('equals', function(otherFieldName) {
+Rules.register('equals', function (otherFieldName) {
     return {
-        check: function(value, context) {
+        check: function check(value, context) {
             return context.getFieldValue(otherFieldName) === value;
         },
         message: 'This field does not match ' + otherFieldName
@@ -177,9 +173,9 @@ Rules.register('equals', function(otherFieldName) {
 /**
  * Registers a rule for validating password.
  */
-Rules.register('password', function() {
+Rules.register('password', function () {
     return {
-        check: function(value) {
+        check: function check(value) {
             if (!value || value.length < 8) {
                 return 'length';
             }
@@ -206,9 +202,9 @@ Rules.register('password', function() {
 /**
  * Registers a rule for validating minimum age.
  */
-Rules.register('minAge', function(minAge) {
+Rules.register('minAge', function (minAge) {
     return {
-        check: function(value) {
+        check: function check(value) {
             var diff = new Date(Date.now() - value.getTime()),
                 age = Math.abs(diff.getUTCFullYear() - 1970);
             return age >= minAge;

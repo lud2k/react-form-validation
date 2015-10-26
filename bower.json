@@ -1,0 +1,22 @@
+{
+  "name": "react-form-validation",
+  "version": "1.0.0",
+  "homepage": "https://github.com/lud2k/react-form-validation",
+  "authors": [
+    "Ludovic Cabre <ludovic@knewton.com>"
+  ],
+  "description": "Form validation for React",
+  "main": "dist/react-form-validation.js",
+  "moduleType": [],
+  "keywords": [
+    "react", "form", "validation", "reactjs"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

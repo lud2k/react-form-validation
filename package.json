@@ -2,11 +2,11 @@
   "name": "react-form-validation",
   "version": "1.0.0",
   "description": "Form validation for React",
-  "main": "index.js",
+  "main": "dist/js/index.js",
   "author": "Ludovic Cabre",
   "license": "MIT",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "gulp test"
   },
   "keywords": [
     "react",
@@ -14,6 +14,9 @@
     "validation",
     "reactjs"
   ],
+  "dependencies": {
+    "react": "^0.14"
+  },
   "devDependencies": {
     "babelify": "^6.1.2",
     "browserify": "^10.2.4",
