@@ -8,7 +8,29 @@ var ReactFormValidation = require('react-form-validation'),
     Input = ReactFormValidation.Input;
 
 /**
- * Simple login form.
+ * Friend item form.
+ */
+var FriendForm = React.createClass({
+    render: function() {
+        var form = this.props.form;
+        return (
+            <div className="fieldset friend">
+                <b>Friend {this.props.index + 1}</b>
+                <div className="field">
+                    Name: <Input type="text" name="name" form={form} />
+                    <Error forName="name" form={form} />
+                </div>
+                <div className="field">
+                    Age: <Input type="text" name="age" form={form} />
+                    <Error forName="age" form={form} />
+                </div>
+            </div>
+        );
+    }
+});
+
+/**
+ * List example form.
  */
 module.exports = React.createClass({
     /**
@@ -44,18 +66,7 @@ module.exports = React.createClass({
         var ret = [];
         for (var i=0; i<this.state.nbFriends; i++) {
             var subform = form.fieldset('friend', i);
-            ret.push(
-                <div className="fieldset">
-                    <div className="field">
-                        Name: <Input type="text" name="name" form={subform} />
-                        <Error forName="name" form={subform} />
-                    </div>
-                    <div className="field">
-                        Age: <Input type="text" name="age" form={subform} />
-                        <Error forName="age" form={subform} />
-                    </div>
-                </div>
-            );
+            ret.push(<FriendForm key={i} index={i} form={subform} />);
         }
         return ret;
     },

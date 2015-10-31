@@ -90,6 +90,15 @@ body {
     padding: 0 20px;
 }
 
+.content h2 {
+    position: relative;
+}
+
+.content h2 .anchor {
+    position: absolute;
+    top: -50px;
+}
+
 .code-preview::after {
     content: '';
     clear: both;
@@ -104,6 +113,12 @@ body {
 
 .code .CodeMirror {
     background: #f8f5ec;
+    height: auto;
+}
+
+.code .CodeMirror .CodeMirror-scroll {
+    height: auto;
+    max-height: 300px;
 }
 
 .example {
@@ -156,6 +171,20 @@ form label.hint {
 
 form h4 {
     margin: 0 0 10px 0;
+}
+
+.fieldset.friend {
+    background: #FBFBFB;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 0 1px 0 #CCC;
+}
+
+.fieldset.friend b {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+    text-decoration: underline;
 }
 
 /********************************************************************

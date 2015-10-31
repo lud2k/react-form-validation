@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 var ReactFormValidation = require('react-form-validation'),
     Instance = ReactFormValidation.Instance,
@@ -9,10 +9,45 @@ var ReactFormValidation = require('react-form-validation'),
     Input = ReactFormValidation.Input;
 
 /**
- * Simple login form.
+ * Friend item form.
+ */
+var FriendForm = React.createClass({
+    displayName: "FriendForm",
+
+    render: function render() {
+        var form = this.props.form;
+        return React.createElement(
+            "div",
+            { className: "fieldset friend" },
+            React.createElement(
+                "b",
+                null,
+                "Friend ",
+                this.props.index + 1
+            ),
+            React.createElement(
+                "div",
+                { className: "field" },
+                "Name: ",
+                React.createElement(Input, { type: "text", name: "name", form: form }),
+                React.createElement(Error, { forName: "name", form: form })
+            ),
+            React.createElement(
+                "div",
+                { className: "field" },
+                "Age: ",
+                React.createElement(Input, { type: "text", name: "age", form: form }),
+                React.createElement(Error, { forName: "age", form: form })
+            )
+        );
+    }
+});
+
+/**
+ * List example form.
  */
 module.exports = React.createClass({
-    displayName: 'exports',
+    displayName: "exports",
 
     /**
      * Returns the initial state of the component.
@@ -47,24 +82,7 @@ module.exports = React.createClass({
         var ret = [];
         for (var i = 0; i < this.state.nbFriends; i++) {
             var subform = form.fieldset('friend', i);
-            ret.push(React.createElement(
-                'div',
-                { className: 'fieldset' },
-                React.createElement(
-                    'div',
-                    { className: 'field' },
-                    'Name: ',
-                    React.createElement(Input, { type: 'text', name: 'name', form: subform }),
-                    React.createElement(Error, { forName: 'name', form: subform })
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'field' },
-                    'Age: ',
-                    React.createElement(Input, { type: 'text', name: 'age', form: subform }),
-                    React.createElement(Error, { forName: 'age', form: subform })
-                )
-            ));
+            ret.push(React.createElement(FriendForm, { key: i, index: i, form: subform }));
         }
         return ret;
     },
@@ -78,23 +96,23 @@ module.exports = React.createClass({
             Form,
             { form: form },
             React.createElement(
-                'h4',
+                "h4",
                 null,
-                'Friend List'
+                "Friend List"
             ),
             this.renderFriendFields(form),
             React.createElement(
-                'div',
-                { className: 'actions' },
+                "div",
+                { className: "actions" },
                 React.createElement(
-                    'button',
-                    { type: 'button', onClick: this.onClickAddFriend },
-                    'Add Friend'
+                    "button",
+                    { type: "button", onClick: this.onClickAddFriend },
+                    "Add Friend"
                 ),
                 React.createElement(
-                    'button',
+                    "button",
                     null,
-                    'Validate'
+                    "Validate"
                 )
             )
         );

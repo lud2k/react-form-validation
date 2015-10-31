@@ -20,6 +20,17 @@ gulp.task('clean', function() {
 gulp.task('compile', ['clean'], function() {
     return gulp.src('src/**/*.js')
         .pipe(babel())
+        .on('error', function(error) {
+            console.error('failed to babelify code', error);
+        })
+        .pipe(gulp.dest('dist/js'));
+});
+
+/**
+ * Copies static files to the dist directory.
+ */
+gulp.task('copy', ['clean'], function() {
+    return gulp.src('src/**/*.html')
         .pipe(gulp.dest('dist/js'));
 });
 
@@ -27,7 +38,7 @@ gulp.task('compile', ['clean'], function() {
  * Converts the example js files into javascript text.
  */
 gulp.task('textify', ['clean'], function() {
-    return gulp.src('src/**/*-form.js')
+    return gulp.src(['src/**/*-form.js', 'src/**/*.code.js'])
         .pipe(rename(function(path) {
             path.extname = '.txt';
         }))
@@ -38,13 +49,13 @@ gulp.task('textify', ['clean'], function() {
 /**
  * Packages all files into one big JavaScript file usable in the browser.
  */
-gulp.task('browserify', ['compile', 'textify'], function() {
+gulp.task('browserify', ['compile', 'copy', 'textify'], function() {
     return gulp.src('dist/js/index.js')
         .pipe(browserify({
             transform: [stringify(), 'babelify']
         }))
         .on('error', function(error) {
-            console.log(error.stack.replace(/[ ]+at .*\n?/g, ''));
+            console.error(error.stack.replace(/[ ]+at .*\n?/g, ''));
         })
         .pipe(rename('index.js'))
         .pipe(gulp.dest('dist'));
