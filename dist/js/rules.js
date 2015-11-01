@@ -1,6 +1,6 @@
 'use strict';
 
-var EMAIL_REGEXP = new RegExp('^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]' + '{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$');
+var EMAIL_REGEXP = new RegExp('^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]' + '{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$');
 
 /**
  * Constructor of the Rules class.
@@ -140,7 +140,8 @@ Rules.register('email', function () {
 Rules.register('integer', function (message) {
     return {
         check: function check(value) {
-            return /^[0-9]+$/.test(value);
+            return (/^[0-9]+$/.test(value)
+            );
         },
         message: message || 'This is not a valid integer'
     };

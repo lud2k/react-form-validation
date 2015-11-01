@@ -31,7 +31,9 @@ module.exports = React.createClass({
         }
 
         // scroll to error
-        if (this.props.scrollToError) {}
+        if (this.props.scrollToError) {
+            // TODO: find first error then .scrollIntoView();
+        }
     },
 
     /**
@@ -54,5 +56,3 @@ module.exports.FieldMixin = require('./field-mixin.js');
 module.exports.Rules = require('./rules.js');
 module.exports.Select = require('./select.js');
 module.exports.ListenerMixin = require('./listener-mixin.js');
-
-// TODO: find first error then .scrollIntoView();

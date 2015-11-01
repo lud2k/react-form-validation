@@ -80,7 +80,9 @@ module.exports = React.createClass({
     /**
      * Called by the listener mixin after the form is validated.
      */
-    formDidValidate: function formDidValidate() {},
+    formDidValidate: function formDidValidate() {
+        // TODO: implement getting the field state
+    },
 
     /**
      * Returns the component's className.
@@ -109,5 +111,3 @@ module.exports = React.createClass({
     }
 
 });
-
-// TODO: implement getting the field state

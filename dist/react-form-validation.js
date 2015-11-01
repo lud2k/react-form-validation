@@ -4,7 +4,7 @@
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var React = (typeof window !== "undefined" ? window.React : typeof global !== "undefined" ? global.React : null),
+var React = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null),
     ListenerMixin = _dereq_('./listener-mixin.js');
 
 module.exports = React.createClass({
@@ -197,7 +197,7 @@ module.exports = Field;
 (function (global){
 'use strict';
 
-var React = (typeof window !== "undefined" ? window.React : typeof global !== "undefined" ? global.React : null);
+var React = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
 
 /**
  * Form component.
@@ -228,7 +228,9 @@ module.exports = React.createClass({
         }
 
         // scroll to error
-        if (this.props.scrollToError) {}
+        if (this.props.scrollToError) {
+            // TODO: find first error then .scrollIntoView();
+        }
     },
 
     /**
@@ -252,8 +254,6 @@ module.exports.Rules = _dereq_('./rules.js');
 module.exports.Select = _dereq_('./select.js');
 module.exports.ListenerMixin = _dereq_('./listener-mixin.js');
 
-// TODO: find first error then .scrollIntoView();
-
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./error.js":1,"./field-mixin.js":3,"./form.js":5,"./input.js":7,"./instance.js":8,"./listener-mixin.js":9,"./rules.js":10,"./select.js":11}],6:[function(_dereq_,module,exports){
 (function (global){
@@ -261,7 +261,7 @@ module.exports.ListenerMixin = _dereq_('./listener-mixin.js');
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var React = (typeof window !== "undefined" ? window.React : typeof global !== "undefined" ? global.React : null),
+var React = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null),
     ListenerMixin = _dereq_('./listener-mixin.js');
 
 module.exports = React.createClass({
@@ -361,7 +361,7 @@ module.exports = React.createClass({
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var React = (typeof window !== "undefined" ? window.React : typeof global !== "undefined" ? global.React : null),
+var React = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null),
     FieldMixin = _dereq_('./field-mixin.js'),
     ListenerMixin = _dereq_('./listener-mixin.js');
 
@@ -439,7 +439,9 @@ module.exports = React.createClass({
     /**
      * Called by the listener mixin after the form is validated.
      */
-    formDidValidate: function formDidValidate() {},
+    formDidValidate: function formDidValidate() {
+        // TODO: implement getting the field state
+    },
 
     /**
      * Returns the component's className.
@@ -468,8 +470,6 @@ module.exports = React.createClass({
     }
 
 });
-
-// TODO: implement getting the field state
 
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./field-mixin.js":3,"./listener-mixin.js":9}],8:[function(_dereq_,module,exports){
@@ -876,7 +876,7 @@ module.exports = {
 },{}],10:[function(_dereq_,module,exports){
 'use strict';
 
-var EMAIL_REGEXP = new RegExp('^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]' + '{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$');
+var EMAIL_REGEXP = new RegExp('^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]' + '{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$');
 
 /**
  * Constructor of the Rules class.
@@ -1016,7 +1016,8 @@ Rules.register('email', function () {
 Rules.register('integer', function (message) {
     return {
         check: function check(value) {
-            return /^[0-9]+$/.test(value);
+            return (/^[0-9]+$/.test(value)
+            );
         },
         message: message || 'This is not a valid integer'
     };
@@ -1100,7 +1101,7 @@ module.exports = Rules;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var React = (typeof window !== "undefined" ? window.React : typeof global !== "undefined" ? global.React : null),
+var React = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null),
     FieldMixin = _dereq_('./field-mixin.js');
 
 module.exports = React.createClass({
