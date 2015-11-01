@@ -1,6 +1,6 @@
 {
   "name": "react-form-validation",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Form validation for React",
   "main": "dist/js/index.js",
   "author": "Ludovic Cabre",
