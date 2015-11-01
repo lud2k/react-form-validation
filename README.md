@@ -1,7 +1,5 @@
 # react-form-validation
 
-/!\ Work in progress.
-
 Simple and powerful form validation library for React.
 See examples and documentation on http://lud2k.github.io/react-form-validation.
 
