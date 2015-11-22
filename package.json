@@ -1,6 +1,6 @@
 {
   "name": "react-form-validation",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Form validation for React",
   "main": "dist/js/index.js",
   "author": "Ludovic Cabre",
@@ -15,7 +15,8 @@
     "reactjs"
   ],
   "dependencies": {
-    "react": "^0.14"
+    "react": "^0.14.2",
+    "react-dom": "^0.14.2"
   },
   "devDependencies": {
     "babelify": "^6.1.2",
@@ -34,6 +35,7 @@
     ]
   },
   "browserify-shim": {
-    "react": "global:React"
+    "react": "global:React",
+    "react-dom": "global:ReactDOM"
   }
 }

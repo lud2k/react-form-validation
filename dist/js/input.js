@@ -3,6 +3,7 @@
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var React = require('react'),
+    ReactDOM = require('react-dom'),
     FieldMixin = require('./field-mixin.js'),
     ListenerMixin = require('./listener-mixin.js');
 
@@ -31,7 +32,7 @@ module.exports = React.createClass({
     isChecked: function isChecked() {
         var type = this.props.type;
         if (type === 'checkbox' || type === 'radio') {
-            var element = React.findDOMNode(this);
+            var element = ReactDOM.findDOMNode(this);
             return element.checked;
         }
     },
@@ -48,7 +49,7 @@ module.exports = React.createClass({
      * Returns the value of the input.
      */
     getValue: function getValue() {
-        var element = React.findDOMNode(this);
+        var element = ReactDOM.findDOMNode(this);
         return element.value;
     },
 

@@ -1,5 +1,6 @@
 
-var Form = require('../src/form.js'),
+var ReactDOM = require('react-dom'),
+    Form = require('../src/form.js'),
     FieldMixin = Form.FieldMixin,
     Error = Form.Error;
 
@@ -27,9 +28,9 @@ module.exports = React.createClass({
      * This component a Date object as value.
      */
     getValue: function() {
-        var day = React.findDOMNode(this.refs.day).value,
-            month = React.findDOMNode(this.refs.month).value,
-            year = React.findDOMNode(this.refs.year).value;
+        var day = ReactDOM.findDOMNode(this.refs.day).value,
+            month = ReactDOM.findDOMNode(this.refs.month).value,
+            year = ReactDOM.findDOMNode(this.refs.year).value;
         if (day && month && year) {
             return new Date(year, month, day);
         }

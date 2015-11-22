@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react'),
+    ReactDOM = require('react-dom'),
     FieldMixin = require('./field-mixin.js');
 
 module.exports = React.createClass({
@@ -26,7 +27,7 @@ module.exports = React.createClass({
      * Returns the value of the input.
      */
     getValue: function() {
-        var element = React.findDOMNode(this);
+        var element = ReactDOM.findDOMNode(this);
         return element.value;
     },
 

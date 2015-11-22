@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react'),
+    ReactDOM = require('react-dom'),
     FieldMixin = require('./field-mixin.js'),
     ListenerMixin = require('./listener-mixin.js');
 
@@ -29,7 +30,7 @@ module.exports = React.createClass({
     isChecked: function() {
         var type = this.props.type;
         if (type === 'checkbox' || type === 'radio') {
-            var element = React.findDOMNode(this);
+            var element = ReactDOM.findDOMNode(this);
             return element.checked;
         }
     },
@@ -46,7 +47,7 @@ module.exports = React.createClass({
      * Returns the value of the input.
      */
     getValue: function() {
-        var element = React.findDOMNode(this);
+        var element = ReactDOM.findDOMNode(this);
         return element.value;
     },
 
