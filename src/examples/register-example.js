@@ -1,10 +1,10 @@
 
-var RegisterForm = require('./register-form.js'),
-    RegisterFormTxt = require('./register-form.txt'),
-    Code = require('../code.js');
+var Code = require('../code.js'),
+    RegisterForm = require('./register-form.js'),
+    RegisterTxt = require('./register-form.txt');
 
 /**
- * The main page of the website.
+ * Component that renders an example.
  */
 module.exports = React.createClass({
     /**
@@ -13,17 +13,41 @@ module.exports = React.createClass({
     displayName: 'RegisterExample',
 
     /**
-     * Renders the form.
+     * Returns the initial state of this component.
+     */
+    getInitialState: function() {
+        return {};
+    },
+
+    /**
+     * Called when the form is submitted.
+     */
+    formSubmitted: function(valid, data) {
+        this.setState({
+            formData: data,
+            formValid: valid
+        });
+    },
+
+    /**
+     * Renders the example.
      */
     render: function() {
         return (
             <div className="example">
-                <h3>Example 2: Registration</h3>
+                <h2>Registration Form</h2>
                 <div className="code-preview">
-                    <div className="preview">
-                        <RegisterForm />
+                    <div className="right-side">
+                        <div className="preview">
+                            <RegisterForm formSubmitted={this.formSubmitted} />
+                        </div>
+                        <div className="data">
+                            Form is valid: { this.state.formValid ? 'No' : 'Yes' }{'\n'}
+                            Submitted form data:{'\n'}
+                            {this.state.formData ? JSON.stringify(this.state.formData, null, 2) : 'not yet validated'}
+                        </div>
                     </div>
-                    <Code value={RegisterFormTxt} />
+                    <Code value={RegisterTxt} />
                 </div>
             </div>
         );

@@ -9,7 +9,7 @@ module.exports = React.createClass({
     /**
      * Name of the component.
      */
-    displayName: 'RulesDocumentation',
+    displayName: 'HintDocumentation',
 
     /**
      * Renders the form.
@@ -17,10 +17,10 @@ module.exports = React.createClass({
     render: function() {
         return (
             <div className="documentation">
-                <h4>Hint Component</h4>
-                <p>
+                <h2> &lt;Hint&gt; Component </h2>
+                <div className="paragraph">
                     The <i>Hint</i> component displays a hint depending on the state of a field.
-                </p>
+                </div>
                 <Code value={HintTag} />
             </div>
         );

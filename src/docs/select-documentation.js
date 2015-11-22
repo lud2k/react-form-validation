@@ -17,10 +17,10 @@ module.exports = React.createClass({
     render: function() {
         return (
             <div className="documentation">
-                <h4>Select Component</h4>
-                <p>
+                <h2> &lt;Select&gt; Component </h2>
+                <div className="paragraph">
                     The <i>Select</i> component behaves the same way as the select html tag.
-                </p>
+                </div>
                 <Code value={SelectTag} />
             </div>
         );

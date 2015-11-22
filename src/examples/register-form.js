@@ -34,7 +34,7 @@ module.exports = React.createClass({
     render: function() {
         var form = this.state.form;
         return (
-            <Form form={form}>
+            <Form form={form} onSubmit={this.props.formSubmitted}>
                 <h4>Register</h4>
                 <div className="field">
                     Username: <Input type="text" name="username" form={form} />

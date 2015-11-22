@@ -9,7 +9,7 @@ module.exports = React.createClass({
     /**
      * Name of the component.
      */
-    displayName: 'RulesDocumentation',
+    displayName: 'FormDocumentation',
 
     /**
      * Renders the form.
@@ -17,10 +17,10 @@ module.exports = React.createClass({
     render: function() {
         return (
             <div className="documentation">
-                <h4>Form Component</h4>
-                <p>
+                <h2> &lt;Form&gt; Component </h2>
+                <div className="paragraph">
                     The <i>Form</i> component behaves the same way as the form html tag.
-                </p>
+                </div>
                 <Code value={FormTag} />
             </div>
         );

@@ -6,7 +6,7 @@ module.exports = React.createClass({
     /**
      * Name of the component.
      */
-    displayName: 'RulesDocumentation',
+    displayName: 'ListenerMixinDocumentation',
 
     /**
      * Renders the form.
@@ -14,13 +14,13 @@ module.exports = React.createClass({
     render: function() {
         return (
             <div className="documentation">
-                <h4>Listener Mixin</h4>
-                <p>
+                <h2> Listener Mixin </h2>
+                <div className="paragraph">
                     The <i>ListenerMixin</i> allows you to get notified about form events.<br />
                     <br />
                     The following functions can be impletemented:<br />
                     - formDidValidate: Called after the form was validated.
-                </p>
+                </div>
             </div>
         );
     }

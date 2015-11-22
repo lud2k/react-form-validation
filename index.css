@@ -9,6 +9,10 @@ body {
     min-width: 768px;
 }
 
+.clearfix {
+    clear: both;
+}
+
 /********************************************************************
  * Header
  ********************************************************************/
@@ -90,15 +94,6 @@ body {
     padding: 0 20px;
 }
 
-.content h2 {
-    position: relative;
-}
-
-.content h2 .anchor {
-    position: absolute;
-    top: -50px;
-}
-
 .code-preview::after {
     content: '';
     clear: both;
@@ -121,10 +116,41 @@ body {
     max-height: 300px;
 }
 
-.example {
-    border-top: 1px solid #CCC;
-    margin-top: 20px;
+/********************************************************************
+ * Side Menu
+ ********************************************************************/
+
+.side-menu {
+    width: 200px;
+    float:left;
 }
+
+.side-menu h4:first-child {
+    margin-top: 0;
+}
+
+.side-menu h4 {
+    margin: 20px 0 10px 0;
+}
+
+.side-menu a {
+    display: block;
+    margin: 0 0 2px 0;
+    color: #999;
+    text-decoration: none;
+}
+
+.side-menu a:hover {
+    text-decoration: underline;
+}
+
+.side-content {
+    margin-left: 220px;
+}
+
+/********************************************************************
+ * Examples
+ ********************************************************************/
 
 .preview {
     background: #fff;
@@ -136,12 +162,21 @@ body {
     margin-right: 400px;
     display: block;
     height: 300px;
-    margin; 0;
 }
 
-.code-preview .preview {
+.code-preview .right-side {
     float: right;
-    width: 360px;
+    width: 390px;
+    margin-bottom: 20px;
+}
+
+.code-preview .right-side .data {
+    background: #f8f5ec;
+    border: 1px solid rgba(16,16,16,0.1);
+    padding: 10px;
+    margin-top: 10px;
+    font-family: monospace;
+    white-space: pre;
 }
 
 form {
@@ -188,10 +223,31 @@ form h4 {
 }
 
 /********************************************************************
+ * Documentation
+ ********************************************************************/
+
+#documentation .documentation h4 {
+    margin: 10px 0 10px 0;
+}
+
+#documentation .documentation + .documentation {
+    margin-top: 20px;
+}
+
+#documentation h4 {
+    position: relative;
+}
+
+#documentation h4 .anchor {
+    position: absolute;
+    top: -80px
+}
+
+/********************************************************************
  * Footer
  ********************************************************************/
 
- .footer-wrapper {
+.footer-wrapper {
     position: absolute;
     left: 0;
     right: 0;

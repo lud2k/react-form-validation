@@ -9,7 +9,7 @@ module.exports = React.createClass({
     /**
      * Name of the component.
      */
-    displayName: 'RulesDocumentation',
+    displayName: 'ErrorDocumentation',
 
     /**
      * Renders the form.
@@ -17,10 +17,10 @@ module.exports = React.createClass({
     render: function() {
         return (
             <div className="documentation">
-                <h4>Error Component</h4>
-                <p>
+                <h2> &lt;Error&gt; Component </h2>
+                <div className="paragraph">
                     The <i>Error</i> component displays errors for a given field
-                </p>
+                </div>
                 <Code value={ErrorTag} />
             </div>
         );

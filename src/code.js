@@ -1,4 +1,6 @@
 
+var ReactDOM = require('react-dom');
+
 /**
  * The main page of the website.
  */
@@ -13,8 +15,7 @@ module.exports = React.createClass({
      */
     getDefaultProps: function() {
         return {
-            mode: 'javascript',
-
+            mode: 'javascript'
         };
     },
 
@@ -22,7 +23,7 @@ module.exports = React.createClass({
      * Called when the component is mounted.
      */
     componentDidMount: function() {
-        var ele = React.findDOMNode(this),
+        var ele = ReactDOM.findDOMNode(this),
             value = this.props.value;
         if (!value && this.props.children) {
             if (this.props.children.map) {
@@ -35,9 +36,10 @@ module.exports = React.createClass({
         try {
             // render code
             var doc = CodeMirror(ele, {
-                value: value.trim(),
+                value: value.replace(/    /g, '\t').trim(),
                 mode: this.props.mode,
-                readOnly: true
+                readOnly: true,
+                tabSize: 2
             });
 
             if (this.props.highlight) {

@@ -1,5 +1,6 @@
 
-var ReactFormValidation = require('react-form-validation'),
+var ReactDOM = require('react-dom'),
+    ReactFormValidation = require('react-form-validation'),
     Instance = ReactFormValidation.Instance,
     Error = ReactFormValidation.Error,
     Rules = ReactFormValidation.Rules,
@@ -18,9 +19,9 @@ var BirthdateField = React.createClass({
      * Returns the value of the component.
      */
     getValue: function() {
-        var day = React.findDOMNode(this.refs.day).value,
-            month = React.findDOMNode(this.refs.month).value,
-            year = React.findDOMNode(this.refs.year).value;
+        var day = ReactDOM.findDOMNode(this.refs.day).value,
+            month = ReactDOM.findDOMNode(this.refs.month).value,
+            year = ReactDOM.findDOMNode(this.refs.year).value;
         if (day && month && year) {
             return new Date(year, month, day);
         }
@@ -90,7 +91,7 @@ module.exports = React.createClass({
     render: function() {
         var form = this.state.form;
         return (
-            <Form form={form}>
+            <Form form={form} onSubmit={this.props.formSubmitted}>
                 <h4>Custom Field</h4>
                 <div className="field">
                     Birthdate: <BirthdateField name="birthdate" form={form} />

@@ -17,10 +17,10 @@ module.exports = React.createClass({
     render: function() {
         return (
             <div className="documentation">
-                <h4>Input Component</h4>
-                <p>
-                    The <i>Rules</i> class is used by this library in order to validate field values.<br />
-                </p>
+                <h2> &lt;Input&gt; Component </h2>
+                <div className="paragraph">
+                    The <i>Rules</i> class is used by this library in order to validate field values.
+                </div>
                 <Code value={InputTag} />
             </div>
         );

@@ -6,7 +6,7 @@ module.exports = React.createClass({
     /**
      * Name of the component.
      */
-    displayName: 'RulesDocumentation',
+    displayName: 'InstanceDocumentation',
 
     /**
      * Renders the form.
@@ -14,10 +14,10 @@ module.exports = React.createClass({
     render: function() {
         return (
             <div className="documentation">
-                <h4>Instance Class</h4>
-                <p>
+                <h2> Instance Class </h2>
+                <div className="paragraph">
                     TODO
-                </p>
+                </div>
             </div>
         );
     }

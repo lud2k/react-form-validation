@@ -14,9 +14,13 @@
     "validation",
     "reactjs"
   ],
-  "dependencies": [
-    "react-form-validation"
-  ],
+  "dependencies": {
+    "0": "react-form-validation",
+    "history": "^1.13.1",
+    "react": "^0.14.2",
+    "react-dom": "^0.14.2",
+    "react-router": "^1.0.0"
+  },
   "devDependencies": {
     "babelify": "^6.1.2",
     "browserify": "^10.2.4",
@@ -35,6 +39,7 @@
     ]
   },
   "browserify-shim": {
-    "react": "global:React"
+    "react": "global:React",
+    "react-dom": "global:ReactDOM"
   }
 }
