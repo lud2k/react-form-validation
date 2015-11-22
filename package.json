@@ -15,7 +15,7 @@
     "reactjs"
   ],
   "dependencies": {
-    "0": "react-form-validation",
+    "react-form-validation": "1.0.2",
     "history": "^1.13.1",
     "react": "^0.14.2",
     "react-dom": "^0.14.2",
