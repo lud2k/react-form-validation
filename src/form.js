@@ -1,58 +1,56 @@
 'use strict';
 
-var React = require('react');
+import React from 'react';
 
 /**
  * Form component.
  */
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'Form',
-
-    /**
-     * Properties type.
-     */
-    propTypes: {
-        form: React.PropTypes.any.isRequired
-    },
-
+export class Form extends React.Component {
     /**
      * Called when the form is submitted.
      */
-    onSubmit: function(event) {
-        event.preventDefault();
-
+    onSubmit(event) {
         // validate form, then call callback
         var result = this.props.form.validate(undefined, true);
         if (this.props.onSubmit) {
-            this.props.onSubmit(result.valid, result.data, this.props.form);
+            this.props.onSubmit(event, result.valid, result.data, this.props.form);
+        }
+
+        // prevent form submission if not valid
+        if (!result.valid) {
+            event.preventDefault();
         }
 
         // scroll to error
         if (this.props.scrollToError) {
             // TODO: find first error then .scrollIntoView();
         }
-    },
+    }
+
+    /**
+     * Returns the form context.
+     */
+    getChildContext() {
+        return {
+            form: this.props.form
+        };
+    }
 
     /**
      * Renders the component.
      */
-    render: function() {
+    render() {
         return (
-            <form className={this.props.className} noValidate={true} onSubmit={this.onSubmit}>
+            <form {...this.props} noValidate={true} onSubmit={this.onSubmit.bind(this)}>
                 {this.props.children}
             </form>
         );
     }
-});
+}
 
-module.exports.Form = require('./form.js');
-module.exports.Instance = require('./instance.js');
-module.exports.Input = require('./input.js');
-module.exports.Error = require('./error.js');
-module.exports.FieldMixin = require('./field-mixin.js');
-module.exports.Rules = require('./rules.js');
-module.exports.Select = require('./select.js');
-module.exports.ListenerMixin = require('./listener-mixin.js');
+/**
+ * Context types.
+ */
+Form.childContextTypes = {
+    form: React.PropTypes.any
+};

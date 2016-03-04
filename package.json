@@ -15,8 +15,8 @@
     "reactjs"
   ],
   "dependencies": {
-    "react": "^0.14.2",
-    "react-dom": "^0.14.2"
+    "react": "^0.14.3",
+    "react-dom": "^0.14.3"
   },
   "devDependencies": {
     "babelify": "^6.1.2",

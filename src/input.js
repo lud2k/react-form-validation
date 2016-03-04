@@ -1,92 +1,98 @@
 'use strict';
 
-var React = require('react'),
-    ReactDOM = require('react-dom'),
-    FieldMixin = require('./field-mixin.js'),
-    ListenerMixin = require('./listener-mixin.js');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Field } from './field.js';
+import { Utils } from './utils.js';
 
-module.exports = React.createClass({
+export class Input extends Field {
     /**
-     * Name of the component.
+     * Called when the component is going to be mounted.
      */
-    displayName: 'Input',
+    componentWillMount() {
+        super.componentWillMount();
+
+        var form = Utils.getForm(this);
+        if (form) {
+            form.addListener(this);
+        }
+    }
 
     /**
-     * Mixins.
+     * Called when the component is going to unmount.
      */
-    mixins: [FieldMixin, ListenerMixin],
+    componentWillUnmount() {
+        super.componentWillUnmount();
 
-    /**
-     * Properties type.
-     */
-    propTypes: {
-        form: React.PropTypes.any.isRequired,
-        name: React.PropTypes.string.isRequired
-    },
+        var form = Utils.getForm(this);
+        if (form) {
+            form.removeListener(this);
+        }
+    }
 
     /**
      * Called to check if the field is checked.
      */
-    isChecked: function() {
+    isChecked() {
         var type = this.props.type;
         if (type === 'checkbox' || type === 'radio') {
             var element = ReactDOM.findDOMNode(this);
             return element.checked;
         }
-    },
+    }
 
     /**
      * Called to check if the field is a list.
      */
-    isList: function() {
+    isList() {
         var type = this.props.type;
         return type === 'checkbox';
-    },
+    }
 
     /**
      * Returns the value of the input.
      */
-    getValue: function() {
+    getValue() {
         var element = ReactDOM.findDOMNode(this);
         return element.value;
-    },
+    }
 
     /**
      * Called when the value of the input has changed.
      */
-    onChange: function(event) {
-        this.validateField();
+    onChange(event) {
+        super.validateField();
 
         // call parent prop
         if (this.props.onChange) {
             this.props.onChange(event);
         }
-    },
+    }
 
     /**
      * Called when the field looses focus.
      * This forces validation of the field.
      */
-    onBlur: function() {
-        this.validateField(true);
+    onBlur() {
+        super.validateField(true);
 
         // call parent prop
         if (this.props.onBlur) {
             this.props.onBlur(event);
         }
-    },
+    }
 
     /**
      * Called by the listener mixin after the form is validated.
      */
-    formDidValidate: function() {
+    formDidValidate() {
         // TODO: implement getting the field state
-    },
+    }
 
     /**
      * Returns the component's className.
      */
-    className: function(fieldState) {
+    className(fieldState) {
         var ret = [];
         if (this.props.className) {
             ret.push(this.props.className);
@@ -98,15 +104,30 @@ module.exports = React.createClass({
             ret.push('error');
         }
         return ret.join(' ');
-    },
+    }
 
     /**
      * Renders the input.
      */
-    render: function() {
-        var fieldState = this.props.form.getFieldState(this);
-        return <input {...this.props} className={this.className(fieldState)}
-            onChange={this.onChange} onBlur={this.onBlur} form={null} />;
-    }
+    render() {
+        var form = Utils.getForm(this),
+            fieldState = form.getFieldState(this);
 
-});
+        return <input {...this.props} className={this.className(fieldState)}
+            onChange={this.onChange.bind(this)} onBlur={this.onBlur.bind(this)} form={null} />;
+    }
+}
+
+/**
+ * Properties type.
+ */
+Input.propTypes = {
+    name: React.PropTypes.string.isRequired
+};
+
+/**
+ * Context types.
+ */
+Input.contextTypes = {
+    form: React.PropTypes.any
+};

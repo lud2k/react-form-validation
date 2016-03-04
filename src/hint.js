@@ -1,83 +1,77 @@
 'use strict';
 
-var React = require('react'),
-    ListenerMixin = require('./listener-mixin.js');
+import React from 'react';
+import { Utils } from './utils.js';
 
-module.exports = React.createClass({
+export class Hint extends React.Component {
     /**
-     * Name of the component.
+     * Constructor
      */
-    displayName: 'Hint',
-
-    /**
-     * Mixins
-     */
-    mixins: [ListenerMixin],
-
-    /**
-     * Properties type.
-     */
-    propTypes: {
-        display: React.PropTypes.string,
-        text: React.PropTypes.string,
-        form: React.PropTypes.any.isRequired,
-        forName: React.PropTypes.string.isRequired
-    },
-
-    /**
-     * Returns the default props.
-     */
-    getDefaultProps: function() {
-        return {
-            display: 'pristine|valid'
-        };
-    },
-
-    /**
-     * Returns the initial state of the component.
-     */
-    getInitialState: function() {
-        return {
-            state: this.props.form.getFieldStateByName(this.props.forName),
+    constructor(props, context) {
+        super(props, context);
+        var form = Utils.getForm(this);
+        this.state = {
+            state: form.getFieldStateByName(this.props.forName),
             display: this.parseDisplayString(this.props.display)
         };
-    },
+    }
+
+    /**
+     * Called when the component is going to be mounted.
+     */
+    componentWillMount() {
+        var form = Utils.getForm(this);
+        if (form) {
+            form.addListener(this);
+        }
+    }
+
+    /**
+     * Called when the component is going to unmount.
+     */
+    componentWillUnmount() {
+        var form = Utils.getForm(this);
+        if (form) {
+            form.removeListener(this);
+        }
+    }
 
     /**
      * Called when the component's props have changed.
      */
-    componentWillReceiveProps: function(newProps) {
+    componentWillReceiveProps(newProps) {
         if (newProps.display !== this.props.display) {
             this.setState({
                 display: this.parseDisplayString(newProps.display)
             });
         }
-    },
+    }
 
     /**
      * Converts the display property to an object.
      */
-    parseDisplayString: function(display) {
+    parseDisplayString(display) {
         var ret = {};
         (display || '').split(/[\|,]/).forEach(function(item) {
             ret[item] = true;
         });
         return ret;
-    },
+    }
 
     /**
      * Called by the listener mixin when the form is validated.
      */
-    formDidValidate: function(result) {
+    formDidValidate(result) {
+        var form = Utils.getForm(this);
         this.setState({
-            state: this.props.form.getFieldStateByName(this.props.forName)
+            state: form.getFieldStateByName(this.props.forName)
         });
-    },
+    }
 
     /**
      * Renders the input.
      */
-    render: function() {
+    render() {
         var display = this.state.display,
             state = this.state.state;
         if ((display.error && state.valid === false) ||
@@ -92,5 +86,28 @@ module.exports = React.createClass({
             return null;
         }
     }
+}
 
-});
+/**
+ * Properties type.
+ */
+Hint.propTypes = {
+    display: React.PropTypes.string,
+    text: React.PropTypes.string,
+    form: React.PropTypes.any,
+    forName: React.PropTypes.string.isRequired
+};
+
+/**
+ * The default props.
+ */
+Hint.defaultProps = {
+    display: 'pristine|valid'
+};
+
+/**
+ * Context types.
+ */
+Hint.contextTypes = {
+    form: React.PropTypes.any
+};

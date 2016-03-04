@@ -1,4 +1,6 @@
 
 // render page
-var Registration = require('./registration.js');
-React.render(<Registration />, document.getElementById('registration-form'));
+import ReactDOM from 'react-dom';
+import { Registration } from './registration.js';
+
+ReactDOM.render(<Registration />, document.getElementById('registration-form'));

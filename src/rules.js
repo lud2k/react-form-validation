@@ -1,12 +1,12 @@
 'use strict';
 
-var EMAIL_REGEXP = new RegExp('^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]' +
+let EMAIL_REGEXP = new RegExp('^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]' +
         '{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$');
 
 /**
  * Constructor of the Rules class.
  */
-var Rules = function(config) {
+let Rules = function(config) {
     this.rules = [];
 };
 
@@ -28,7 +28,7 @@ Rules.register = function(name, rule) {
         rules[name].apply(rules, arguments);
         return rules;
     }
-}
+};
 
 /**
  * Validates that the rules are all valid
@@ -129,12 +129,12 @@ Rules.register('required', function(message) {
 /**
  * Registers a rule for validating an email.
  */
-Rules.register('email', function() {
+Rules.register('email', function(message) {
     return {
         check: function(value) {
             return EMAIL_REGEXP.test(value);
         },
-        message: 'This is not a valid email address'
+        message: message || 'This is not a valid email address'
     };
 });
 
@@ -165,19 +165,20 @@ Rules.register('regex', function(regex, message) {
 /**
  * Registers a rule for checking that something equals something else.
  */
-Rules.register('equals', function(otherFieldName) {
+Rules.register('equals', function(otherFieldName, message) {
     return {
         check: function(value, context) {
             return context.getFieldValue(otherFieldName) === value;
         },
-        message: 'This field does not match ' + otherFieldName
+        message: message || ('This field does not match ' + otherFieldName)
     };
 });
 
 /**
  * Registers a rule for validating password.
  */
-Rules.register('password', function() {
+Rules.register('password', function(messages) {
+    messages = messages || {};
     return {
         check: function(value) {
             if (!value || value.length < 8) {
@@ -195,10 +196,10 @@ Rules.register('password', function() {
             return true;
         },
         messages: {
-            length: 'Password should be at least 8 characters',
-            upper: 'Password should contain at least one uppercase letter',
-            lower: 'Password should contain at least one lowercase letter',
-            num: 'Password should contain at least one number'
+            length: messages.length || 'Password should be at least 8 characters',
+            upper: messages.upper || 'Password should contain at least one uppercase letter',
+            lower: messages.lower || 'Password should contain at least one lowercase letter',
+            num: messages.num || 'Password should contain at least one number'
         }
     };
 });
@@ -206,18 +207,15 @@ Rules.register('password', function() {
 /**
  * Registers a rule for validating minimum age.
  */
-Rules.register('minAge', function(minAge) {
+Rules.register('minAge', function(minAge, message) {
     return {
         check: function(value) {
             var diff = new Date(Date.now() - value.getTime()),
                 age = Math.abs(diff.getUTCFullYear() - 1970);
             return age >= minAge;
         },
-        message: 'You must be at least ' + minAge + ' years old.'
+        message: message || ('You must be at least ' + minAge + ' years old.')
     };
 });
 
-/**
- * Export the class.
- */
-module.exports = Rules;
+export { Rules };

@@ -1,58 +1,76 @@
 'use strict';
 
-var React = require('react'),
-    ListenerMixin = require('./listener-mixin.js');
+import React from 'react';
+import { Utils } from './utils.js';
 
-module.exports = React.createClass({
+export class Error extends React.Component {
     /**
-     * Name of the component.
+     * Constructor.
      */
-    displayName: 'Error',
-
-    /**
-     * Mixins
-     */
-    mixins: [ListenerMixin],
+    constructor(props, context) {
+        super(props, context);
+        this.state = this.getFieldState();
+    }
 
     /**
-     * Properties type.
+     * Called when the component is going to be mounted.
      */
-    propTypes: {
-        form: React.PropTypes.any.isRequired,
-        forName: React.PropTypes.string.isRequired
-    },
+    componentWillMount() {
+        var form = Utils.getForm(this);
+        if (form) {
+            form.addListener(this);
+        }
+    }
 
     /**
-     * Returns the initial state of the component.
+     * Called when the component is going to unmount.
      */
-    getInitialState: function() {
-        return this.getFieldState();
-    },
+    componentWillUnmount() {
+        var form = Utils.getForm(this);
+        if (form) {
+            form.removeListener(this);
+        }
+    }
 
     /**
      * Called by the listener mixin when the form is validated.
      */
-    formDidValidate: function(result) {
+    formDidValidate(result) {
         this.setState(this.getFieldState());
-    },
+    }
 
-    getFieldState: function() {
-        var fieldState = this.props.form.getFieldStateByName(this.props.forName);
+    getFieldState() {
+        var form = Utils.getForm(this),
+            fieldState = form.getFieldStateByName(this.props.forName);
         return {
             error: fieldState ? fieldState.error : undefined,
             valid: fieldState ? fieldState.valid : undefined
         };
-    },
+    }
 
     /**
      * Renders the input.
      */
-    render: function() {
+    render() {
         if (this.state.valid === false) {
             return <label className="error" {...this.props} form={null}>{this.state.error}</label>;
         } else {
             return null;
         }
     }
+}
 
-});
+/**
+ * Properties type.
+ */
+Error.propTypes = {
+    form: React.PropTypes.any,
+    forName: React.PropTypes.string.isRequired
+};
+
+/**
+ * Context types.
+ */
+Error.contextTypes = {
+    form: React.PropTypes.any
+};
