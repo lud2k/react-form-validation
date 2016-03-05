@@ -1,44 +1,40 @@
 
-var ReactFormValidation = require('react-form-validation'),
-    Instance = ReactFormValidation.Instance,
-    Error = ReactFormValidation.Error,
-    Hint = ReactFormValidation.Hint,
-    Rules = ReactFormValidation.Rules,
-    Form = ReactFormValidation.Form,
-    Input = ReactFormValidation.Input;
+import { Context, Error, Hint, Rules, Form, Input } from 'react-form-validation';
 
 /**
  * Friend item form.
  */
-var FriendForm = React.createClass({
-    render: function() {
-        var form = this.props.form;
+export default class FriendForm extends React.Component {
+    render() {
+        var prefix = `friend[${this.props.index}]`;
         return (
             <div className="fieldset friend">
                 <b>Friend {this.props.index + 1}</b>
                 <div className="field">
-                    Name: <Input type="text" name="name" form={form} />
-                    <Error forName="name" form={form} />
+                    Name: <Input type="text" name={prefix + 'name'} />
+                    <Error forName={prefix + 'name'} />
                 </div>
                 <div className="field">
-                    Age: <Input type="text" name="age" form={form} />
-                    <Error forName="age" form={form} />
+                    Age: <Input type="text" name={prefix + 'age'} />
+                    <Error forName={prefix + 'age'} />
                 </div>
             </div>
         );
     }
-});
+}
 
 /**
  * List example form.
  */
-module.exports = React.createClass({
+export default class ListForm extends React.Component {
     /**
      * Returns the initial state of the component.
      */
-    getInitialState: function() {
-        return {
-            form: new Instance({
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            form: new Context({
                 fields: {
                     friend: {
                         name: Rules.required(),
@@ -48,43 +44,42 @@ module.exports = React.createClass({
             }),
             nbFriends: 2
         };
-    },
+    }
 
     /**
      * Called when the user clicks "add friend".
      */
-    onClickAddFriend: function() {
+    onClickAddFriend() {
         this.setState({
             nbFriends: this.state.nbFriends+1
         });
-    },
+    }
 
     /**
      * Renders the form.
      */
-    renderFriendFields: function(form) {
+    renderFriendFields(form) {
         var ret = [];
         for (var i=0; i<this.state.nbFriends; i++) {
-            var subform = form.fieldset('friend', i);
-            ret.push(<FriendForm key={i} index={i} form={subform} />);
+            ret.push(<FriendForm key={i} index={i} />);
         }
         return ret;
-    },
+    }
 
     /**
      * Renders the form.
      */
-    render: function() {
+    render() {
         var form = this.state.form;
         return (
             <Form form={form} onSubmit={this.props.formSubmitted}>
                 <h4>Friend List</h4>
                 { this.renderFriendFields(form) }
                 <div className="actions">
-                    <button type="button" onClick={this.onClickAddFriend}>Add Friend</button>
+                    <button type="button" onClick={this.onClickAddFriend.bind(this)}>Add Friend</button>
                     <button>Validate</button>
                 </div>
             </Form>
         );
     }
-});
+}

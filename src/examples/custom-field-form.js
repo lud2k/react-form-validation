@@ -1,43 +1,31 @@
 
-var ReactDOM = require('react-dom'),
-    ReactFormValidation = require('react-form-validation'),
-    Instance = ReactFormValidation.Instance,
-    Error = ReactFormValidation.Error,
-    Rules = ReactFormValidation.Rules,
-    Form = ReactFormValidation.Form,
-    Input = ReactFormValidation.Input,
-    FieldMixin = ReactFormValidation.FieldMixin,
-    Hint = ReactFormValidation.Hint;
+import ReactDOM from 'react-dom';
+import { Context, Error, Rules, Form, Input, Field, Hint } from 'react-form-validation';
 
-var BirthdateField = React.createClass({
-    /**
-     * Make this component a "Field".
-     */
-    mixins: [FieldMixin],
-
+class BirthdateField extends Field {
     /**
      * Returns the value of the component.
      */
-    getValue: function() {
-        var day = ReactDOM.findDOMNode(this.refs.day).value,
-            month = ReactDOM.findDOMNode(this.refs.month).value,
-            year = ReactDOM.findDOMNode(this.refs.year).value;
+    getValue() {
+        var day = this.refs.day.value,
+            month = this.refs.month.value,
+            year = this.refs.year.value;
         if (day && month && year) {
             return new Date(year, month, day);
         }
-    },
+    }
 
     /**
      * Called when one of the <select> selection has changed.
      */
-    onChange: function() {
-        this.props.form.onChange(this);
-    },
+    onChange() {
+        this.validateField(false);
+    }
 
     /**
      * Renders the options for the year <select>.
      */
-    renderOptions: function(label, start, end, reversed) {
+    renderOptions(label, start, end, reversed) {
         var ret = [];
         ret.push(<option key={-1} value="">{ label }</option>);
         for (var i=start; i<=end; i++) {
@@ -45,58 +33,59 @@ var BirthdateField = React.createClass({
             ret.push(<option key={j} value={j}>{j}</option>);
         }
         return ret;
-    },
+    }
 
     /**
      * Renders the component.
      */
-    render: function() {
+    render() {
         return (
             <span className="field-group">
-                <select name="day" ref="day" onChange={this.onChange}>
+                <select name="day" ref="day" onChange={this.onChange.bind(this)}>
                     {this.renderOptions('Day', 1, 31)}
                 </select>
-                <select name="month" ref="month" onChange={this.onChange}>
+                <select name="month" ref="month" onChange={this.onChange.bind(this)}>
                     {this.renderOptions('Month', 1, 12)}
                 </select>
-                <select name="year" ref="year" onChange={this.onChange}>
+                <select name="year" ref="year" onChange={this.onChange.bind(this)}>
                     {this.renderOptions('Year', new Date().getFullYear()-100,
                         new Date().getFullYear(), true)}
                 </select>
             </span>
         );
     }
-});
+}
 
 /**
  * Simple login form.
  */
-module.exports = React.createClass({
+export default class CustomFieldForm extends React.Component {
     /**
      * Returns the initial state of the component.
      */
-    getInitialState: function() {
-        return {
-            form: new Instance({
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            form: new Context({
                 fields: {
                     birthdate: Rules.required().minAge(13)
                 }
             })
         };
-    },
+    }
 
     /**
      * Renders the form.
      */
-    render: function() {
-        var form = this.state.form;
+    render() {
         return (
-            <Form form={form} onSubmit={this.props.formSubmitted}>
+            <Form form={this.state.form} onSubmit={this.props.formSubmitted}>
                 <h4>Custom Field</h4>
                 <div className="field">
-                    Birthdate: <BirthdateField name="birthdate" form={form} />
-                    <Error forName="birthdate" form={form} />
-                    <Hint forName="birthdate" form={form} text="You have to be at least 13"
+                    Birthdate: <BirthdateField name="birthdate" />
+                    <Error forName="birthdate" />
+                    <Hint forName="birthdate" text="You have to be at least 13"
                         display="pristine" />
                 </div>
                 <div className="actions">
@@ -105,4 +94,4 @@ module.exports = React.createClass({
             </Form>
         );
     }
-});
+}

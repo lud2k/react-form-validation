@@ -1,19 +1,15 @@
 
-var Link = require('react-router').Link;
+import { Link } from 'react-router';
+import React from 'react';
 
 /**
  * The main page of the website.
  */
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'Main',
-
+export default class Main extends React.Component {
     /**
      * Renders the form.
      */
-    render: function() {
+    render() {
         return (
             <div id="main">
                 <div className="header-wrapper">
@@ -47,4 +43,4 @@ module.exports = React.createClass({
             </div>
         );
     }
-});
+}

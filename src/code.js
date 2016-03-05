@@ -1,29 +1,16 @@
 
-var ReactDOM = require('react-dom');
+import ReactDOM from 'react-dom';
+import React from 'react';
 
 /**
- * The main page of the website.
+ * Code component.
  */
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'Code',
-
-    /**
-     * Returns the default properties.
-     */
-    getDefaultProps: function() {
-        return {
-            mode: 'javascript'
-        };
-    },
-
+export default class Code extends React.Component {
     /**
      * Called when the component is mounted.
      */
-    componentDidMount: function() {
-        var ele = ReactDOM.findDOMNode(this),
+    componentDidMount() {
+        var ele = this.refs.root,
             value = this.props.value;
         if (!value && this.props.children) {
             if (this.props.children.map) {
@@ -50,13 +37,16 @@ module.exports = React.createClass({
         } catch(e) {
             console.error('failed to render code', this);
         }
-    },
-
+    }
 
     /**
      * Renders an empty div in which CodeMirror will render pretty code.
      */
-    render: function() {
-        return <div className="code" />;
+    render() {
+        return <div className="code" ref="root" />;
     }
-});
+}
+
+Code.defaultProps = {
+    mode: 'javascript'
+};

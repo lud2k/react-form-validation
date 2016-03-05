@@ -1,20 +1,15 @@
 
-var Code = require('../code.js'),
-    ErrorTag = require('./error-tag.html');
+import Code from '../code.js';
+import ErrorTag from './error-tag.html';
 
 /**
  * The main page of the website.
  */
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'ErrorDocumentation',
-
+export default class ErrorDocumentation extends React.Component {
     /**
      * Renders the form.
      */
-    render: function() {
+    render() {
         return (
             <div className="documentation">
                 <h2> &lt;Error&gt; Component </h2>
@@ -25,4 +20,4 @@ module.exports = React.createClass({
             </div>
         );
     }
-});
+}

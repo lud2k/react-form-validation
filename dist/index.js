@@ -2,92 +2,226 @@
 (function (global){
 'use strict';
 
-var ReactDOM = (typeof window !== "undefined" ? window['ReactDOM'] : typeof global !== "undefined" ? global['ReactDOM'] : null);
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+    };
+})();
+
+var _get = function get(_x, _x2, _x3) {
+    var _again = true;_function: while (_again) {
+        var object = _x,
+            property = _x2,
+            receiver = _x3;_again = false;if (object === null) object = Function.prototype;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
+            var parent = Object.getPrototypeOf(object);if (parent === null) {
+                return undefined;
+            } else {
+                _x = parent;_x2 = property;_x3 = receiver;_again = true;desc = parent = undefined;continue _function;
+            }
+        } else if ('value' in desc) {
+            return desc.value;
+        } else {
+            var getter = desc.get;if (getter === undefined) {
+                return undefined;
+            }return getter.call(receiver);
+        }
+    }
+};
+
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : { 'default': obj };
+}
+
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+    }
+}
+
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== 'function' && superClass !== null) {
+        throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var _reactDom = (typeof window !== "undefined" ? window['ReactDOM'] : typeof global !== "undefined" ? global['ReactDOM'] : null);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _react = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
+
+var _react2 = _interopRequireDefault(_react);
 
 /**
- * The main page of the website.
+ * Code component.
  */
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'Code',
 
-    /**
-     * Returns the default properties.
-     */
-    getDefaultProps: function getDefaultProps() {
-        return {
-            mode: 'javascript'
-        };
-    },
+var Code = (function (_React$Component) {
+    _inherits(Code, _React$Component);
 
-    /**
-     * Called when the component is mounted.
-     */
-    componentDidMount: function componentDidMount() {
-        var ele = ReactDOM.findDOMNode(this),
-            value = this.props.value;
-        if (!value && this.props.children) {
-            if (this.props.children.map) {
-                value = this.props.children.map(function (child) {
-                    return child.toString();
-                }).join('');
-            } else {
-                value = this.props.children;
-            }
-        }
+    function Code() {
+        _classCallCheck(this, Code);
 
-        try {
-            // render code
-            var doc = CodeMirror(ele, {
-                value: value.replace(/    /g, '\t').trim(),
-                mode: this.props.mode,
-                readOnly: true,
-                tabSize: 2
-            });
-
-            if (this.props.highlight) {
-                this.props.highlight.forEach(function (item) {
-                    doc.markText({ line: item.from }, { line: item.to }, { css: 'background-color: #FFF2B0' });
-                });
-            }
-        } catch (e) {
-            console.error('failed to render code', this);
-        }
-    },
-
-    /**
-     * Renders an empty div in which CodeMirror will render pretty code.
-     */
-    render: function render() {
-        return React.createElement('div', { className: 'code' });
+        _get(Object.getPrototypeOf(Code.prototype), 'constructor', this).apply(this, arguments);
     }
-});
+
+    _createClass(Code, [{
+        key: 'componentDidMount',
+
+        /**
+         * Called when the component is mounted.
+         */
+        value: function componentDidMount() {
+            var ele = this.refs.root,
+                value = this.props.value;
+            if (!value && this.props.children) {
+                if (this.props.children.map) {
+                    value = this.props.children.map(function (child) {
+                        return child.toString();
+                    }).join('');
+                } else {
+                    value = this.props.children;
+                }
+            }
+
+            try {
+                // render code
+                var doc = CodeMirror(ele, {
+                    value: value.replace(/    /g, '\t').trim(),
+                    mode: this.props.mode,
+                    readOnly: true,
+                    tabSize: 2
+                });
+
+                if (this.props.highlight) {
+                    this.props.highlight.forEach(function (item) {
+                        doc.markText({ line: item.from }, { line: item.to }, { css: 'background-color: #FFF2B0' });
+                    });
+                }
+            } catch (e) {
+                console.error('failed to render code', this);
+            }
+        }
+
+        /**
+         * Renders an empty div in which CodeMirror will render pretty code.
+         */
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2['default'].createElement('div', { className: 'code', ref: 'root' });
+        }
+    }]);
+
+    return Code;
+})(_react2['default'].Component);
+
+exports['default'] = Code;
+
+Code.defaultProps = {
+    mode: 'javascript'
+};
+module.exports = exports['default'];
 
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],2:[function(require,module,exports){
 'use strict';
 
-var Code = require('../code.js'),
-    ErrorTag = require('./error-tag.html');
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+    };
+})();
+
+var _get = function get(_x, _x2, _x3) {
+    var _again = true;_function: while (_again) {
+        var object = _x,
+            property = _x2,
+            receiver = _x3;_again = false;if (object === null) object = Function.prototype;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
+            var parent = Object.getPrototypeOf(object);if (parent === null) {
+                return undefined;
+            } else {
+                _x = parent;_x2 = property;_x3 = receiver;_again = true;desc = parent = undefined;continue _function;
+            }
+        } else if ('value' in desc) {
+            return desc.value;
+        } else {
+            var getter = desc.get;if (getter === undefined) {
+                return undefined;
+            }return getter.call(receiver);
+        }
+    }
+};
+
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : { 'default': obj };
+}
+
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+    }
+}
+
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== 'function' && superClass !== null) {
+        throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var _codeJs = require('../code.js');
+
+var _codeJs2 = _interopRequireDefault(_codeJs);
+
+var _errorTagHtml = require('./error-tag.html');
+
+var _errorTagHtml2 = _interopRequireDefault(_errorTagHtml);
 
 /**
  * The main page of the website.
  */
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'ErrorDocumentation',
 
-    /**
-     * Renders the form.
-     */
-    render: function render() {
-        return React.createElement('div', { className: 'documentation' }, React.createElement('h2', null, ' <Error> Component '), React.createElement('div', { className: 'paragraph' }, 'The ', React.createElement('i', null, 'Error'), ' component displays errors for a given field'), React.createElement(Code, { value: ErrorTag }));
+var ErrorDocumentation = (function (_React$Component) {
+    _inherits(ErrorDocumentation, _React$Component);
+
+    function ErrorDocumentation() {
+        _classCallCheck(this, ErrorDocumentation);
+
+        _get(Object.getPrototypeOf(ErrorDocumentation.prototype), 'constructor', this).apply(this, arguments);
     }
-});
+
+    _createClass(ErrorDocumentation, [{
+        key: 'render',
+
+        /**
+         * Renders the form.
+         */
+        value: function render() {
+            return React.createElement('div', { className: 'documentation' }, React.createElement('h2', null, ' <Error> Component '), React.createElement('div', { className: 'paragraph' }, 'The ', React.createElement('i', null, 'Error'), ' component displays errors for a given field'), React.createElement(_codeJs2['default'], { value: _errorTagHtml2['default'] }));
+        }
+    }]);
+
+    return ErrorDocumentation;
+})(React.Component);
+
+exports['default'] = ErrorDocumentation;
+module.exports = exports['default'];
 
 },{"../code.js":1,"./error-tag.html":3}],3:[function(require,module,exports){
 module.exports = "<Error\n    name=\"field_name\"    // name of a field (required)\n    form=\"form_instance\" // form instance (required)\n    />";
@@ -99,118 +233,366 @@ module.exports = "<Error\n    name=\"field_name\"    // name of a field (require
  */
 "use strict";
 
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'FieldMixinDocumentation',
-
-    /**
-     * Renders the form.
-     */
-    render: function render() {
-        return React.createElement("div", { className: "documentation" }, React.createElement("h2", null, " Field Mixin "), React.createElement("div", { className: "paragraph" }, "The ", React.createElement("i", null, "FieldMixin"), " makes it a bit easier to create a custom field.", React.createElement("br", null), React.createElement("br", null), "The following functions needs to be implemented:", React.createElement("br", null), "- getValue: Called when the field is being validated. This method should return the value of the field."));
-    }
+Object.defineProperty(exports, "__esModule", {
+    value: true
 });
+
+var _createClass = (function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+    };
+})();
+
+var _get = function get(_x, _x2, _x3) {
+    var _again = true;_function: while (_again) {
+        var object = _x,
+            property = _x2,
+            receiver = _x3;_again = false;if (object === null) object = Function.prototype;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
+            var parent = Object.getPrototypeOf(object);if (parent === null) {
+                return undefined;
+            } else {
+                _x = parent;_x2 = property;_x3 = receiver;_again = true;desc = parent = undefined;continue _function;
+            }
+        } else if ("value" in desc) {
+            return desc.value;
+        } else {
+            var getter = desc.get;if (getter === undefined) {
+                return undefined;
+            }return getter.call(receiver);
+        }
+    }
+};
+
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError("Cannot call a class as a function");
+    }
+}
+
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+        throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var FieldMixinDocumentation = (function (_React$Component) {
+    _inherits(FieldMixinDocumentation, _React$Component);
+
+    function FieldMixinDocumentation() {
+        _classCallCheck(this, FieldMixinDocumentation);
+
+        _get(Object.getPrototypeOf(FieldMixinDocumentation.prototype), "constructor", this).apply(this, arguments);
+    }
+
+    _createClass(FieldMixinDocumentation, [{
+        key: "render",
+
+        /**
+         * Renders the form.
+         */
+        value: function render() {
+            return React.createElement("div", { className: "documentation" }, React.createElement("h2", null, " Field Mixin "), React.createElement("div", { className: "paragraph" }, "The ", React.createElement("i", null, "FieldMixin"), " makes it a bit easier to create a custom field.", React.createElement("br", null), React.createElement("br", null), "The following functions needs to be implemented:", React.createElement("br", null), "- getValue: Called when the field is being validated. This method should return the value of the field."));
+        }
+    }]);
+
+    return FieldMixinDocumentation;
+})(React.Component);
+
+exports["default"] = FieldMixinDocumentation;
+module.exports = exports["default"];
 
 },{}],5:[function(require,module,exports){
 'use strict';
 
-var Code = require('../code.js'),
-    FormTag = require('./form-tag.html');
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+    };
+})();
+
+var _get = function get(_x, _x2, _x3) {
+    var _again = true;_function: while (_again) {
+        var object = _x,
+            property = _x2,
+            receiver = _x3;_again = false;if (object === null) object = Function.prototype;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
+            var parent = Object.getPrototypeOf(object);if (parent === null) {
+                return undefined;
+            } else {
+                _x = parent;_x2 = property;_x3 = receiver;_again = true;desc = parent = undefined;continue _function;
+            }
+        } else if ('value' in desc) {
+            return desc.value;
+        } else {
+            var getter = desc.get;if (getter === undefined) {
+                return undefined;
+            }return getter.call(receiver);
+        }
+    }
+};
+
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : { 'default': obj };
+}
+
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+    }
+}
+
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== 'function' && superClass !== null) {
+        throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var _codeJs = require('../code.js');
+
+var _codeJs2 = _interopRequireDefault(_codeJs);
+
+var _formTagHtml = require('./form-tag.html');
+
+var _formTagHtml2 = _interopRequireDefault(_formTagHtml);
+
+var _formTagUsageHtml = require('./form-tag-usage.html');
+
+var _formTagUsageHtml2 = _interopRequireDefault(_formTagUsageHtml);
 
 /**
  * The main page of the website.
  */
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'FormDocumentation',
 
-    /**
-     * Renders the form.
-     */
-    render: function render() {
-        return React.createElement('div', { className: 'documentation' }, React.createElement('h2', null, ' <Form> Component '), React.createElement('div', { className: 'paragraph' }, 'The ', React.createElement('i', null, 'Form'), ' component behaves the same way as the form html tag.'), React.createElement(Code, { value: FormTag }));
+var FormDocumentation = (function (_React$Component) {
+    _inherits(FormDocumentation, _React$Component);
+
+    function FormDocumentation() {
+        _classCallCheck(this, FormDocumentation);
+
+        _get(Object.getPrototypeOf(FormDocumentation.prototype), 'constructor', this).apply(this, arguments);
     }
-});
 
-},{"../code.js":1,"./form-tag.html":6}],6:[function(require,module,exports){
-module.exports = "<Form\n    form=\"form_instance\" // form instance (required)\n>\n    // ...\n</Form>";
+    _createClass(FormDocumentation, [{
+        key: 'render',
+
+        /**
+         * Renders the form.
+         */
+        value: function render() {
+            return React.createElement('div', { className: 'documentation' }, React.createElement('h2', null, ' <Form> Component '), React.createElement('p', null, 'The ', React.createElement('i', null, 'Form'), ' component is a wrapped aroung the html form tag.', React.createElement('p', null), 'You have to use this component in order for the form validation to work. The component validates the form when it is submitted by the user. The component will prevent form submission if it is invalid.'), React.createElement(_codeJs2['default'], { value: _formTagHtml2['default'] }), React.createElement('h3', null, ' Properties '), React.createElement('p', null, React.createElement('ul', null, React.createElement('li', null, React.createElement('b', null, 'form'), ' (required): A valid form instance object.'), React.createElement('li', null, React.createElement('b', null, 'onSubmit(event, valid, data, form)'), ': If set, this callback will be called when the form is submitted.', React.createElement('ul', null, React.createElement('li', null, React.createElement('b', null, 'valid'), ' (boolean): True if the form is valid, false otherwise'), React.createElement('li', null, React.createElement('b', null, 'data'), ' (object): A nicely organized object containing the data of the form.'), React.createElement('li', null, React.createElement('b', null, 'form'), ' (object): The raw result of the form validation. Contains the DOM nodes and values of the form.'))), React.createElement('li', null, React.createElement('b', null, 'noValidate'), ': Setting this property has no effect. This component forces the value true to prevent the browser to interfere with the library.'), React.createElement('li', null, React.createElement('b', null, 'scrollToError'), ' (default: true): Allows you to configure if you would like to automatically scroll to the first error in the page when the form is submitted.'), React.createElement('li', null, React.createElement('b', null, '...'), ': All other properties set on this component will be transferred, as is, to the original form html tag.'))), React.createElement('h3', null, ' Usage '), React.createElement(_codeJs2['default'], { value: _formTagUsageHtml2['default'] }));
+        }
+    }]);
+
+    return FormDocumentation;
+})(React.Component);
+
+exports['default'] = FormDocumentation;
+module.exports = exports['default'];
+
+},{"../code.js":1,"./form-tag-usage.html":6,"./form-tag.html":7}],6:[function(require,module,exports){
+module.exports = "onSubmit: function(event, valid, data, form) {\n\n}";
 
 },{}],7:[function(require,module,exports){
+module.exports = "<Form\n    form=\"form_instance\" // form instance (required)\n    onSubmit=\"function(event, valid, data, form)\" // called when the form is submitted\n    scrollToError=\"boolean\" // should scroll to error (default: true)\n    ... // other properties are passed to the html form tag\n>\n    // code\n</Form>";
+
+},{}],8:[function(require,module,exports){
 'use strict';
 
-var Code = require('../code.js'),
-    HintTag = require('./hint-tag.html');
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+    };
+})();
+
+var _get = function get(_x, _x2, _x3) {
+    var _again = true;_function: while (_again) {
+        var object = _x,
+            property = _x2,
+            receiver = _x3;_again = false;if (object === null) object = Function.prototype;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
+            var parent = Object.getPrototypeOf(object);if (parent === null) {
+                return undefined;
+            } else {
+                _x = parent;_x2 = property;_x3 = receiver;_again = true;desc = parent = undefined;continue _function;
+            }
+        } else if ('value' in desc) {
+            return desc.value;
+        } else {
+            var getter = desc.get;if (getter === undefined) {
+                return undefined;
+            }return getter.call(receiver);
+        }
+    }
+};
+
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : { 'default': obj };
+}
+
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+    }
+}
+
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== 'function' && superClass !== null) {
+        throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var _codeJs = require('../code.js');
+
+var _codeJs2 = _interopRequireDefault(_codeJs);
+
+var _hintTagHtml = require('./hint-tag.html');
+
+var _hintTagHtml2 = _interopRequireDefault(_hintTagHtml);
 
 /**
  * The main page of the website.
  */
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'HintDocumentation',
 
-    /**
-     * Renders the form.
-     */
-    render: function render() {
-        return React.createElement('div', { className: 'documentation' }, React.createElement('h2', null, ' <Hint> Component '), React.createElement('div', { className: 'paragraph' }, 'The ', React.createElement('i', null, 'Hint'), ' component displays a hint depending on the state of a field.'), React.createElement(Code, { value: HintTag }));
+var HintDocumentation = (function (_React$Component) {
+    _inherits(HintDocumentation, _React$Component);
+
+    function HintDocumentation() {
+        _classCallCheck(this, HintDocumentation);
+
+        _get(Object.getPrototypeOf(HintDocumentation.prototype), 'constructor', this).apply(this, arguments);
     }
-});
 
-},{"../code.js":1,"./hint-tag.html":8}],8:[function(require,module,exports){
+    _createClass(HintDocumentation, [{
+        key: 'render',
+
+        /**
+         * Renders the form.
+         */
+        value: function render() {
+            return React.createElement('div', { className: 'documentation' }, React.createElement('h2', null, ' <Hint> Component '), React.createElement('div', { className: 'paragraph' }, 'The ', React.createElement('i', null, 'Hint'), ' component displays a hint depending on the state of a field.'), React.createElement(_codeJs2['default'], { value: _hintTagHtml2['default'] }));
+        }
+    }]);
+
+    return HintDocumentation;
+})(React.Component);
+
+exports['default'] = HintDocumentation;
+module.exports = exports['default'];
+
+},{"../code.js":1,"./hint-tag.html":9}],9:[function(require,module,exports){
 module.exports = "<Hint\n    name=\"field_name\"              // name of a field (required)\n    form=\"form_instance\"           // form instance (required)\n    text=\"text to display\"         // text to display (optional, defaults to tag's content if not set)\n    display=\"pristine|valid|error\" // when to display this hint (optional)\n>\n    html to display                // only used if the text property isn't set\n</Hint>";
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 'use strict';
 
-var Code = require('../code.js'),
-    InputTag = require('./input-tag.html');
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+    };
+})();
+
+var _get = function get(_x, _x2, _x3) {
+    var _again = true;_function: while (_again) {
+        var object = _x,
+            property = _x2,
+            receiver = _x3;_again = false;if (object === null) object = Function.prototype;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
+            var parent = Object.getPrototypeOf(object);if (parent === null) {
+                return undefined;
+            } else {
+                _x = parent;_x2 = property;_x3 = receiver;_again = true;desc = parent = undefined;continue _function;
+            }
+        } else if ('value' in desc) {
+            return desc.value;
+        } else {
+            var getter = desc.get;if (getter === undefined) {
+                return undefined;
+            }return getter.call(receiver);
+        }
+    }
+};
+
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : { 'default': obj };
+}
+
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+    }
+}
+
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== 'function' && superClass !== null) {
+        throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var _codeJs = require('../code.js');
+
+var _codeJs2 = _interopRequireDefault(_codeJs);
+
+var _inputTagHtml = require('./input-tag.html');
+
+var _inputTagHtml2 = _interopRequireDefault(_inputTagHtml);
 
 /**
  * The main page of the website.
  */
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'RulesDocumentation',
 
-    /**
-     * Renders the form.
-     */
-    render: function render() {
-        return React.createElement('div', { className: 'documentation' }, React.createElement('h2', null, ' <Input> Component '), React.createElement('div', { className: 'paragraph' }, 'The ', React.createElement('i', null, 'Rules'), ' class is used by this library in order to validate field values.'), React.createElement(Code, { value: InputTag }));
+var InputDocumentation = (function (_React$Component) {
+    _inherits(InputDocumentation, _React$Component);
+
+    function InputDocumentation() {
+        _classCallCheck(this, InputDocumentation);
+
+        _get(Object.getPrototypeOf(InputDocumentation.prototype), 'constructor', this).apply(this, arguments);
     }
-});
 
-},{"../code.js":1,"./input-tag.html":10}],10:[function(require,module,exports){
+    _createClass(InputDocumentation, [{
+        key: 'render',
+
+        /**
+         * Renders the form.
+         */
+        value: function render() {
+            return React.createElement('div', { className: 'documentation' }, React.createElement('h2', null, ' <Input> Component '), React.createElement('div', { className: 'paragraph' }, 'The ', React.createElement('i', null, 'Rules'), ' class is used by this library in order to validate field values.'), React.createElement(_codeJs2['default'], { value: _inputTagHtml2['default'] }));
+        }
+    }]);
+
+    return InputDocumentation;
+})(React.Component);
+
+exports['default'] = InputDocumentation;
+module.exports = exports['default'];
+
+},{"../code.js":1,"./input-tag.html":11}],11:[function(require,module,exports){
 module.exports = "<Input\n    name=\"field_name\"    // name of a field (required)\n    form=\"form_instance\" // form instance (required)\n    />";
-
-},{}],11:[function(require,module,exports){
-
-/**
- * The main page of the website.
- */
-"use strict";
-
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'InstanceDocumentation',
-
-    /**
-     * Renders the form.
-     */
-    render: function render() {
-        return React.createElement("div", { className: "documentation" }, React.createElement("h2", null, " Instance Class "), React.createElement("div", { className: "paragraph" }, "TODO"));
-    }
-});
 
 },{}],12:[function(require,module,exports){
 
@@ -219,309 +601,977 @@ module.exports = React.createClass({
  */
 "use strict";
 
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'ListenerMixinDocumentation',
-
-    /**
-     * Renders the form.
-     */
-    render: function render() {
-        return React.createElement("div", { className: "documentation" }, React.createElement("h2", null, " Listener Mixin "), React.createElement("div", { className: "paragraph" }, "The ", React.createElement("i", null, "ListenerMixin"), " allows you to get notified about form events.", React.createElement("br", null), React.createElement("br", null), "The following functions can be impletemented:", React.createElement("br", null), "- formDidValidate: Called after the form was validated."));
-    }
+Object.defineProperty(exports, "__esModule", {
+    value: true
 });
+
+var _createClass = (function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+    };
+})();
+
+var _get = function get(_x, _x2, _x3) {
+    var _again = true;_function: while (_again) {
+        var object = _x,
+            property = _x2,
+            receiver = _x3;_again = false;if (object === null) object = Function.prototype;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
+            var parent = Object.getPrototypeOf(object);if (parent === null) {
+                return undefined;
+            } else {
+                _x = parent;_x2 = property;_x3 = receiver;_again = true;desc = parent = undefined;continue _function;
+            }
+        } else if ("value" in desc) {
+            return desc.value;
+        } else {
+            var getter = desc.get;if (getter === undefined) {
+                return undefined;
+            }return getter.call(receiver);
+        }
+    }
+};
+
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError("Cannot call a class as a function");
+    }
+}
+
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+        throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var InstanceDocumentation = (function (_React$Component) {
+    _inherits(InstanceDocumentation, _React$Component);
+
+    function InstanceDocumentation() {
+        _classCallCheck(this, InstanceDocumentation);
+
+        _get(Object.getPrototypeOf(InstanceDocumentation.prototype), "constructor", this).apply(this, arguments);
+    }
+
+    _createClass(InstanceDocumentation, [{
+        key: "render",
+
+        /**
+         * Renders the form.
+         */
+        value: function render() {
+            return React.createElement("div", { className: "documentation" }, React.createElement("h2", null, " Instance Class "), React.createElement("div", { className: "paragraph" }, "TODO"));
+        }
+    }]);
+
+    return InstanceDocumentation;
+})(React.Component);
+
+exports["default"] = InstanceDocumentation;
+module.exports = exports["default"];
 
 },{}],13:[function(require,module,exports){
-'use strict';
-
-var Code = require('../code.js'),
-    RulesRegisterCode = require('./rules-register.code.txt');
 
 /**
  * The main page of the website.
  */
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'RulesDocumentation',
+"use strict";
 
-    /**
-     * Renders the form.
-     */
-    render: function render() {
-        return React.createElement('div', { className: 'documentation' }, React.createElement('h2', null, ' Rules Class '), React.createElement('div', { className: 'documentation-content' }, 'The Rules class is what is used to validate field values.', React.createElement('br', null), React.createElement('br', null), 'To create a rule you just need to call the name of the rule on the Rules class as follow:', React.createElement('br', null), React.createElement(Code, null, 'Rules.required().password().anyOtherRule()'), React.createElement('br', null), 'List of rules available:', React.createElement('br', null), '- email', React.createElement('br', null), '- password', React.createElement('br', null), '- equals', React.createElement('br', null), '- minAge', React.createElement('br', null), '- regex', React.createElement('br', null), '- integer', React.createElement('br', null), '- required', React.createElement('br', null), '- optional', React.createElement('br', null), '- custom', React.createElement('br', null), '- onlyIf', React.createElement('br', null), React.createElement('br', null), 'You can register a new rule using the register method. This will override any previously registered rule, even the default rules.', React.createElement('br', null), React.createElement('br', null), React.createElement(Code, { value: RulesRegisterCode })));
-    }
+Object.defineProperty(exports, "__esModule", {
+    value: true
 });
 
-},{"../code.js":1,"./rules-register.code.txt":14}],14:[function(require,module,exports){
+var _createClass = (function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+    };
+})();
+
+var _get = function get(_x, _x2, _x3) {
+    var _again = true;_function: while (_again) {
+        var object = _x,
+            property = _x2,
+            receiver = _x3;_again = false;if (object === null) object = Function.prototype;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
+            var parent = Object.getPrototypeOf(object);if (parent === null) {
+                return undefined;
+            } else {
+                _x = parent;_x2 = property;_x3 = receiver;_again = true;desc = parent = undefined;continue _function;
+            }
+        } else if ("value" in desc) {
+            return desc.value;
+        } else {
+            var getter = desc.get;if (getter === undefined) {
+                return undefined;
+            }return getter.call(receiver);
+        }
+    }
+};
+
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError("Cannot call a class as a function");
+    }
+}
+
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+        throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var ListenerMixinDocumentation = (function (_React$Component) {
+    _inherits(ListenerMixinDocumentation, _React$Component);
+
+    function ListenerMixinDocumentation() {
+        _classCallCheck(this, ListenerMixinDocumentation);
+
+        _get(Object.getPrototypeOf(ListenerMixinDocumentation.prototype), "constructor", this).apply(this, arguments);
+    }
+
+    _createClass(ListenerMixinDocumentation, [{
+        key: "render",
+
+        /**
+         * Renders the form.
+         */
+        value: function render() {
+            return React.createElement("div", { className: "documentation" }, React.createElement("h2", null, " Listener Mixin "), React.createElement("div", { className: "paragraph" }, "The ", React.createElement("i", null, "ListenerMixin"), " allows you to get notified about form events.", React.createElement("br", null), React.createElement("br", null), "The following functions can be impletemented:", React.createElement("br", null), "- formDidValidate: Called after the form was validated."));
+        }
+    }]);
+
+    return ListenerMixinDocumentation;
+})(React.Component);
+
+exports["default"] = ListenerMixinDocumentation;
+module.exports = exports["default"];
+
+},{}],14:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+    };
+})();
+
+var _get = function get(_x, _x2, _x3) {
+    var _again = true;_function: while (_again) {
+        var object = _x,
+            property = _x2,
+            receiver = _x3;_again = false;if (object === null) object = Function.prototype;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
+            var parent = Object.getPrototypeOf(object);if (parent === null) {
+                return undefined;
+            } else {
+                _x = parent;_x2 = property;_x3 = receiver;_again = true;desc = parent = undefined;continue _function;
+            }
+        } else if ('value' in desc) {
+            return desc.value;
+        } else {
+            var getter = desc.get;if (getter === undefined) {
+                return undefined;
+            }return getter.call(receiver);
+        }
+    }
+};
+
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : { 'default': obj };
+}
+
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+    }
+}
+
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== 'function' && superClass !== null) {
+        throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var _codeJs = require('../code.js');
+
+var _codeJs2 = _interopRequireDefault(_codeJs);
+
+var _rulesRegisterCodeTxt = require('./rules-register.code.txt');
+
+var _rulesRegisterCodeTxt2 = _interopRequireDefault(_rulesRegisterCodeTxt);
+
+/**
+ * The main page of the website.
+ */
+
+var RulesDocumentation = (function (_React$Component) {
+    _inherits(RulesDocumentation, _React$Component);
+
+    function RulesDocumentation() {
+        _classCallCheck(this, RulesDocumentation);
+
+        _get(Object.getPrototypeOf(RulesDocumentation.prototype), 'constructor', this).apply(this, arguments);
+    }
+
+    _createClass(RulesDocumentation, [{
+        key: 'render',
+
+        /**
+         * Renders the form.
+         */
+        value: function render() {
+            return React.createElement('div', { className: 'documentation' }, React.createElement('h2', null, ' Rules Class '), React.createElement('div', { className: 'documentation-content' }, React.createElement('p', null, 'The Rules class is what is used to validate field values.'), React.createElement('h3', null, 'Basic usage'), React.createElement('p', null, 'To create a rule you just need to call the name of the rule on the Rules class as follow:'), React.createElement(_codeJs2['default'], null, 'Rules.required().password().anyOtherRule()'), React.createElement('p', null, 'The order in which you call the functions is the order in which the rules will be executed. In the code above, the required rule will first check that the value is not empty or falsy, then the password rule will check that the value is a valid password and finally the anyOtherRule will be executed last.'), React.createElement('h3', null, 'Existing rules'), React.createElement('h4', null, 'Rules.email()'), React.createElement('p', null, React.createElement('span', { className: 'inline-code' }, 'Rules.email(customErrorMessage?)'), ' checks that the value is a proper email.', React.createElement('br', null), React.createElement('span', { className: 'inline-code' }, 'customErrorMessage'), ' is an optional argument that allows you to change the default error message returned by the rule.'), React.createElement('h4', null, 'Rules.password()'), React.createElement('p', null, React.createElement('span', { className: 'inline-code' }, 'Rules.password(customErrorMessages?)'), ' checks that the value is a complex password. It expects the password to have at least 8 characters, an uppercase character, a lowercase character and a numer.', React.createElement('br', null), 'If you want to change the default error message returned by the rule you may give a string as first argument: ', React.createElement('span', { className: 'inline-code' }, 'Rules.email(\'My custom error message\')'), '.'), '- password', React.createElement('br', null), '- equals', React.createElement('br', null), '- minAge', React.createElement('br', null), '- regex', React.createElement('br', null), '- integer', React.createElement('br', null), '- required', React.createElement('br', null), '- optional', React.createElement('br', null), '- custom', React.createElement('br', null), '- onlyIf', React.createElement('br', null), React.createElement('br', null), 'You can register a new rule using the register method. This will override any previously registered rule, even the default rules.', React.createElement('br', null), React.createElement('br', null), React.createElement(_codeJs2['default'], { value: _rulesRegisterCodeTxt2['default'] })));
+        }
+    }]);
+
+    return RulesDocumentation;
+})(React.Component);
+
+exports['default'] = RulesDocumentation;
+module.exports = exports['default'];
+
+},{"../code.js":1,"./rules-register.code.txt":15}],15:[function(require,module,exports){
 module.exports = "\nRules.register('myCustomUsernameRule', function() {\n    return {\n        check: function check(value) {\n            if (!/^[a-z0-9]+$/.test(value)) {\n                return 'letters';\n            }\n            if (!value || value.length < 5) {\n                return 'length';\n            }\n            if (!/[0-9]+$/.test(value)) {\n                return 'syntax';\n            }\n            return true;\n        },\n        messages: {\n            letters: 'Username should only contain lower case characters or numbers',\n            length: 'Username should be at least 5 characters',\n            syntax: 'Username should end with numbers'\n        }\n    };\n});\n";
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 'use strict';
 
-var Code = require('../code.js'),
-    SelectTag = require('./select-tag.html');
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+    };
+})();
+
+var _get = function get(_x, _x2, _x3) {
+    var _again = true;_function: while (_again) {
+        var object = _x,
+            property = _x2,
+            receiver = _x3;_again = false;if (object === null) object = Function.prototype;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
+            var parent = Object.getPrototypeOf(object);if (parent === null) {
+                return undefined;
+            } else {
+                _x = parent;_x2 = property;_x3 = receiver;_again = true;desc = parent = undefined;continue _function;
+            }
+        } else if ('value' in desc) {
+            return desc.value;
+        } else {
+            var getter = desc.get;if (getter === undefined) {
+                return undefined;
+            }return getter.call(receiver);
+        }
+    }
+};
+
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : { 'default': obj };
+}
+
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+    }
+}
+
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== 'function' && superClass !== null) {
+        throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var _codeJs = require('../code.js');
+
+var _codeJs2 = _interopRequireDefault(_codeJs);
+
+var _selectTagHtml = require('./select-tag.html');
+
+var _selectTagHtml2 = _interopRequireDefault(_selectTagHtml);
 
 /**
  * The main page of the website.
  */
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'RulesDocumentation',
 
-    /**
-     * Renders the form.
-     */
-    render: function render() {
-        return React.createElement('div', { className: 'documentation' }, React.createElement('h2', null, ' <Select> Component '), React.createElement('div', { className: 'paragraph' }, 'The ', React.createElement('i', null, 'Select'), ' component behaves the same way as the select html tag.'), React.createElement(Code, { value: SelectTag }));
+var SelectDocumentation = (function (_React$Component) {
+    _inherits(SelectDocumentation, _React$Component);
+
+    function SelectDocumentation() {
+        _classCallCheck(this, SelectDocumentation);
+
+        _get(Object.getPrototypeOf(SelectDocumentation.prototype), 'constructor', this).apply(this, arguments);
     }
-});
 
-},{"../code.js":1,"./select-tag.html":16}],16:[function(require,module,exports){
+    _createClass(SelectDocumentation, [{
+        key: 'render',
+
+        /**
+         * Renders the form.
+         */
+        value: function render() {
+            return React.createElement('div', { className: 'documentation' }, React.createElement('h2', null, ' <Select> Component '), React.createElement('div', { className: 'paragraph' }, 'The ', React.createElement('i', null, 'Select'), ' component behaves the same way as the select html tag.'), React.createElement(_codeJs2['default'], { value: _selectTagHtml2['default'] }));
+        }
+    }]);
+
+    return SelectDocumentation;
+})(React.Component);
+
+exports['default'] = SelectDocumentation;
+module.exports = exports['default'];
+
+},{"../code.js":1,"./select-tag.html":17}],17:[function(require,module,exports){
 module.exports = "<Select\n    name=\"field_name\"    // name of a field (required)\n    form=\"form_instance\" // form instance (required)\n    />";
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
+(function (global){
 'use strict';
 
-var Link = require('react-router').Link;
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+    };
+})();
+
+var _get = function get(_x, _x2, _x3) {
+    var _again = true;_function: while (_again) {
+        var object = _x,
+            property = _x2,
+            receiver = _x3;_again = false;if (object === null) object = Function.prototype;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
+            var parent = Object.getPrototypeOf(object);if (parent === null) {
+                return undefined;
+            } else {
+                _x = parent;_x2 = property;_x3 = receiver;_again = true;desc = parent = undefined;continue _function;
+            }
+        } else if ('value' in desc) {
+            return desc.value;
+        } else {
+            var getter = desc.get;if (getter === undefined) {
+                return undefined;
+            }return getter.call(receiver);
+        }
+    }
+};
+
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : { 'default': obj };
+}
+
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+    }
+}
+
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== 'function' && superClass !== null) {
+        throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var _reactRouter = require('react-router');
+
+var _react = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
+
+var _react2 = _interopRequireDefault(_react);
 
 /**
  * The documentation page of the website.
  */
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'Documentation',
 
-    /**
-     * Renders the page.
-     */
-    render: function render() {
-        return React.createElement('div', { id: 'documentation', className: 'content' }, React.createElement('div', { className: 'side-menu' }, React.createElement('h4', null, 'Classes'), React.createElement(Link, { to: '/documentation/rules-class' }, ' Rules Class '), React.createElement(Link, { to: '/documentation/instance-class' }, ' Instance Class '), React.createElement('h4', null, 'Compontents'), React.createElement(Link, { to: '/documentation/form-component' }, ' <Form> Component '), React.createElement(Link, { to: '/documentation/input-component' }, ' <Input> Component '), React.createElement(Link, { to: '/documentation/select-component' }, ' <Select> Component '), React.createElement(Link, { to: '/documentation/error-component' }, ' <Error> Component '), React.createElement(Link, { to: '/documentation/hint-component' }, ' <Hint> Component '), React.createElement('h4', null, 'Mixins'), React.createElement(Link, { to: '/documentation/listener-mixin' }, ' Listener Mixin '), React.createElement(Link, { to: '/documentation/field-mixin' }, ' Field Mixin ')), React.createElement('div', { className: 'side-content' }, this.props.children));
+var Documentation = (function (_React$Component) {
+    _inherits(Documentation, _React$Component);
+
+    function Documentation() {
+        _classCallCheck(this, Documentation);
+
+        _get(Object.getPrototypeOf(Documentation.prototype), 'constructor', this).apply(this, arguments);
     }
-});
 
-},{"react-router":95}],18:[function(require,module,exports){
+    _createClass(Documentation, [{
+        key: 'render',
+
+        /**
+         * Renders the page.
+         */
+        value: function render() {
+            return _react2['default'].createElement('div', { id: 'documentation', className: 'content' }, _react2['default'].createElement('div', { className: 'side-menu' }, _react2['default'].createElement('h4', null, 'Classes'), _react2['default'].createElement(_reactRouter.Link, { to: '/documentation/rules-class' }, ' Rules Class '), _react2['default'].createElement(_reactRouter.Link, { to: '/documentation/instance-class' }, ' Instance Class '), _react2['default'].createElement('h4', null, 'Compontents'), _react2['default'].createElement(_reactRouter.Link, { to: '/documentation/form-component' }, ' <Form> Component '), _react2['default'].createElement(_reactRouter.Link, { to: '/documentation/input-component' }, ' <Input> Component '), _react2['default'].createElement(_reactRouter.Link, { to: '/documentation/select-component' }, ' <Select> Component '), _react2['default'].createElement(_reactRouter.Link, { to: '/documentation/error-component' }, ' <Error> Component '), _react2['default'].createElement(_reactRouter.Link, { to: '/documentation/hint-component' }, ' <Hint> Component '), _react2['default'].createElement('h4', null, 'Mixins'), _react2['default'].createElement(_reactRouter.Link, { to: '/documentation/listener-mixin' }, ' Listener Mixin '), _react2['default'].createElement(_reactRouter.Link, { to: '/documentation/field-mixin' }, ' Field Mixin ')), _react2['default'].createElement('div', { className: 'side-content' }, this.props.children));
+        }
+    }]);
+
+    return Documentation;
+})(_react2['default'].Component);
+
+exports['default'] = Documentation;
+module.exports = exports['default'];
+
+}).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"react-router":96}],19:[function(require,module,exports){
+(function (global){
 'use strict';
 
-var Link = require('react-router').Link;
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+    };
+})();
+
+var _get = function get(_x, _x2, _x3) {
+    var _again = true;_function: while (_again) {
+        var object = _x,
+            property = _x2,
+            receiver = _x3;_again = false;if (object === null) object = Function.prototype;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
+            var parent = Object.getPrototypeOf(object);if (parent === null) {
+                return undefined;
+            } else {
+                _x = parent;_x2 = property;_x3 = receiver;_again = true;desc = parent = undefined;continue _function;
+            }
+        } else if ('value' in desc) {
+            return desc.value;
+        } else {
+            var getter = desc.get;if (getter === undefined) {
+                return undefined;
+            }return getter.call(receiver);
+        }
+    }
+};
+
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : { 'default': obj };
+}
+
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+    }
+}
+
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== 'function' && superClass !== null) {
+        throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var _reactRouter = require('react-router');
+
+var _react = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
+
+var _react2 = _interopRequireDefault(_react);
 
 /**
  * The examples page of the website.
  */
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'Examples',
 
-    /**
-     * Renders the page.
-     */
-    render: function render() {
-        return React.createElement('div', { id: 'documentation', className: 'content' }, React.createElement('div', { className: 'side-menu' }, React.createElement('h4', null, 'Examples'), React.createElement(Link, { to: '/example/login' }, ' Login Form '), React.createElement(Link, { to: '/example/register' }, ' Registration Form '), React.createElement(Link, { to: '/example/list' }, ' List Form '), React.createElement(Link, { to: '/example/custom-field' }, ' Custom Field '), React.createElement(Link, { to: '/example/custom-rule' }, ' Custom Rule ')), React.createElement('div', { className: 'side-content' }, this.props.children));
+var Example = (function (_React$Component) {
+    _inherits(Example, _React$Component);
+
+    function Example() {
+        _classCallCheck(this, Example);
+
+        _get(Object.getPrototypeOf(Example.prototype), 'constructor', this).apply(this, arguments);
     }
-});
 
-},{"react-router":95}],19:[function(require,module,exports){
+    _createClass(Example, [{
+        key: 'render',
+
+        /**
+         * Renders the page.
+         */
+        value: function render() {
+            return _react2['default'].createElement('div', { id: 'documentation', className: 'content' }, _react2['default'].createElement('div', { className: 'side-menu' }, _react2['default'].createElement('h4', null, 'Examples'), _react2['default'].createElement(_reactRouter.Link, { to: '/example/login' }, ' Login Form '), _react2['default'].createElement(_reactRouter.Link, { to: '/example/register' }, ' Registration Form '), _react2['default'].createElement(_reactRouter.Link, { to: '/example/list' }, ' List Form '), _react2['default'].createElement(_reactRouter.Link, { to: '/example/custom-field' }, ' Custom Field '), _react2['default'].createElement(_reactRouter.Link, { to: '/example/custom-rule' }, ' Custom Rule ')), _react2['default'].createElement('div', { className: 'side-content' }, this.props.children));
+        }
+    }]);
+
+    return Example;
+})(_react2['default'].Component);
+
+exports['default'] = Example;
+module.exports = exports['default'];
+
+}).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"react-router":96}],20:[function(require,module,exports){
 'use strict';
 
-var Code = require('../code.js'),
-    CustomFieldForm = require('./custom-field-form.js'),
-    CustomFieldTxt = require('./custom-field-form.txt');
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+    };
+})();
+
+var _get = function get(_x, _x2, _x3) {
+    var _again = true;_function: while (_again) {
+        var object = _x,
+            property = _x2,
+            receiver = _x3;_again = false;if (object === null) object = Function.prototype;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
+            var parent = Object.getPrototypeOf(object);if (parent === null) {
+                return undefined;
+            } else {
+                _x = parent;_x2 = property;_x3 = receiver;_again = true;desc = parent = undefined;continue _function;
+            }
+        } else if ('value' in desc) {
+            return desc.value;
+        } else {
+            var getter = desc.get;if (getter === undefined) {
+                return undefined;
+            }return getter.call(receiver);
+        }
+    }
+};
+
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : { 'default': obj };
+}
+
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+    }
+}
+
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== 'function' && superClass !== null) {
+        throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var _codeJs = require('../code.js');
+
+var _codeJs2 = _interopRequireDefault(_codeJs);
+
+var _customFieldFormJs = require('./custom-field-form.js');
+
+var _customFieldFormJs2 = _interopRequireDefault(_customFieldFormJs);
+
+var _customFieldFormTxt = require('./custom-field-form.txt');
+
+var _customFieldFormTxt2 = _interopRequireDefault(_customFieldFormTxt);
 
 /**
  * Component that renders an example.
  */
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'CustomRuleExample',
+
+var CustomFieldExample = (function (_React$Component) {
+    _inherits(CustomFieldExample, _React$Component);
 
     /**
      * Returns the initial state of this component.
      */
-    getInitialState: function getInitialState() {
-        return {};
-    },
+
+    function CustomFieldExample(props) {
+        _classCallCheck(this, CustomFieldExample);
+
+        _get(Object.getPrototypeOf(CustomFieldExample.prototype), 'constructor', this).call(this, props);
+
+        this.state = {};
+    }
 
     /**
      * Called when the form is submitted.
      */
-    formSubmitted: function formSubmitted(valid, data) {
-        this.setState({
-            formData: data,
-            formValid: valid
-        });
-    },
 
-    /**
-     * Renders the example.
-     */
-    render: function render() {
-        return React.createElement('div', { className: 'example' }, React.createElement('h2', null, 'Custom Field'), React.createElement('div', { className: 'code-preview' }, React.createElement('div', { className: 'right-side' }, React.createElement('div', { className: 'preview' }, React.createElement(CustomFieldForm, { formSubmitted: this.formSubmitted })), React.createElement('div', { className: 'data' }, 'Form is valid: ', this.state.formValid ? 'No' : 'Yes', '\n', 'Submitted form data:', '\n', this.state.formData ? JSON.stringify(this.state.formData, null, 2) : 'not yet validated')), React.createElement(Code, { value: CustomFieldTxt })));
-    }
-});
+    _createClass(CustomFieldExample, [{
+        key: 'formSubmitted',
+        value: function formSubmitted(event, valid, data) {
+            this.setState({
+                formData: data,
+                formValid: valid
+            });
+        }
 
-},{"../code.js":1,"./custom-field-form.js":20,"./custom-field-form.txt":21}],20:[function(require,module,exports){
+        /**
+         * Renders the example.
+         */
+    }, {
+        key: 'render',
+        value: function render() {
+            return React.createElement('div', { className: 'example' }, React.createElement('h2', null, 'Custom Field'), React.createElement('div', { className: 'code-preview' }, React.createElement('div', { className: 'right-side' }, React.createElement('div', { className: 'preview' }, React.createElement(_customFieldFormJs2['default'], { formSubmitted: this.formSubmitted.bind(this) })), React.createElement('div', { className: 'data' }, 'Form is valid: ', this.state.formValid ? 'No' : 'Yes', '\n', 'Submitted form data:', '\n', this.state.formData ? JSON.stringify(this.state.formData, null, 2) : 'not yet validated')), React.createElement(_codeJs2['default'], { value: _customFieldFormTxt2['default'] })));
+        }
+    }]);
+
+    return CustomFieldExample;
+})(React.Component);
+
+exports['default'] = CustomFieldExample;
+module.exports = exports['default'];
+
+},{"../code.js":1,"./custom-field-form.js":21,"./custom-field-form.txt":22}],21:[function(require,module,exports){
 (function (global){
 'use strict';
 
-var ReactDOM = (typeof window !== "undefined" ? window['ReactDOM'] : typeof global !== "undefined" ? global['ReactDOM'] : null),
-    ReactFormValidation = require('react-form-validation'),
-    Instance = ReactFormValidation.Instance,
-    Error = ReactFormValidation.Error,
-    Rules = ReactFormValidation.Rules,
-    Form = ReactFormValidation.Form,
-    Input = ReactFormValidation.Input,
-    FieldMixin = ReactFormValidation.FieldMixin,
-    Hint = ReactFormValidation.Hint;
-
-var BirthdateField = React.createClass({
-    displayName: 'BirthdateField',
-
-    /**
-     * Make this component a "Field".
-     */
-    mixins: [FieldMixin],
-
-    /**
-     * Returns the value of the component.
-     */
-    getValue: function getValue() {
-        var day = ReactDOM.findDOMNode(this.refs.day).value,
-            month = ReactDOM.findDOMNode(this.refs.month).value,
-            year = ReactDOM.findDOMNode(this.refs.year).value;
-        if (day && month && year) {
-            return new Date(year, month, day);
-        }
-    },
-
-    /**
-     * Called when one of the <select> selection has changed.
-     */
-    onChange: function onChange() {
-        this.props.form.onChange(this);
-    },
-
-    /**
-     * Renders the options for the year <select>.
-     */
-    renderOptions: function renderOptions(label, start, end, reversed) {
-        var ret = [];
-        ret.push(React.createElement('option', { key: -1, value: '' }, label));
-        for (var i = start; i <= end; i++) {
-            var j = reversed ? end - i + start : i;
-            ret.push(React.createElement('option', { key: j, value: j }, j));
-        }
-        return ret;
-    },
-
-    /**
-     * Renders the component.
-     */
-    render: function render() {
-        return React.createElement('span', { className: 'field-group' }, React.createElement('select', { name: 'day', ref: 'day', onChange: this.onChange }, this.renderOptions('Day', 1, 31)), React.createElement('select', { name: 'month', ref: 'month', onChange: this.onChange }, this.renderOptions('Month', 1, 12)), React.createElement('select', { name: 'year', ref: 'year', onChange: this.onChange }, this.renderOptions('Year', new Date().getFullYear() - 100, new Date().getFullYear(), true)));
-    }
+Object.defineProperty(exports, '__esModule', {
+    value: true
 });
 
-/**
- * Simple login form.
- */
-module.exports = React.createClass({
-    displayName: 'exports',
+var _createClass = (function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+    };
+})();
+
+var _get = function get(_x, _x2, _x3) {
+    var _again = true;_function: while (_again) {
+        var object = _x,
+            property = _x2,
+            receiver = _x3;_again = false;if (object === null) object = Function.prototype;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
+            var parent = Object.getPrototypeOf(object);if (parent === null) {
+                return undefined;
+            } else {
+                _x = parent;_x2 = property;_x3 = receiver;_again = true;desc = parent = undefined;continue _function;
+            }
+        } else if ('value' in desc) {
+            return desc.value;
+        } else {
+            var getter = desc.get;if (getter === undefined) {
+                return undefined;
+            }return getter.call(receiver);
+        }
+    }
+};
+
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : { 'default': obj };
+}
+
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+    }
+}
+
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== 'function' && superClass !== null) {
+        throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var _reactDom = (typeof window !== "undefined" ? window['ReactDOM'] : typeof global !== "undefined" ? global['ReactDOM'] : null);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _reactFormValidation = require('react-form-validation');
+
+var BirthdateField = (function (_Field) {
+    _inherits(BirthdateField, _Field);
+
+    function BirthdateField() {
+        _classCallCheck(this, BirthdateField);
+
+        _get(Object.getPrototypeOf(BirthdateField.prototype), 'constructor', this).apply(this, arguments);
+    }
+
+    /**
+     * Simple login form.
+     */
+
+    _createClass(BirthdateField, [{
+        key: 'getValue',
+
+        /**
+         * Returns the value of the component.
+         */
+        value: function getValue() {
+            var day = this.refs.day.value,
+                month = this.refs.month.value,
+                year = this.refs.year.value;
+            if (day && month && year) {
+                return new Date(year, month, day);
+            }
+        }
+
+        /**
+         * Called when one of the <select> selection has changed.
+         */
+    }, {
+        key: 'onChange',
+        value: function onChange() {
+            this.validateField(false);
+        }
+
+        /**
+         * Renders the options for the year <select>.
+         */
+    }, {
+        key: 'renderOptions',
+        value: function renderOptions(label, start, end, reversed) {
+            var ret = [];
+            ret.push(React.createElement('option', { key: -1, value: '' }, label));
+            for (var i = start; i <= end; i++) {
+                var j = reversed ? end - i + start : i;
+                ret.push(React.createElement('option', { key: j, value: j }, j));
+            }
+            return ret;
+        }
+
+        /**
+         * Renders the component.
+         */
+    }, {
+        key: 'render',
+        value: function render() {
+            return React.createElement('span', { className: 'field-group' }, React.createElement('select', { name: 'day', ref: 'day', onChange: this.onChange.bind(this) }, this.renderOptions('Day', 1, 31)), React.createElement('select', { name: 'month', ref: 'month', onChange: this.onChange.bind(this) }, this.renderOptions('Month', 1, 12)), React.createElement('select', { name: 'year', ref: 'year', onChange: this.onChange.bind(this) }, this.renderOptions('Year', new Date().getFullYear() - 100, new Date().getFullYear(), true)));
+        }
+    }]);
+
+    return BirthdateField;
+})(_reactFormValidation.Field);
+
+var CustomFieldForm = (function (_React$Component) {
+    _inherits(CustomFieldForm, _React$Component);
 
     /**
      * Returns the initial state of the component.
      */
-    getInitialState: function getInitialState() {
-        return {
-            form: new Instance({
+
+    function CustomFieldForm(props) {
+        _classCallCheck(this, CustomFieldForm);
+
+        _get(Object.getPrototypeOf(CustomFieldForm.prototype), 'constructor', this).call(this, props);
+
+        this.state = {
+            form: new _reactFormValidation.Context({
                 fields: {
-                    birthdate: Rules.required().minAge(13)
+                    birthdate: _reactFormValidation.Rules.required().minAge(13)
                 }
             })
         };
-    },
+    }
 
     /**
      * Renders the form.
      */
-    render: function render() {
-        var form = this.state.form;
-        return React.createElement(Form, { form: form, onSubmit: this.props.formSubmitted }, React.createElement('h4', null, 'Custom Field'), React.createElement('div', { className: 'field' }, 'Birthdate: ', React.createElement(BirthdateField, { name: 'birthdate', form: form }), React.createElement(Error, { forName: 'birthdate', form: form }), React.createElement(Hint, { forName: 'birthdate', form: form, text: 'You have to be at least 13',
-            display: 'pristine' })), React.createElement('div', { className: 'actions' }, React.createElement('button', null, 'Validate')));
-    }
-});
+
+    _createClass(CustomFieldForm, [{
+        key: 'render',
+        value: function render() {
+            return React.createElement(_reactFormValidation.Form, { form: this.state.form, onSubmit: this.props.formSubmitted }, React.createElement('h4', null, 'Custom Field'), React.createElement('div', { className: 'field' }, 'Birthdate: ', React.createElement(BirthdateField, { name: 'birthdate' }), React.createElement(_reactFormValidation.Error, { forName: 'birthdate' }), React.createElement(_reactFormValidation.Hint, { forName: 'birthdate', text: 'You have to be at least 13',
+                display: 'pristine' })), React.createElement('div', { className: 'actions' }, React.createElement('button', null, 'Validate')));
+        }
+    }]);
+
+    return CustomFieldForm;
+})(React.Component);
+
+exports['default'] = CustomFieldForm;
+module.exports = exports['default'];
 
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"react-form-validation":69}],21:[function(require,module,exports){
-module.exports = "\nvar ReactDOM = require('react-dom'),\n    ReactFormValidation = require('react-form-validation'),\n    Instance = ReactFormValidation.Instance,\n    Error = ReactFormValidation.Error,\n    Rules = ReactFormValidation.Rules,\n    Form = ReactFormValidation.Form,\n    Input = ReactFormValidation.Input,\n    FieldMixin = ReactFormValidation.FieldMixin,\n    Hint = ReactFormValidation.Hint;\n\nvar BirthdateField = React.createClass({\n    /**\n     * Make this component a \"Field\".\n     */\n    mixins: [FieldMixin],\n\n    /**\n     * Returns the value of the component.\n     */\n    getValue: function() {\n        var day = ReactDOM.findDOMNode(this.refs.day).value,\n            month = ReactDOM.findDOMNode(this.refs.month).value,\n            year = ReactDOM.findDOMNode(this.refs.year).value;\n        if (day && month && year) {\n            return new Date(year, month, day);\n        }\n    },\n\n    /**\n     * Called when one of the <select> selection has changed.\n     */\n    onChange: function() {\n        this.props.form.onChange(this);\n    },\n\n    /**\n     * Renders the options for the year <select>.\n     */\n    renderOptions: function(label, start, end, reversed) {\n        var ret = [];\n        ret.push(<option key={-1} value=\"\">{ label }</option>);\n        for (var i=start; i<=end; i++) {\n            var j = reversed ? end - i + start : i;\n            ret.push(<option key={j} value={j}>{j}</option>);\n        }\n        return ret;\n    },\n\n    /**\n     * Renders the component.\n     */\n    render: function() {\n        return (\n            <span className=\"field-group\">\n                <select name=\"day\" ref=\"day\" onChange={this.onChange}>\n                    {this.renderOptions('Day', 1, 31)}\n                </select>\n                <select name=\"month\" ref=\"month\" onChange={this.onChange}>\n                    {this.renderOptions('Month', 1, 12)}\n                </select>\n                <select name=\"year\" ref=\"year\" onChange={this.onChange}>\n                    {this.renderOptions('Year', new Date().getFullYear()-100,\n                        new Date().getFullYear(), true)}\n                </select>\n            </span>\n        );\n    }\n});\n\n/**\n * Simple login form.\n */\nmodule.exports = React.createClass({\n    /**\n     * Returns the initial state of the component.\n     */\n    getInitialState: function() {\n        return {\n            form: new Instance({\n                fields: {\n                    birthdate: Rules.required().minAge(13)\n                }\n            })\n        };\n    },\n\n    /**\n     * Renders the form.\n     */\n    render: function() {\n        var form = this.state.form;\n        return (\n            <Form form={form} onSubmit={this.props.formSubmitted}>\n                <h4>Custom Field</h4>\n                <div className=\"field\">\n                    Birthdate: <BirthdateField name=\"birthdate\" form={form} />\n                    <Error forName=\"birthdate\" form={form} />\n                    <Hint forName=\"birthdate\" form={form} text=\"You have to be at least 13\"\n                        display=\"pristine\" />\n                </div>\n                <div className=\"actions\">\n                    <button>Validate</button>\n                </div>\n            </Form>\n        );\n    }\n});\n";
+},{"react-form-validation":71}],22:[function(require,module,exports){
+module.exports = "\nimport ReactDOM from 'react-dom';\nimport { Context, Error, Rules, Form, Input, Field, Hint } from 'react-form-validation';\n\nclass BirthdateField extends Field {\n    /**\n     * Returns the value of the component.\n     */\n    getValue() {\n        var day = this.refs.day.value,\n            month = this.refs.month.value,\n            year = this.refs.year.value;\n        if (day && month && year) {\n            return new Date(year, month, day);\n        }\n    }\n\n    /**\n     * Called when one of the <select> selection has changed.\n     */\n    onChange() {\n        this.validateField(false);\n    }\n\n    /**\n     * Renders the options for the year <select>.\n     */\n    renderOptions(label, start, end, reversed) {\n        var ret = [];\n        ret.push(<option key={-1} value=\"\">{ label }</option>);\n        for (var i=start; i<=end; i++) {\n            var j = reversed ? end - i + start : i;\n            ret.push(<option key={j} value={j}>{j}</option>);\n        }\n        return ret;\n    }\n\n    /**\n     * Renders the component.\n     */\n    render() {\n        return (\n            <span className=\"field-group\">\n                <select name=\"day\" ref=\"day\" onChange={this.onChange.bind(this)}>\n                    {this.renderOptions('Day', 1, 31)}\n                </select>\n                <select name=\"month\" ref=\"month\" onChange={this.onChange.bind(this)}>\n                    {this.renderOptions('Month', 1, 12)}\n                </select>\n                <select name=\"year\" ref=\"year\" onChange={this.onChange.bind(this)}>\n                    {this.renderOptions('Year', new Date().getFullYear()-100,\n                        new Date().getFullYear(), true)}\n                </select>\n            </span>\n        );\n    }\n}\n\n/**\n * Simple login form.\n */\nexport default class CustomFieldForm extends React.Component {\n    /**\n     * Returns the initial state of the component.\n     */\n    constructor(props) {\n        super(props);\n\n        this.state = {\n            form: new Context({\n                fields: {\n                    birthdate: Rules.required().minAge(13)\n                }\n            })\n        };\n    }\n\n    /**\n     * Renders the form.\n     */\n    render() {\n        return (\n            <Form form={this.state.form} onSubmit={this.props.formSubmitted}>\n                <h4>Custom Field</h4>\n                <div className=\"field\">\n                    Birthdate: <BirthdateField name=\"birthdate\" />\n                    <Error forName=\"birthdate\" />\n                    <Hint forName=\"birthdate\" text=\"You have to be at least 13\"\n                        display=\"pristine\" />\n                </div>\n                <div className=\"actions\">\n                    <button>Validate</button>\n                </div>\n            </Form>\n        );\n    }\n}\n";
 
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 'use strict';
 
-var Code = require('../code.js'),
-    CustomRuleForm = require('./custom-rule-form.js'),
-    CustomRuleTxt = require('./custom-rule-form.txt');
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+    };
+})();
+
+var _get = function get(_x, _x2, _x3) {
+    var _again = true;_function: while (_again) {
+        var object = _x,
+            property = _x2,
+            receiver = _x3;_again = false;if (object === null) object = Function.prototype;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
+            var parent = Object.getPrototypeOf(object);if (parent === null) {
+                return undefined;
+            } else {
+                _x = parent;_x2 = property;_x3 = receiver;_again = true;desc = parent = undefined;continue _function;
+            }
+        } else if ('value' in desc) {
+            return desc.value;
+        } else {
+            var getter = desc.get;if (getter === undefined) {
+                return undefined;
+            }return getter.call(receiver);
+        }
+    }
+};
+
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : { 'default': obj };
+}
+
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+    }
+}
+
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== 'function' && superClass !== null) {
+        throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var _codeJs = require('../code.js');
+
+var _codeJs2 = _interopRequireDefault(_codeJs);
+
+var _customRuleFormJs = require('./custom-rule-form.js');
+
+var _customRuleFormJs2 = _interopRequireDefault(_customRuleFormJs);
+
+var _customRuleFormTxt = require('./custom-rule-form.txt');
+
+var _customRuleFormTxt2 = _interopRequireDefault(_customRuleFormTxt);
 
 /**
  * Component that renders an example.
  */
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'CustomRuleExample',
+
+var CustomRuleExample = (function (_React$Component) {
+    _inherits(CustomRuleExample, _React$Component);
 
     /**
      * Returns the initial state of this component.
      */
-    getInitialState: function getInitialState() {
-        return {};
-    },
+
+    function CustomRuleExample(props) {
+        _classCallCheck(this, CustomRuleExample);
+
+        _get(Object.getPrototypeOf(CustomRuleExample.prototype), 'constructor', this).call(this, props);
+
+        this.state = {};
+    }
 
     /**
      * Called when the form is submitted.
      */
-    formSubmitted: function formSubmitted(valid, data) {
-        this.setState({
-            formData: data,
-            formValid: valid
-        });
-    },
 
-    /**
-     * Renders the example.
-     */
-    render: function render() {
-        return React.createElement('div', { className: 'example' }, React.createElement('h2', null, 'Custom Rule'), React.createElement('div', { className: 'code-preview' }, React.createElement('div', { className: 'right-side' }, React.createElement('div', { className: 'preview' }, React.createElement(CustomRuleForm, { formSubmitted: this.formSubmitted })), React.createElement('div', { className: 'data' }, 'Form is valid: ', this.state.formValid ? 'No' : 'Yes', '\n', 'Submitted form data:', '\n', this.state.formData ? JSON.stringify(this.state.formData, null, 2) : 'not yet validated')), React.createElement(Code, { value: CustomRuleTxt })));
-    }
-});
+    _createClass(CustomRuleExample, [{
+        key: 'formSubmitted',
+        value: function formSubmitted(event, valid, data) {
+            this.setState({
+                formData: data,
+                formValid: valid
+            });
+        }
 
-},{"../code.js":1,"./custom-rule-form.js":23,"./custom-rule-form.txt":24}],23:[function(require,module,exports){
+        /**
+         * Renders the example.
+         */
+    }, {
+        key: 'render',
+        value: function render() {
+            return React.createElement('div', { className: 'example' }, React.createElement('h2', null, 'Custom Rule'), React.createElement('div', { className: 'code-preview' }, React.createElement('div', { className: 'right-side' }, React.createElement('div', { className: 'preview' }, React.createElement(_customRuleFormJs2['default'], { formSubmitted: this.formSubmitted.bind(this) })), React.createElement('div', { className: 'data' }, 'Form is valid: ', this.state.formValid ? 'No' : 'Yes', '\n', 'Submitted form data:', '\n', this.state.formData ? JSON.stringify(this.state.formData, null, 2) : 'not yet validated')), React.createElement(_codeJs2['default'], { value: _customRuleFormTxt2['default'] })));
+        }
+    }]);
+
+    return CustomRuleExample;
+})(React.Component);
+
+exports['default'] = CustomRuleExample;
+module.exports = exports['default'];
+
+},{"../code.js":1,"./custom-rule-form.js":24,"./custom-rule-form.txt":25}],24:[function(require,module,exports){
 'use strict';
 
-var ReactFormValidation = require('react-form-validation'),
-    Instance = ReactFormValidation.Instance,
-    Error = ReactFormValidation.Error,
-    Rules = ReactFormValidation.Rules,
-    Form = ReactFormValidation.Form,
-    Input = ReactFormValidation.Input,
-    Hint = ReactFormValidation.Hint;
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+    };
+})();
+
+var _get = function get(_x, _x2, _x3) {
+    var _again = true;_function: while (_again) {
+        var object = _x,
+            property = _x2,
+            receiver = _x3;_again = false;if (object === null) object = Function.prototype;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
+            var parent = Object.getPrototypeOf(object);if (parent === null) {
+                return undefined;
+            } else {
+                _x = parent;_x2 = property;_x3 = receiver;_again = true;desc = parent = undefined;continue _function;
+            }
+        } else if ('value' in desc) {
+            return desc.value;
+        } else {
+            var getter = desc.get;if (getter === undefined) {
+                return undefined;
+            }return getter.call(receiver);
+        }
+    }
+};
+
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+    }
+}
+
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== 'function' && superClass !== null) {
+        throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var _reactFormValidation = require('react-form-validation');
 
 /**
  * Registers a custom rule for validating usernames.
  * the rules will be accessible form Rules.{ruleName}.
  */
-Rules.register('myCustomUsernameRule', function () {
+_reactFormValidation.Rules.register('myCustomUsernameRule', function () {
     return {
         check: function check(value) {
             if (!/^[a-z0-9]+$/.test(value)) {
@@ -544,414 +1594,1047 @@ Rules.register('myCustomUsernameRule', function () {
 });
 
 /**
- * Simple login form.
+ * Custom rule form.
  */
-module.exports = React.createClass({
-    displayName: 'exports',
+
+var CustomRuleForm = (function (_React$Component) {
+    _inherits(CustomRuleForm, _React$Component);
 
     /**
      * Returns the initial state of the component.
      */
-    getInitialState: function getInitialState() {
-        return {
-            form: new Instance({
+
+    function CustomRuleForm(props) {
+        _classCallCheck(this, CustomRuleForm);
+
+        _get(Object.getPrototypeOf(CustomRuleForm.prototype), 'constructor', this).call(this, props);
+
+        this.state = {
+            form: new _reactFormValidation.Context({
                 fields: {
-                    username: Rules.required().myCustomUsernameRule()
+                    username: _reactFormValidation.Rules.required().myCustomUsernameRule()
                 }
             })
         };
-    },
+    }
 
     /**
      * Renders the form.
      */
-    render: function render() {
-        var form = this.state.form;
-        return React.createElement(Form, { form: form, onSubmit: this.props.formSubmitted }, React.createElement('h4', null, 'Custom Rule'), React.createElement('div', { className: 'field' }, 'Username: ', React.createElement(Input, { type: 'text', name: 'username', form: form }), React.createElement(Error, { forName: 'username', form: form }), React.createElement(Hint, { forName: 'username', form: form, display: 'error|valid|pristine' }, 'Should contain at least 5 characters (lowercase letters or numbers) and end with a number. Why? Because!')), React.createElement('div', { className: 'actions' }, React.createElement('button', null, 'Validate')));
-    }
-});
 
-},{"react-form-validation":69}],24:[function(require,module,exports){
-module.exports = "\nvar ReactFormValidation = require('react-form-validation'),\n    Instance = ReactFormValidation.Instance,\n    Error = ReactFormValidation.Error,\n    Rules = ReactFormValidation.Rules,\n    Form = ReactFormValidation.Form,\n    Input = ReactFormValidation.Input,\n    Hint = ReactFormValidation.Hint;\n\n/**\n * Registers a custom rule for validating usernames.\n * the rules will be accessible form Rules.{ruleName}.\n */\nRules.register('myCustomUsernameRule', function() {\n    return {\n        check: function check(value) {\n            if (!/^[a-z0-9]+$/.test(value)) {\n                return 'letters';\n            }\n            if (!value || value.length < 5) {\n                return 'length';\n            }\n            if (!/[0-9]+$/.test(value)) {\n                return 'syntax';\n            }\n            return true;\n        },\n        messages: {\n            letters: 'Username should only contain lower case characters or numbers',\n            length: 'Username should be at least 5 characters',\n            syntax: 'Username should end with numbers'\n        }\n    };\n});\n\n/**\n * Simple login form.\n */\nmodule.exports = React.createClass({\n    /**\n     * Returns the initial state of the component.\n     */\n    getInitialState: function() {\n        return {\n            form: new Instance({\n                fields: {\n                    username: Rules.required().myCustomUsernameRule()\n                }\n            })\n        };\n    },\n\n    /**\n     * Renders the form.\n     */\n    render: function() {\n        var form = this.state.form;\n        return (\n            <Form form={form} onSubmit={this.props.formSubmitted}>\n                <h4>Custom Rule</h4>\n                <div className=\"field\">\n                    Username: <Input type=\"text\" name=\"username\" form={form} />\n                    <Error forName=\"username\" form={form} />\n                    <Hint forName=\"username\" form={form} display=\"error|valid|pristine\">\n                        Should contain at least 5 characters (lowercase letters or numbers) and end\n                        with a number. Why? Because!\n                    </Hint>\n                </div>\n                <div className=\"actions\">\n                    <button>Validate</button>\n                </div>\n            </Form>\n        );\n    }\n});\n";
+    _createClass(CustomRuleForm, [{
+        key: 'render',
+        value: function render() {
+            return React.createElement(_reactFormValidation.Form, { form: this.state.form, onSubmit: this.props.formSubmitted }, React.createElement('h4', null, 'Custom Rule'), React.createElement('div', { className: 'field' }, 'Username: ', React.createElement(_reactFormValidation.Input, { type: 'text', name: 'username' }), React.createElement(_reactFormValidation.Error, { forName: 'username' }), React.createElement(_reactFormValidation.Hint, { forName: 'username', display: 'error|valid|pristine' }, 'Should contain at least 5 characters (lowercase letters or numbers) and end with a number. Why? Because!')), React.createElement('div', { className: 'actions' }, React.createElement('button', null, 'Validate')));
+        }
+    }]);
 
-},{}],25:[function(require,module,exports){
+    return CustomRuleForm;
+})(React.Component);
+
+exports['default'] = CustomRuleForm;
+module.exports = exports['default'];
+
+},{"react-form-validation":71}],25:[function(require,module,exports){
+module.exports = "\nimport { Context, Error, Rules, Form, Input, Hint } from 'react-form-validation';\n\n/**\n * Registers a custom rule for validating usernames.\n * the rules will be accessible form Rules.{ruleName}.\n */\nRules.register('myCustomUsernameRule', function() {\n    return {\n        check: function check(value) {\n            if (!/^[a-z0-9]+$/.test(value)) {\n                return 'letters';\n            }\n            if (!value || value.length < 5) {\n                return 'length';\n            }\n            if (!/[0-9]+$/.test(value)) {\n                return 'syntax';\n            }\n            return true;\n        },\n        messages: {\n            letters: 'Username should only contain lower case characters or numbers',\n            length: 'Username should be at least 5 characters',\n            syntax: 'Username should end with numbers'\n        }\n    };\n});\n\n/**\n * Custom rule form.\n */\nexport default class CustomRuleForm extends React.Component {\n    /**\n     * Returns the initial state of the component.\n     */\n    constructor(props) {\n        super(props);\n\n        this.state = {\n            form: new Context({\n                fields: {\n                    username: Rules.required().myCustomUsernameRule()\n                }\n            })\n        };\n    }\n\n    /**\n     * Renders the form.\n     */\n    render() {\n        return (\n            <Form form={this.state.form} onSubmit={this.props.formSubmitted}>\n                <h4>Custom Rule</h4>\n                <div className=\"field\">\n                    Username: <Input type=\"text\" name=\"username\" />\n                    <Error forName=\"username\" />\n                    <Hint forName=\"username\" display=\"error|valid|pristine\">\n                        Should contain at least 5 characters (lowercase letters or numbers) and end\n                        with a number. Why? Because!\n                    </Hint>\n                </div>\n                <div className=\"actions\">\n                    <button>Validate</button>\n                </div>\n            </Form>\n        );\n    }\n}\n";
+
+},{}],26:[function(require,module,exports){
 'use strict';
 
-var Code = require('../code.js'),
-    ListForm = require('./list-form.js'),
-    ListTxt = require('./list-form.txt');
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+    };
+})();
+
+var _get = function get(_x, _x2, _x3) {
+    var _again = true;_function: while (_again) {
+        var object = _x,
+            property = _x2,
+            receiver = _x3;_again = false;if (object === null) object = Function.prototype;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
+            var parent = Object.getPrototypeOf(object);if (parent === null) {
+                return undefined;
+            } else {
+                _x = parent;_x2 = property;_x3 = receiver;_again = true;desc = parent = undefined;continue _function;
+            }
+        } else if ('value' in desc) {
+            return desc.value;
+        } else {
+            var getter = desc.get;if (getter === undefined) {
+                return undefined;
+            }return getter.call(receiver);
+        }
+    }
+};
+
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : { 'default': obj };
+}
+
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+    }
+}
+
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== 'function' && superClass !== null) {
+        throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var _codeJs = require('../code.js');
+
+var _codeJs2 = _interopRequireDefault(_codeJs);
+
+var _listFormJs = require('./list-form.js');
+
+var _listFormJs2 = _interopRequireDefault(_listFormJs);
+
+var _listFormTxt = require('./list-form.txt');
+
+var _listFormTxt2 = _interopRequireDefault(_listFormTxt);
 
 /**
  * Component that renders an example.
  */
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'LoginExample',
+
+var ListExample = (function (_React$Component) {
+    _inherits(ListExample, _React$Component);
 
     /**
-     * Returns the initial state of this component.
+     * Constructor.
      */
-    getInitialState: function getInitialState() {
-        return {};
-    },
+
+    function ListExample(props) {
+        _classCallCheck(this, ListExample);
+
+        _get(Object.getPrototypeOf(ListExample.prototype), 'constructor', this).call(this, props);
+
+        this.state = {};
+    }
 
     /**
      * Called when the form is submitted.
      */
-    formSubmitted: function formSubmitted(valid, data) {
-        this.setState({
-            formData: data,
-            formValid: valid
-        });
-    },
 
-    /**
-     * Renders the example.
-     */
-    render: function render() {
-        return React.createElement('div', { className: 'example' }, React.createElement('h2', null, 'List Form'), React.createElement('div', { className: 'code-preview' }, React.createElement('div', { className: 'right-side' }, React.createElement('div', { className: 'preview' }, React.createElement(ListForm, { formSubmitted: this.formSubmitted })), React.createElement('div', { className: 'data' }, 'Form is valid: ', this.state.formValid ? 'No' : 'Yes', '\n', 'Submitted form data:', '\n', this.state.formData ? JSON.stringify(this.state.formData, null, 2) : 'not yet validated')), React.createElement(Code, { value: ListTxt })));
-    }
-});
+    _createClass(ListExample, [{
+        key: 'formSubmitted',
+        value: function formSubmitted(event, valid, data) {
+            this.setState({
+                formData: data,
+                formValid: valid
+            });
+        }
 
-},{"../code.js":1,"./list-form.js":26,"./list-form.txt":27}],26:[function(require,module,exports){
+        /**
+         * Renders the example.
+         */
+    }, {
+        key: 'render',
+        value: function render() {
+            return React.createElement('div', { className: 'example' }, React.createElement('h2', null, 'List Form'), React.createElement('div', { className: 'code-preview' }, React.createElement('div', { className: 'right-side' }, React.createElement('div', { className: 'preview' }, React.createElement(_listFormJs2['default'], { formSubmitted: this.formSubmitted.bind(this) })), React.createElement('div', { className: 'data' }, 'Form is valid: ', this.state.formValid ? 'No' : 'Yes', '\n', 'Submitted form data:', '\n', this.state.formData ? JSON.stringify(this.state.formData, null, 2) : 'not yet validated')), React.createElement(_codeJs2['default'], { value: _listFormTxt2['default'] })));
+        }
+    }]);
+
+    return ListExample;
+})(React.Component);
+
+exports['default'] = ListExample;
+module.exports = exports['default'];
+
+},{"../code.js":1,"./list-form.js":27,"./list-form.txt":28}],27:[function(require,module,exports){
 "use strict";
 
-var ReactFormValidation = require('react-form-validation'),
-    Instance = ReactFormValidation.Instance,
-    Error = ReactFormValidation.Error,
-    Hint = ReactFormValidation.Hint,
-    Rules = ReactFormValidation.Rules,
-    Form = ReactFormValidation.Form,
-    Input = ReactFormValidation.Input;
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = (function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+    };
+})();
+
+var _get = function get(_x, _x2, _x3) {
+    var _again = true;_function: while (_again) {
+        var object = _x,
+            property = _x2,
+            receiver = _x3;_again = false;if (object === null) object = Function.prototype;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
+            var parent = Object.getPrototypeOf(object);if (parent === null) {
+                return undefined;
+            } else {
+                _x = parent;_x2 = property;_x3 = receiver;_again = true;desc = parent = undefined;continue _function;
+            }
+        } else if ("value" in desc) {
+            return desc.value;
+        } else {
+            var getter = desc.get;if (getter === undefined) {
+                return undefined;
+            }return getter.call(receiver);
+        }
+    }
+};
+
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError("Cannot call a class as a function");
+    }
+}
+
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+        throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var _reactFormValidation = require('react-form-validation');
 
 /**
  * Friend item form.
  */
-var FriendForm = React.createClass({
-    displayName: "FriendForm",
 
-    render: function render() {
-        var form = this.props.form;
-        return React.createElement("div", { className: "fieldset friend" }, React.createElement("b", null, "Friend ", this.props.index + 1), React.createElement("div", { className: "field" }, "Name: ", React.createElement(Input, { type: "text", name: "name", form: form }), React.createElement(Error, { forName: "name", form: form })), React.createElement("div", { className: "field" }, "Age: ", React.createElement(Input, { type: "text", name: "age", form: form }), React.createElement(Error, { forName: "age", form: form })));
+var FriendForm = (function (_React$Component) {
+    _inherits(FriendForm, _React$Component);
+
+    function FriendForm() {
+        _classCallCheck(this, FriendForm);
+
+        _get(Object.getPrototypeOf(FriendForm.prototype), "constructor", this).apply(this, arguments);
     }
-});
 
-/**
- * List example form.
- */
-module.exports = React.createClass({
-    displayName: "exports",
+    /**
+     * List example form.
+     */
+
+    _createClass(FriendForm, [{
+        key: "render",
+        value: function render() {
+            var prefix = "friend[" + this.props.index + "]";
+            return React.createElement("div", { className: "fieldset friend" }, React.createElement("b", null, "Friend ", this.props.index + 1), React.createElement("div", { className: "field" }, "Name: ", React.createElement(_reactFormValidation.Input, { type: "text", name: prefix + 'name' }), React.createElement(_reactFormValidation.Error, { forName: prefix + 'name' })), React.createElement("div", { className: "field" }, "Age: ", React.createElement(_reactFormValidation.Input, { type: "text", name: prefix + 'age' }), React.createElement(_reactFormValidation.Error, { forName: prefix + 'age' })));
+        }
+    }]);
+
+    return FriendForm;
+})(React.Component);
+
+exports["default"] = FriendForm;
+
+var ListForm = (function (_React$Component2) {
+    _inherits(ListForm, _React$Component2);
 
     /**
      * Returns the initial state of the component.
      */
-    getInitialState: function getInitialState() {
-        return {
-            form: new Instance({
+
+    function ListForm(props) {
+        _classCallCheck(this, ListForm);
+
+        _get(Object.getPrototypeOf(ListForm.prototype), "constructor", this).call(this, props);
+
+        this.state = {
+            form: new _reactFormValidation.Context({
                 fields: {
                     friend: {
-                        name: Rules.required(),
-                        age: Rules.optional().integer()
+                        name: _reactFormValidation.Rules.required(),
+                        age: _reactFormValidation.Rules.optional().integer()
                     }
                 }
             }),
             nbFriends: 2
         };
-    },
+    }
 
     /**
      * Called when the user clicks "add friend".
      */
-    onClickAddFriend: function onClickAddFriend() {
-        this.setState({
-            nbFriends: this.state.nbFriends + 1
-        });
-    },
 
-    /**
-     * Renders the form.
-     */
-    renderFriendFields: function renderFriendFields(form) {
-        var ret = [];
-        for (var i = 0; i < this.state.nbFriends; i++) {
-            var subform = form.fieldset('friend', i);
-            ret.push(React.createElement(FriendForm, { key: i, index: i, form: subform }));
+    _createClass(ListForm, [{
+        key: "onClickAddFriend",
+        value: function onClickAddFriend() {
+            this.setState({
+                nbFriends: this.state.nbFriends + 1
+            });
         }
-        return ret;
-    },
 
-    /**
-     * Renders the form.
-     */
-    render: function render() {
-        var form = this.state.form;
-        return React.createElement(Form, { form: form, onSubmit: this.props.formSubmitted }, React.createElement("h4", null, "Friend List"), this.renderFriendFields(form), React.createElement("div", { className: "actions" }, React.createElement("button", { type: "button", onClick: this.onClickAddFriend }, "Add Friend"), React.createElement("button", null, "Validate")));
-    }
-});
+        /**
+         * Renders the form.
+         */
+    }, {
+        key: "renderFriendFields",
+        value: function renderFriendFields(form) {
+            var ret = [];
+            for (var i = 0; i < this.state.nbFriends; i++) {
+                ret.push(React.createElement(FriendForm, { key: i, index: i }));
+            }
+            return ret;
+        }
 
-},{"react-form-validation":69}],27:[function(require,module,exports){
-module.exports = "\nvar ReactFormValidation = require('react-form-validation'),\n    Instance = ReactFormValidation.Instance,\n    Error = ReactFormValidation.Error,\n    Hint = ReactFormValidation.Hint,\n    Rules = ReactFormValidation.Rules,\n    Form = ReactFormValidation.Form,\n    Input = ReactFormValidation.Input;\n\n/**\n * Friend item form.\n */\nvar FriendForm = React.createClass({\n    render: function() {\n        var form = this.props.form;\n        return (\n            <div className=\"fieldset friend\">\n                <b>Friend {this.props.index + 1}</b>\n                <div className=\"field\">\n                    Name: <Input type=\"text\" name=\"name\" form={form} />\n                    <Error forName=\"name\" form={form} />\n                </div>\n                <div className=\"field\">\n                    Age: <Input type=\"text\" name=\"age\" form={form} />\n                    <Error forName=\"age\" form={form} />\n                </div>\n            </div>\n        );\n    }\n});\n\n/**\n * List example form.\n */\nmodule.exports = React.createClass({\n    /**\n     * Returns the initial state of the component.\n     */\n    getInitialState: function() {\n        return {\n            form: new Instance({\n                fields: {\n                    friend: {\n                        name: Rules.required(),\n                        age: Rules.optional().integer()\n                    }\n                }\n            }),\n            nbFriends: 2\n        };\n    },\n\n    /**\n     * Called when the user clicks \"add friend\".\n     */\n    onClickAddFriend: function() {\n        this.setState({\n            nbFriends: this.state.nbFriends+1\n        });\n    },\n\n    /**\n     * Renders the form.\n     */\n    renderFriendFields: function(form) {\n        var ret = [];\n        for (var i=0; i<this.state.nbFriends; i++) {\n            var subform = form.fieldset('friend', i);\n            ret.push(<FriendForm key={i} index={i} form={subform} />);\n        }\n        return ret;\n    },\n\n    /**\n     * Renders the form.\n     */\n    render: function() {\n        var form = this.state.form;\n        return (\n            <Form form={form} onSubmit={this.props.formSubmitted}>\n                <h4>Friend List</h4>\n                { this.renderFriendFields(form) }\n                <div className=\"actions\">\n                    <button type=\"button\" onClick={this.onClickAddFriend}>Add Friend</button>\n                    <button>Validate</button>\n                </div>\n            </Form>\n        );\n    }\n});\n";
+        /**
+         * Renders the form.
+         */
+    }, {
+        key: "render",
+        value: function render() {
+            var form = this.state.form;
+            return React.createElement(_reactFormValidation.Form, { form: form, onSubmit: this.props.formSubmitted }, React.createElement("h4", null, "Friend List"), this.renderFriendFields(form), React.createElement("div", { className: "actions" }, React.createElement("button", { type: "button", onClick: this.onClickAddFriend.bind(this) }, "Add Friend"), React.createElement("button", null, "Validate")));
+        }
+    }]);
 
-},{}],28:[function(require,module,exports){
+    return ListForm;
+})(React.Component);
+
+exports["default"] = ListForm;
+module.exports = exports["default"];
+
+},{"react-form-validation":71}],28:[function(require,module,exports){
+module.exports = "\nimport { Context, Error, Hint, Rules, Form, Input } from 'react-form-validation';\n\n/**\n * Friend item form.\n */\nexport default class FriendForm extends React.Component {\n    render() {\n        var prefix = `friend[${this.props.index}]`;\n        return (\n            <div className=\"fieldset friend\">\n                <b>Friend {this.props.index + 1}</b>\n                <div className=\"field\">\n                    Name: <Input type=\"text\" name={prefix + 'name'} />\n                    <Error forName={prefix + 'name'} />\n                </div>\n                <div className=\"field\">\n                    Age: <Input type=\"text\" name={prefix + 'age'} />\n                    <Error forName={prefix + 'age'} />\n                </div>\n            </div>\n        );\n    }\n}\n\n/**\n * List example form.\n */\nexport default class ListForm extends React.Component {\n    /**\n     * Returns the initial state of the component.\n     */\n    constructor(props) {\n        super(props);\n\n        this.state = {\n            form: new Context({\n                fields: {\n                    friend: {\n                        name: Rules.required(),\n                        age: Rules.optional().integer()\n                    }\n                }\n            }),\n            nbFriends: 2\n        };\n    }\n\n    /**\n     * Called when the user clicks \"add friend\".\n     */\n    onClickAddFriend() {\n        this.setState({\n            nbFriends: this.state.nbFriends+1\n        });\n    }\n\n    /**\n     * Renders the form.\n     */\n    renderFriendFields(form) {\n        var ret = [];\n        for (var i=0; i<this.state.nbFriends; i++) {\n            ret.push(<FriendForm key={i} index={i} />);\n        }\n        return ret;\n    }\n\n    /**\n     * Renders the form.\n     */\n    render() {\n        var form = this.state.form;\n        return (\n            <Form form={form} onSubmit={this.props.formSubmitted}>\n                <h4>Friend List</h4>\n                { this.renderFriendFields(form) }\n                <div className=\"actions\">\n                    <button type=\"button\" onClick={this.onClickAddFriend.bind(this)}>Add Friend</button>\n                    <button>Validate</button>\n                </div>\n            </Form>\n        );\n    }\n}\n";
+
+},{}],29:[function(require,module,exports){
 'use strict';
 
-var Code = require('../code.js'),
-    LoginForm = require('./login-form.js'),
-    LoginTxt = require('./login-form.txt');
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+    };
+})();
+
+var _get = function get(_x, _x2, _x3) {
+    var _again = true;_function: while (_again) {
+        var object = _x,
+            property = _x2,
+            receiver = _x3;_again = false;if (object === null) object = Function.prototype;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
+            var parent = Object.getPrototypeOf(object);if (parent === null) {
+                return undefined;
+            } else {
+                _x = parent;_x2 = property;_x3 = receiver;_again = true;desc = parent = undefined;continue _function;
+            }
+        } else if ('value' in desc) {
+            return desc.value;
+        } else {
+            var getter = desc.get;if (getter === undefined) {
+                return undefined;
+            }return getter.call(receiver);
+        }
+    }
+};
+
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : { 'default': obj };
+}
+
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+    }
+}
+
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== 'function' && superClass !== null) {
+        throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var _codeJs = require('../code.js');
+
+var _codeJs2 = _interopRequireDefault(_codeJs);
+
+var _loginFormJs = require('./login-form.js');
+
+var _loginFormJs2 = _interopRequireDefault(_loginFormJs);
+
+var _loginFormTxt = require('./login-form.txt');
+
+var _loginFormTxt2 = _interopRequireDefault(_loginFormTxt);
 
 /**
  * Component that renders an example.
  */
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'LoginExample',
+
+var LoginExample = (function (_React$Component) {
+    _inherits(LoginExample, _React$Component);
 
     /**
      * Returns the initial state of this component.
      */
-    getInitialState: function getInitialState() {
-        return {};
-    },
+
+    function LoginExample(props) {
+        _classCallCheck(this, LoginExample);
+
+        _get(Object.getPrototypeOf(LoginExample.prototype), 'constructor', this).call(this, props);
+        this.state = {};
+    }
 
     /**
      * Called when the form is submitted.
      */
-    formSubmitted: function formSubmitted(valid, data) {
-        this.setState({
-            formData: data,
-            formValid: valid
-        });
-    },
 
-    /**
-     * Renders the example.
-     */
-    render: function render() {
-        return React.createElement('div', { className: 'example' }, React.createElement('h2', null, 'Login Form'), React.createElement('div', { className: 'code-preview' }, React.createElement('div', { className: 'right-side' }, React.createElement('div', { className: 'preview' }, React.createElement(LoginForm, { formSubmitted: this.formSubmitted })), React.createElement('div', { className: 'data' }, 'Form is valid: ', this.state.formValid ? 'No' : 'Yes', '\n', 'Submitted form data:', '\n', this.state.formData ? JSON.stringify(this.state.formData, null, 2) : 'not yet validated')), React.createElement(Code, { value: LoginTxt })));
-    }
-});
+    _createClass(LoginExample, [{
+        key: 'formSubmitted',
+        value: function formSubmitted(event, valid, data) {
+            this.setState({
+                formData: data,
+                formValid: valid
+            });
+        }
 
-},{"../code.js":1,"./login-form.js":29,"./login-form.txt":30}],29:[function(require,module,exports){
-"use strict";
+        /**
+         * Renders the example.
+         */
+    }, {
+        key: 'render',
+        value: function render() {
+            return React.createElement('div', { className: 'example' }, React.createElement('h2', null, 'Login Form'), React.createElement('div', { className: 'code-preview' }, React.createElement('div', { className: 'right-side' }, React.createElement('div', { className: 'preview' }, React.createElement(_loginFormJs2['default'], { formSubmitted: this.formSubmitted.bind(this) })), React.createElement('div', { className: 'data' }, 'Form is valid: ', this.state.formValid ? 'No' : 'Yes', '\n', 'Submitted form data:', '\n', this.state.formData ? JSON.stringify(this.state.formData, null, 2) : 'not yet validated')), React.createElement(_codeJs2['default'], { value: _loginFormTxt2['default'] })));
+        }
+    }]);
 
-var ReactFormValidation = require('react-form-validation'),
-    Instance = ReactFormValidation.Instance,
-    Error = ReactFormValidation.Error,
-    Rules = ReactFormValidation.Rules,
-    Form = ReactFormValidation.Form,
-    Input = ReactFormValidation.Input;
+    return LoginExample;
+})(React.Component);
 
-/**
- * Simple login form.
- */
-module.exports = React.createClass({
-    displayName: "exports",
+exports['default'] = LoginExample;
+module.exports = exports['default'];
 
-    /**
-     * Returns the initial state of the component.
-     */
-    getInitialState: function getInitialState() {
-        return {
-            form: new Instance({
-                fields: {
-                    email: Rules.required().email(),
-                    password: Rules.required()
-                }
-            })
-        };
-    },
-
-    /**
-     * Renders the form.
-     */
-    render: function render() {
-        var form = this.state.form;
-        return React.createElement(Form, { form: form, onSubmit: this.props.formSubmitted }, React.createElement("h4", null, "Login"), React.createElement("div", { className: "field" }, "Email: ", React.createElement(Input, { type: "text", name: "email", form: form }), React.createElement(Error, { forName: "email", form: form })), React.createElement("div", { className: "field" }, "Password: ", React.createElement(Input, { type: "password", name: "password", form: form }), React.createElement(Error, { forName: "password", form: form })), React.createElement("div", { className: "actions" }, React.createElement("button", null, "Login")));
-    }
-});
-
-},{"react-form-validation":69}],30:[function(require,module,exports){
-module.exports = "\nvar ReactFormValidation = require('react-form-validation'),\n    Instance = ReactFormValidation.Instance,\n    Error = ReactFormValidation.Error,\n    Rules = ReactFormValidation.Rules,\n    Form = ReactFormValidation.Form,\n    Input = ReactFormValidation.Input;\n\n/**\n * Simple login form.\n */\nmodule.exports = React.createClass({\n    /**\n     * Returns the initial state of the component.\n     */\n    getInitialState: function() {\n        return {\n            form: new Instance({\n                fields: {\n                    email: Rules.required().email(),\n                    password: Rules.required()\n                }\n            })\n        };\n    },\n\n    /**\n     * Renders the form.\n     */\n    render: function() {\n        var form = this.state.form;\n        return (\n            <Form form={form} onSubmit={this.props.formSubmitted}>\n                <h4>Login</h4>\n                <div className=\"field\">\n                    Email: <Input type=\"text\" name=\"email\" form={form} />\n                    <Error forName=\"email\" form={form} />\n                </div>\n                <div className=\"field\">\n                    Password: <Input type=\"password\" name=\"password\" form={form} />\n                    <Error forName=\"password\" form={form} />\n                </div>\n                <div className=\"actions\">\n                    <button>Login</button>\n                </div>\n            </Form>\n        );\n    }\n});\n";
-
-},{}],31:[function(require,module,exports){
-'use strict';
-
-var Code = require('../code.js'),
-    RegisterForm = require('./register-form.js'),
-    RegisterTxt = require('./register-form.txt');
-
-/**
- * Component that renders an example.
- */
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'RegisterExample',
-
-    /**
-     * Returns the initial state of this component.
-     */
-    getInitialState: function getInitialState() {
-        return {};
-    },
-
-    /**
-     * Called when the form is submitted.
-     */
-    formSubmitted: function formSubmitted(valid, data) {
-        this.setState({
-            formData: data,
-            formValid: valid
-        });
-    },
-
-    /**
-     * Renders the example.
-     */
-    render: function render() {
-        return React.createElement('div', { className: 'example' }, React.createElement('h2', null, 'Registration Form'), React.createElement('div', { className: 'code-preview' }, React.createElement('div', { className: 'right-side' }, React.createElement('div', { className: 'preview' }, React.createElement(RegisterForm, { formSubmitted: this.formSubmitted })), React.createElement('div', { className: 'data' }, 'Form is valid: ', this.state.formValid ? 'No' : 'Yes', '\n', 'Submitted form data:', '\n', this.state.formData ? JSON.stringify(this.state.formData, null, 2) : 'not yet validated')), React.createElement(Code, { value: RegisterTxt })));
-    }
-});
-
-},{"../code.js":1,"./register-form.js":32,"./register-form.txt":33}],32:[function(require,module,exports){
-'use strict';
-
-var ReactFormValidation = require('react-form-validation'),
-    Instance = ReactFormValidation.Instance,
-    Error = ReactFormValidation.Error,
-    Hint = ReactFormValidation.Hint,
-    Rules = ReactFormValidation.Rules,
-    Form = ReactFormValidation.Form,
-    Input = ReactFormValidation.Input;
-
-/**
- * Simple login form.
- */
-module.exports = React.createClass({
-    displayName: 'exports',
-
-    /**
-     * Returns the initial state of the component.
-     */
-    getInitialState: function getInitialState() {
-        return {
-            form: new Instance({
-                fields: {
-                    username: Rules.required().regex(/^[a-z0-9_]+$/, 'Should only contain letters, numbers and _.'),
-                    email: Rules.required().email(),
-                    password: Rules.required().password(),
-                    confirmPassword: Rules.equals('password')
-                }
-            })
-        };
-    },
-
-    /**
-     * Renders the form.
-     */
-    render: function render() {
-        var form = this.state.form;
-        return React.createElement(Form, { form: form, onSubmit: this.props.formSubmitted }, React.createElement('h4', null, 'Register'), React.createElement('div', { className: 'field' }, 'Username: ', React.createElement(Input, { type: 'text', name: 'username', form: form }), React.createElement(Error, { forName: 'username', form: form }), React.createElement(Hint, { forName: 'username', form: form,
-            text: 'Only letters, numbers or _ is allowed' })), React.createElement('div', { className: 'field' }, 'Email: ', React.createElement(Input, { type: 'text', name: 'email', form: form }), React.createElement(Error, { forName: 'email', form: form })), React.createElement('div', { className: 'field' }, 'Password: ', React.createElement(Input, { type: 'password', name: 'password', form: form }), React.createElement(Error, { forName: 'password', form: form }), React.createElement(Hint, { forName: 'password', form: form,
-            text: 'At least 8 characters, one uppercase, one lowercase and one number' })), React.createElement('div', { className: 'field' }, 'Confirm Password: ', React.createElement(Input, { type: 'password', name: 'confirmPassword', form: form }), React.createElement(Error, { forName: 'confirmPassword', form: form })), React.createElement('div', { className: 'actions' }, React.createElement('button', null, 'Register')));
-    }
-});
-
-},{"react-form-validation":69}],33:[function(require,module,exports){
-module.exports = "\nvar ReactFormValidation = require('react-form-validation'),\n    Instance = ReactFormValidation.Instance,\n    Error = ReactFormValidation.Error,\n    Hint = ReactFormValidation.Hint,\n    Rules = ReactFormValidation.Rules,\n    Form = ReactFormValidation.Form,\n    Input = ReactFormValidation.Input;\n\n/**\n * Simple login form.\n */\nmodule.exports = React.createClass({\n    /**\n     * Returns the initial state of the component.\n     */\n    getInitialState: function() {\n        return {\n            form: new Instance({\n                fields: {\n                    username: Rules.required().regex(/^[a-z0-9_]+$/,\n                        'Should only contain letters, numbers and _.'),\n                    email: Rules.required().email(),\n                    password: Rules.required().password(),\n                    confirmPassword: Rules.equals('password')\n                }\n            })\n        };\n    },\n\n    /**\n     * Renders the form.\n     */\n    render: function() {\n        var form = this.state.form;\n        return (\n            <Form form={form} onSubmit={this.props.formSubmitted}>\n                <h4>Register</h4>\n                <div className=\"field\">\n                    Username: <Input type=\"text\" name=\"username\" form={form} />\n                    <Error forName=\"username\" form={form} />\n                    <Hint forName=\"username\" form={form}\n                        text=\"Only letters, numbers or _ is allowed\" />\n                </div>\n                <div className=\"field\">\n                    Email: <Input type=\"text\" name=\"email\" form={form} />\n                    <Error forName=\"email\" form={form} />\n                </div>\n                <div className=\"field\">\n                    Password: <Input type=\"password\" name=\"password\" form={form} />\n                    <Error forName=\"password\" form={form} />\n                    <Hint forName=\"password\" form={form}\n                        text=\"At least 8 characters, one uppercase, one lowercase and one number\" />\n                </div>\n                <div className=\"field\">\n                    Confirm Password: <Input type=\"password\" name=\"confirmPassword\" form={form} />\n                    <Error forName=\"confirmPassword\" form={form} />\n                </div>\n                <div className=\"actions\">\n                    <button>Register</button>\n                </div>\n            </Form>\n        );\n    }\n});\n";
-
-},{}],34:[function(require,module,exports){
+},{"../code.js":1,"./login-form.js":30,"./login-form.txt":31}],30:[function(require,module,exports){
 (function (global){
-
-// render page
 'use strict';
 
-var ReactDOM = (typeof window !== "undefined" ? window['ReactDOM'] : typeof global !== "undefined" ? global['ReactDOM'] : null),
-    ReactRouter = require('react-router'),
-    createHashHistory = require('history/lib/createHashHistory'),
-    Router = ReactRouter.Router,
-    Route = ReactRouter.Route,
-    IndexRoute = ReactRouter.IndexRoute,
-    Main = require('./main.js'),
-    Install = require('./install.js'),
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
 
-// example pages
-Example = require('./example.js'),
-    LoginExample = require('./examples/login-example.js'),
-    RegisterExample = require('./examples/register-example.js'),
-    ListExample = require('./examples/list-example.js'),
-    CustomFieldExample = require('./examples/custom-field-example.js'),
-    CustomRuleExample = require('./examples/custom-rule-example.js'),
+var _createClass = (function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+    };
+})();
 
-// documentation pages
-Documentation = require('./documentation.js'),
-    RulesClassDocumentation = require('./docs/rules-documentation.js'),
-    InstanceClassDocumentation = require('./docs/instance-documentation.js'),
-    FormComponentDocumentation = require('./docs/form-documentation.js'),
-    InputComponentDocumentation = require('./docs/input-documentation.js'),
-    ErrorComponentDocumentation = require('./docs/error-documentation.js'),
-    HintComponentDocumentation = require('./docs/hint-documentation.js'),
-    SelectComponentDocumentation = require('./docs/select-documentation.js'),
-    ListenerMixinDocumentation = require('./docs/listener-mixin-documentation.js'),
-    FieldMixinDocumentation = require('./docs/field-mixin-documentation.js');
+var _get = function get(_x, _x2, _x3) {
+    var _again = true;_function: while (_again) {
+        var object = _x,
+            property = _x2,
+            receiver = _x3;_again = false;if (object === null) object = Function.prototype;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
+            var parent = Object.getPrototypeOf(object);if (parent === null) {
+                return undefined;
+            } else {
+                _x = parent;_x2 = property;_x3 = receiver;_again = true;desc = parent = undefined;continue _function;
+            }
+        } else if ('value' in desc) {
+            return desc.value;
+        } else {
+            var getter = desc.get;if (getter === undefined) {
+                return undefined;
+            }return getter.call(receiver);
+        }
+    }
+};
 
-ReactDOM.render(React.createElement(Router, { history: createHashHistory() }, React.createElement(Route, { path: '/', component: Main }, React.createElement(IndexRoute, { component: Install }), React.createElement(Route, { path: 'install', component: Install }), React.createElement(Route, { path: 'example', component: Example }, React.createElement(IndexRoute, { component: LoginExample }), React.createElement(Route, { path: 'login', component: LoginExample }), React.createElement(Route, { path: 'register', component: RegisterExample }), React.createElement(Route, { path: 'list', component: ListExample }), React.createElement(Route, { path: 'custom-field', component: CustomFieldExample }), React.createElement(Route, { path: 'custom-rule', component: CustomRuleExample })), React.createElement(Route, { path: 'documentation', component: Documentation }, React.createElement(IndexRoute, { component: RulesClassDocumentation }), React.createElement(Route, { path: 'rules-class', component: RulesClassDocumentation }), React.createElement(Route, { path: 'instance-class', component: InstanceClassDocumentation }), React.createElement(Route, { path: 'form-component', component: FormComponentDocumentation }), React.createElement(Route, { path: 'input-component', component: InputComponentDocumentation }), React.createElement(Route, { path: 'select-component', component: SelectComponentDocumentation }), React.createElement(Route, { path: 'error-component', component: ErrorComponentDocumentation }), React.createElement(Route, { path: 'hint-component', component: HintComponentDocumentation }), React.createElement(Route, { path: 'listener-mixin', component: ListenerMixinDocumentation }), React.createElement(Route, { path: 'field-mixin', component: FieldMixinDocumentation })))), document.getElementById('main'));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : { 'default': obj };
+}
+
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+    }
+}
+
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== 'function' && superClass !== null) {
+        throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var _react = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactFormValidation = require('react-form-validation');
+
+/**
+ * Simple login form.
+ */
+
+var LoginForm = (function (_React$Component) {
+    _inherits(LoginForm, _React$Component);
+
+    /**
+     * Constructor.
+     */
+
+    function LoginForm(props) {
+        _classCallCheck(this, LoginForm);
+
+        _get(Object.getPrototypeOf(LoginForm.prototype), 'constructor', this).call(this, props);
+
+        this.state = {
+            form: new _reactFormValidation.Context({
+                fields: {
+                    email: _reactFormValidation.Rules.required().email(),
+                    password: _reactFormValidation.Rules.required()
+                }
+            })
+        };
+    }
+
+    /**
+     * Renders the form.
+     */
+
+    _createClass(LoginForm, [{
+        key: 'render',
+        value: function render() {
+            return _react2['default'].createElement(_reactFormValidation.Form, { form: this.state.form, onSubmit: this.props.formSubmitted }, _react2['default'].createElement('h4', null, 'Login'), _react2['default'].createElement('div', { className: 'field' }, 'Email: ', _react2['default'].createElement(_reactFormValidation.Input, { type: 'text', name: 'email' }), _react2['default'].createElement(_reactFormValidation.Error, { forName: 'email' })), _react2['default'].createElement('div', { className: 'field' }, 'Password: ', _react2['default'].createElement(_reactFormValidation.Input, { type: 'password', name: 'password' }), _react2['default'].createElement(_reactFormValidation.Error, { forName: 'password' })), _react2['default'].createElement('div', { className: 'actions' }, _react2['default'].createElement('button', null, 'Login')));
+        }
+    }]);
+
+    return LoginForm;
+})(_react2['default'].Component);
+
+exports['default'] = LoginForm;
+module.exports = exports['default'];
 
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./docs/error-documentation.js":2,"./docs/field-mixin-documentation.js":4,"./docs/form-documentation.js":5,"./docs/hint-documentation.js":7,"./docs/input-documentation.js":9,"./docs/instance-documentation.js":11,"./docs/listener-mixin-documentation.js":12,"./docs/rules-documentation.js":13,"./docs/select-documentation.js":15,"./documentation.js":17,"./example.js":18,"./examples/custom-field-example.js":19,"./examples/custom-rule-example.js":22,"./examples/list-example.js":25,"./examples/login-example.js":28,"./examples/register-example.js":31,"./install.js":36,"./main.js":37,"history/lib/createHashHistory":45,"react-router":95}],35:[function(require,module,exports){
+},{"react-form-validation":71}],31:[function(require,module,exports){
+module.exports = "\nimport React from 'react';\nimport { Context, Error, Rules, Form, Input } from 'react-form-validation';\n\n/**\n * Simple login form.\n */\nexport default class LoginForm extends React.Component {\n    /**\n     * Constructor.\n     */\n    constructor(props) {\n        super(props);\n\n        this.state = {\n            form: new Context({\n                fields: {\n                    email: Rules.required().email(),\n                    password: Rules.required()\n                }\n            })\n        };\n    }\n\n    /**\n     * Renders the form.\n     */\n    render() {\n        return (\n            <Form form={this.state.form} onSubmit={this.props.formSubmitted}>\n                <h4>Login</h4>\n                <div className=\"field\">\n                    Email: <Input type=\"text\" name=\"email\" />\n                    <Error forName=\"email\" />\n                </div>\n                <div className=\"field\">\n                    Password: <Input type=\"password\" name=\"password\" />\n                    <Error forName=\"password\" />\n                </div>\n                <div className=\"actions\">\n                    <button>Login</button>\n                </div>\n            </Form>\n        );\n    }\n}\n";
+
+},{}],32:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+    };
+})();
+
+var _get = function get(_x, _x2, _x3) {
+    var _again = true;_function: while (_again) {
+        var object = _x,
+            property = _x2,
+            receiver = _x3;_again = false;if (object === null) object = Function.prototype;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
+            var parent = Object.getPrototypeOf(object);if (parent === null) {
+                return undefined;
+            } else {
+                _x = parent;_x2 = property;_x3 = receiver;_again = true;desc = parent = undefined;continue _function;
+            }
+        } else if ('value' in desc) {
+            return desc.value;
+        } else {
+            var getter = desc.get;if (getter === undefined) {
+                return undefined;
+            }return getter.call(receiver);
+        }
+    }
+};
+
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : { 'default': obj };
+}
+
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+    }
+}
+
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== 'function' && superClass !== null) {
+        throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var _codeJs = require('../code.js');
+
+var _codeJs2 = _interopRequireDefault(_codeJs);
+
+var _registerFormJs = require('./register-form.js');
+
+var _registerFormJs2 = _interopRequireDefault(_registerFormJs);
+
+var _registerFormTxt = require('./register-form.txt');
+
+var _registerFormTxt2 = _interopRequireDefault(_registerFormTxt);
+
+/**
+ * Component that renders an example.
+ */
+
+var RegisterExample = (function (_React$Component) {
+    _inherits(RegisterExample, _React$Component);
+
+    /**
+     * Returns the initial state of this component.
+     */
+
+    function RegisterExample(props) {
+        _classCallCheck(this, RegisterExample);
+
+        _get(Object.getPrototypeOf(RegisterExample.prototype), 'constructor', this).call(this, props);
+        this.state = {};
+    }
+
+    /**
+     * Called when the form is submitted.
+     */
+
+    _createClass(RegisterExample, [{
+        key: 'formSubmitted',
+        value: function formSubmitted(event, valid, data) {
+            this.setState({
+                formData: data,
+                formValid: valid
+            });
+        }
+
+        /**
+         * Renders the example.
+         */
+    }, {
+        key: 'render',
+        value: function render() {
+            return React.createElement('div', { className: 'example' }, React.createElement('h2', null, 'Registration Form'), React.createElement('div', { className: 'code-preview' }, React.createElement('div', { className: 'right-side' }, React.createElement('div', { className: 'preview' }, React.createElement(_registerFormJs2['default'], { formSubmitted: this.formSubmitted.bind(this) })), React.createElement('div', { className: 'data' }, 'Form is valid: ', this.state.formValid ? 'No' : 'Yes', '\n', 'Submitted form data:', '\n', this.state.formData ? JSON.stringify(this.state.formData, null, 2) : 'not yet validated')), React.createElement(_codeJs2['default'], { value: _registerFormTxt2['default'] })));
+        }
+    }]);
+
+    return RegisterExample;
+})(React.Component);
+
+exports['default'] = RegisterExample;
+module.exports = exports['default'];
+
+},{"../code.js":1,"./register-form.js":33,"./register-form.txt":34}],33:[function(require,module,exports){
+(function (global){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+    };
+})();
+
+var _get = function get(_x, _x2, _x3) {
+    var _again = true;_function: while (_again) {
+        var object = _x,
+            property = _x2,
+            receiver = _x3;_again = false;if (object === null) object = Function.prototype;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
+            var parent = Object.getPrototypeOf(object);if (parent === null) {
+                return undefined;
+            } else {
+                _x = parent;_x2 = property;_x3 = receiver;_again = true;desc = parent = undefined;continue _function;
+            }
+        } else if ('value' in desc) {
+            return desc.value;
+        } else {
+            var getter = desc.get;if (getter === undefined) {
+                return undefined;
+            }return getter.call(receiver);
+        }
+    }
+};
+
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : { 'default': obj };
+}
+
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+    }
+}
+
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== 'function' && superClass !== null) {
+        throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var _react = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactFormValidation = require('react-form-validation');
+
+/**
+ * Registration form.
+ */
+
+var RegisterForm = (function (_React$Component) {
+    _inherits(RegisterForm, _React$Component);
+
+    /**
+     * Constructor.
+     */
+
+    function RegisterForm(props) {
+        _classCallCheck(this, RegisterForm);
+
+        _get(Object.getPrototypeOf(RegisterForm.prototype), 'constructor', this).call(this, props);
+
+        this.state = {
+            form: new _reactFormValidation.Context({
+                fields: {
+                    username: _reactFormValidation.Rules.required().regex(/^[a-z0-9_]+$/, 'Should only contain letters, numbers and _.'),
+                    email: _reactFormValidation.Rules.required().email(),
+                    password: _reactFormValidation.Rules.required().password(),
+                    confirmPassword: _reactFormValidation.Rules.equals('password')
+                }
+            })
+        };
+    }
+
+    /**
+     * Renders the form.
+     */
+
+    _createClass(RegisterForm, [{
+        key: 'render',
+        value: function render() {
+            return _react2['default'].createElement(_reactFormValidation.Form, { form: this.state.form, onSubmit: this.props.formSubmitted }, _react2['default'].createElement('h4', null, 'Register'), _react2['default'].createElement('div', { className: 'field' }, 'Username: ', _react2['default'].createElement(_reactFormValidation.Input, { type: 'text', name: 'username' }), _react2['default'].createElement(_reactFormValidation.Error, { forName: 'username' }), _react2['default'].createElement(_reactFormValidation.Hint, { forName: 'username',
+                text: 'Only letters, numbers or _ is allowed' })), _react2['default'].createElement('div', { className: 'field' }, 'Email: ', _react2['default'].createElement(_reactFormValidation.Input, { type: 'text', name: 'email' }), _react2['default'].createElement(_reactFormValidation.Error, { forName: 'email' })), _react2['default'].createElement('div', { className: 'field' }, 'Password: ', _react2['default'].createElement(_reactFormValidation.Input, { type: 'password', name: 'password' }), _react2['default'].createElement(_reactFormValidation.Error, { forName: 'password' }), _react2['default'].createElement(_reactFormValidation.Hint, { forName: 'password',
+                text: 'At least 8 characters, one uppercase, one lowercase and one number' })), _react2['default'].createElement('div', { className: 'field' }, 'Confirm Password: ', _react2['default'].createElement(_reactFormValidation.Input, { type: 'password', name: 'confirmPassword' }), _react2['default'].createElement(_reactFormValidation.Error, { forName: 'confirmPassword' })), _react2['default'].createElement('div', { className: 'actions' }, _react2['default'].createElement('button', null, 'Register')));
+        }
+    }]);
+
+    return RegisterForm;
+})(_react2['default'].Component);
+
+exports['default'] = RegisterForm;
+module.exports = exports['default'];
+
+}).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"react-form-validation":71}],34:[function(require,module,exports){
+module.exports = "\nimport React from 'react';\nimport { Context, Error, Hint, Rules, Form, Input } from 'react-form-validation';\n\n/**\n * Registration form.\n */\nexport default class RegisterForm extends React.Component {\n    /**\n     * Constructor.\n     */\n    constructor(props) {\n        super(props);\n\n        this.state = {\n            form: new Context({\n                fields: {\n                    username: Rules.required().regex(/^[a-z0-9_]+$/,\n                        'Should only contain letters, numbers and _.'),\n                    email: Rules.required().email(),\n                    password: Rules.required().password(),\n                    confirmPassword: Rules.equals('password')\n                }\n            })\n        };\n    }\n\n    /**\n     * Renders the form.\n     */\n    render() {\n        return (\n            <Form form={this.state.form} onSubmit={this.props.formSubmitted}>\n                <h4>Register</h4>\n                <div className=\"field\">\n                    Username: <Input type=\"text\" name=\"username\" />\n                    <Error forName=\"username\" />\n                    <Hint forName=\"username\"\n                        text=\"Only letters, numbers or _ is allowed\" />\n                </div>\n                <div className=\"field\">\n                    Email: <Input type=\"text\" name=\"email\" />\n                    <Error forName=\"email\" />\n                </div>\n                <div className=\"field\">\n                    Password: <Input type=\"password\" name=\"password\" />\n                    <Error forName=\"password\" />\n                    <Hint forName=\"password\"\n                        text=\"At least 8 characters, one uppercase, one lowercase and one number\" />\n                </div>\n                <div className=\"field\">\n                    Confirm Password: <Input type=\"password\" name=\"confirmPassword\" />\n                    <Error forName=\"confirmPassword\" />\n                </div>\n                <div className=\"actions\">\n                    <button>Register</button>\n                </div>\n            </Form>\n        );\n    }\n}\n";
+
+},{}],35:[function(require,module,exports){
+(function (global){
+
+// imports
+'use strict';
+
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : { 'default': obj };
+}
+
+var _reactDom = (typeof window !== "undefined" ? window['ReactDOM'] : typeof global !== "undefined" ? global['ReactDOM'] : null);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _reactRouter = require('react-router');
+
+var _historyLibCreateHashHistory = require('history/lib/createHashHistory');
+
+var _historyLibCreateHashHistory2 = _interopRequireDefault(_historyLibCreateHashHistory);
+
+var _mainJs = require('./main.js');
+
+var _mainJs2 = _interopRequireDefault(_mainJs);
+
+var _installJs = require('./install.js');
+
+var _installJs2 = _interopRequireDefault(_installJs);
+
+// example pages
+
+var _exampleJs = require('./example.js');
+
+var _exampleJs2 = _interopRequireDefault(_exampleJs);
+
+var _examplesLoginExampleJs = require('./examples/login-example.js');
+
+var _examplesLoginExampleJs2 = _interopRequireDefault(_examplesLoginExampleJs);
+
+var _examplesRegisterExampleJs = require('./examples/register-example.js');
+
+var _examplesRegisterExampleJs2 = _interopRequireDefault(_examplesRegisterExampleJs);
+
+var _examplesListExampleJs = require('./examples/list-example.js');
+
+var _examplesListExampleJs2 = _interopRequireDefault(_examplesListExampleJs);
+
+var _examplesCustomFieldExampleJs = require('./examples/custom-field-example.js');
+
+var _examplesCustomFieldExampleJs2 = _interopRequireDefault(_examplesCustomFieldExampleJs);
+
+var _examplesCustomRuleExampleJs = require('./examples/custom-rule-example.js');
+
+var _examplesCustomRuleExampleJs2 = _interopRequireDefault(_examplesCustomRuleExampleJs);
+
+// documentation pages
+
+var _documentationJs = require('./documentation.js');
+
+var _documentationJs2 = _interopRequireDefault(_documentationJs);
+
+var _docsRulesDocumentationJs = require('./docs/rules-documentation.js');
+
+var _docsRulesDocumentationJs2 = _interopRequireDefault(_docsRulesDocumentationJs);
+
+var _docsInstanceDocumentationJs = require('./docs/instance-documentation.js');
+
+var _docsInstanceDocumentationJs2 = _interopRequireDefault(_docsInstanceDocumentationJs);
+
+var _docsFormDocumentationJs = require('./docs/form-documentation.js');
+
+var _docsFormDocumentationJs2 = _interopRequireDefault(_docsFormDocumentationJs);
+
+var _docsInputDocumentationJs = require('./docs/input-documentation.js');
+
+var _docsInputDocumentationJs2 = _interopRequireDefault(_docsInputDocumentationJs);
+
+var _docsErrorDocumentationJs = require('./docs/error-documentation.js');
+
+var _docsErrorDocumentationJs2 = _interopRequireDefault(_docsErrorDocumentationJs);
+
+var _docsHintDocumentationJs = require('./docs/hint-documentation.js');
+
+var _docsHintDocumentationJs2 = _interopRequireDefault(_docsHintDocumentationJs);
+
+var _docsSelectDocumentationJs = require('./docs/select-documentation.js');
+
+var _docsSelectDocumentationJs2 = _interopRequireDefault(_docsSelectDocumentationJs);
+
+var _docsListenerMixinDocumentationJs = require('./docs/listener-mixin-documentation.js');
+
+var _docsListenerMixinDocumentationJs2 = _interopRequireDefault(_docsListenerMixinDocumentationJs);
+
+var _docsFieldMixinDocumentationJs = require('./docs/field-mixin-documentation.js');
+
+var _docsFieldMixinDocumentationJs2 = _interopRequireDefault(_docsFieldMixinDocumentationJs);
+
+_reactDom2['default'].render(React.createElement(_reactRouter.Router, { history: (0, _historyLibCreateHashHistory2['default'])({ queryKey: false }) }, React.createElement(_reactRouter.Route, { path: '/', component: _mainJs2['default'] }, React.createElement(_reactRouter.IndexRoute, { component: _installJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'install', component: _installJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'example', component: _exampleJs2['default'] }, React.createElement(_reactRouter.IndexRoute, { component: _examplesLoginExampleJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'login', component: _examplesLoginExampleJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'register', component: _examplesRegisterExampleJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'list', component: _examplesListExampleJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'custom-field', component: _examplesCustomFieldExampleJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'custom-rule', component: _examplesCustomRuleExampleJs2['default'] })), React.createElement(_reactRouter.Route, { path: 'documentation', component: _documentationJs2['default'] }, React.createElement(_reactRouter.IndexRoute, { component: _docsRulesDocumentationJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'rules-class', component: _docsRulesDocumentationJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'instance-class', component: _docsInstanceDocumentationJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'form-component', component: _docsFormDocumentationJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'input-component', component: _docsInputDocumentationJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'select-component', component: _docsSelectDocumentationJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'error-component', component: _docsErrorDocumentationJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'hint-component', component: _docsHintDocumentationJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'listener-mixin', component: _docsListenerMixinDocumentationJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'field-mixin', component: _docsFieldMixinDocumentationJs2['default'] })))), document.getElementById('main'));
+
+}).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./docs/error-documentation.js":2,"./docs/field-mixin-documentation.js":4,"./docs/form-documentation.js":5,"./docs/hint-documentation.js":8,"./docs/input-documentation.js":10,"./docs/instance-documentation.js":12,"./docs/listener-mixin-documentation.js":13,"./docs/rules-documentation.js":14,"./docs/select-documentation.js":16,"./documentation.js":18,"./example.js":19,"./examples/custom-field-example.js":20,"./examples/custom-rule-example.js":23,"./examples/list-example.js":26,"./examples/login-example.js":29,"./examples/register-example.js":32,"./install.js":37,"./main.js":38,"history/lib/createHashHistory":46,"react-router":96}],36:[function(require,module,exports){
 module.exports = "// using an ES6 transpiler, like babel\nimport { Form, Input } from 'react-form-validation';\n\n// not using an ES6 transpiler\nvar ReactFormValidation = require('react-form-validation'),\n    Error = ReactFormValidation.Error,\n    Hint = ReactFormValidation.Hint;";
 
-},{}],36:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
+(function (global){
 'use strict';
 
-var Code = require('./code.js'),
-    ImportCodeText = require('./import.code.txt');
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+    };
+})();
+
+var _get = function get(_x, _x2, _x3) {
+    var _again = true;_function: while (_again) {
+        var object = _x,
+            property = _x2,
+            receiver = _x3;_again = false;if (object === null) object = Function.prototype;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
+            var parent = Object.getPrototypeOf(object);if (parent === null) {
+                return undefined;
+            } else {
+                _x = parent;_x2 = property;_x3 = receiver;_again = true;desc = parent = undefined;continue _function;
+            }
+        } else if ('value' in desc) {
+            return desc.value;
+        } else {
+            var getter = desc.get;if (getter === undefined) {
+                return undefined;
+            }return getter.call(receiver);
+        }
+    }
+};
+
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : { 'default': obj };
+}
+
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+    }
+}
+
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== 'function' && superClass !== null) {
+        throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var _importCodeTxt = require('./import.code.txt');
+
+var _importCodeTxt2 = _interopRequireDefault(_importCodeTxt);
+
+var _codeJs = require('./code.js');
+
+var _codeJs2 = _interopRequireDefault(_codeJs);
+
+var _react = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
+
+var _react2 = _interopRequireDefault(_react);
 
 /**
  * The main page of the website.
  */
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'Main',
 
-    /**
-     * Renders the form.
-     */
-    render: function render() {
-        return React.createElement('div', { id: 'install', className: 'content' }, React.createElement('div', { className: 'section' }, React.createElement('h2', null, ' Introduction '), '/!\\ Work in progress.', React.createElement('br', null), 'Feedback always appreciated.'), React.createElement('div', { className: 'section' }, React.createElement('h2', null, ' Install '), React.createElement('h3', null, ' NPM '), React.createElement(Code, null, 'npm install react-form-validation --save'), React.createElement('h3', null, ' Bower '), React.createElement(Code, null, 'bower install react-form-validation --save'), React.createElement('h2', null, ' Usage ')), React.createElement('div', { className: 'section' }, React.createElement('h3', null, ' Browserify / Webpack '), React.createElement('p', null, 'The most common usage. After installing this library, access it using ', React.createElement('i', null, 'require'), ' or ', React.createElement('i', null, 'import'), '.'), React.createElement(Code, { mode: 'javascript', value: ImportCodeText }), React.createElement('h3', null, ' Script '), React.createElement('p', null, 'This library can be used as an external script added to your web page.', React.createElement('br', null), 'The script ', React.createElement('i', null, 'dist/react-form-validation.js'), ' exposes the classes of the library on window.FormValidation. Instead of using require() you can then access the classes using that object (', React.createElement('i', null, 'window.FormValidation.Field'), ').'), React.createElement(Code, { mode: 'xml' }, '<script type="text/javascript" src="{path_to_library}/dist/react-form-validation.js"></script>')));
+var Install = (function (_React$Component) {
+    _inherits(Install, _React$Component);
+
+    function Install() {
+        _classCallCheck(this, Install);
+
+        _get(Object.getPrototypeOf(Install.prototype), 'constructor', this).apply(this, arguments);
     }
-});
 
-},{"./code.js":1,"./import.code.txt":35}],37:[function(require,module,exports){
+    _createClass(Install, [{
+        key: 'render',
+
+        /**
+         * Renders the form.
+         */
+        value: function render() {
+            return _react2['default'].createElement('div', { id: 'install', className: 'content' }, _react2['default'].createElement('div', { className: 'section' }, _react2['default'].createElement('h2', null, ' Introduction '), '/!\\ Work in progress.', _react2['default'].createElement('br', null), 'Feedback always appreciated.'), _react2['default'].createElement('div', { className: 'section' }, _react2['default'].createElement('h2', null, ' Install '), _react2['default'].createElement('h3', null, ' NPM '), _react2['default'].createElement(_codeJs2['default'], null, 'npm install react-form-validation --save'), _react2['default'].createElement('h3', null, ' Bower '), _react2['default'].createElement(_codeJs2['default'], null, 'bower install react-form-validation --save'), _react2['default'].createElement('h2', null, ' Usage ')), _react2['default'].createElement('div', { className: 'section' }, _react2['default'].createElement('h3', null, ' Browserify / Webpack '), _react2['default'].createElement('p', null, 'The most common usage. After installing this library, access it using ', _react2['default'].createElement('i', null, 'require'), ' or ', _react2['default'].createElement('i', null, 'import'), '.'), _react2['default'].createElement(_codeJs2['default'], { mode: 'javascript', value: _importCodeTxt2['default'] }), _react2['default'].createElement('h3', null, ' Script '), _react2['default'].createElement('p', null, 'This library can be used as an external script added to your web page.', _react2['default'].createElement('br', null), 'The script ', _react2['default'].createElement('i', null, 'dist/react-form-validation.js'), ' exposes the classes of the library on window.FormValidation. Instead of using require() you can then access the classes using that object (', _react2['default'].createElement('i', null, 'window.FormValidation.Field'), ').'), _react2['default'].createElement(_codeJs2['default'], { mode: 'xml' }, '<script type="text/javascript" src="{path_to_library}/dist/react-form-validation.js"></script>')));
+        }
+    }]);
+
+    return Install;
+})(_react2['default'].Component);
+
+exports['default'] = Install;
+module.exports = exports['default'];
+
+}).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./code.js":1,"./import.code.txt":36}],38:[function(require,module,exports){
+(function (global){
 'use strict';
 
-var Link = require('react-router').Link;
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+    };
+})();
+
+var _get = function get(_x, _x2, _x3) {
+    var _again = true;_function: while (_again) {
+        var object = _x,
+            property = _x2,
+            receiver = _x3;_again = false;if (object === null) object = Function.prototype;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
+            var parent = Object.getPrototypeOf(object);if (parent === null) {
+                return undefined;
+            } else {
+                _x = parent;_x2 = property;_x3 = receiver;_again = true;desc = parent = undefined;continue _function;
+            }
+        } else if ('value' in desc) {
+            return desc.value;
+        } else {
+            var getter = desc.get;if (getter === undefined) {
+                return undefined;
+            }return getter.call(receiver);
+        }
+    }
+};
+
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : { 'default': obj };
+}
+
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+    }
+}
+
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== 'function' && superClass !== null) {
+        throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var _reactRouter = require('react-router');
+
+var _react = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
+
+var _react2 = _interopRequireDefault(_react);
 
 /**
  * The main page of the website.
  */
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'Main',
 
-    /**
-     * Renders the form.
-     */
-    render: function render() {
-        return React.createElement('div', { id: 'main' }, React.createElement('div', { className: 'header-wrapper' }, React.createElement('div', { className: 'header' }, React.createElement(Link, { className: 'logo', to: '/' }, React.createElement('img', { src: 'logo.svg' }), 'React Form Validation'), React.createElement(Link, { className: 'link', to: '/install' }, 'Install'), React.createElement(Link, { className: 'link', to: '/example' }, 'Examples'), React.createElement(Link, { className: 'link', to: '/documentation' }, 'Documentation'), React.createElement('a', { className: 'link', href: 'https://github.com/lud2k/react-form-validation' }, 'GitHub'))), React.createElement('div', { className: 'content-wrapper' }, this.props.children), React.createElement('div', { className: 'footer-wrapper' }, React.createElement('div', { className: 'footer' }, 'Created by ', React.createElement('a', { href: 'https://github.com/lud2k' }, 'Ludovic Cabre'))));
+var Main = (function (_React$Component) {
+    _inherits(Main, _React$Component);
+
+    function Main() {
+        _classCallCheck(this, Main);
+
+        _get(Object.getPrototypeOf(Main.prototype), 'constructor', this).apply(this, arguments);
     }
-});
 
-},{"react-router":95}],38:[function(require,module,exports){
+    _createClass(Main, [{
+        key: 'render',
+
+        /**
+         * Renders the form.
+         */
+        value: function render() {
+            return _react2['default'].createElement('div', { id: 'main' }, _react2['default'].createElement('div', { className: 'header-wrapper' }, _react2['default'].createElement('div', { className: 'header' }, _react2['default'].createElement(_reactRouter.Link, { className: 'logo', to: '/' }, _react2['default'].createElement('img', { src: 'logo.svg' }), 'React Form Validation'), _react2['default'].createElement(_reactRouter.Link, { className: 'link', to: '/install' }, 'Install'), _react2['default'].createElement(_reactRouter.Link, { className: 'link', to: '/example' }, 'Examples'), _react2['default'].createElement(_reactRouter.Link, { className: 'link', to: '/documentation' }, 'Documentation'), _react2['default'].createElement('a', { className: 'link', href: 'https://github.com/lud2k/react-form-validation' }, 'GitHub'))), _react2['default'].createElement('div', { className: 'content-wrapper' }, this.props.children), _react2['default'].createElement('div', { className: 'footer-wrapper' }, _react2['default'].createElement('div', { className: 'footer' }, 'Created by ', _react2['default'].createElement('a', { href: 'https://github.com/lud2k' }, 'Ludovic Cabre'))));
+        }
+    }]);
+
+    return Main;
+})(_react2['default'].Component);
+
+exports['default'] = Main;
+module.exports = exports['default'];
+
+}).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"react-router":96}],39:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -1016,7 +2699,7 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],39:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 /**
  * Indicates that navigation was caused by a call to history.push.
  */
@@ -1048,7 +2731,7 @@ exports['default'] = {
   REPLACE: REPLACE,
   POP: POP
 };
-},{}],40:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -1075,7 +2758,7 @@ function loopAsync(turns, work, callback) {
 
   next();
 }
-},{}],41:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 (function (process){
 /*eslint-disable no-empty */
 'use strict';
@@ -1146,7 +2829,7 @@ function readState(key) {
   return null;
 }
 }).call(this,require("oMfpAn"))
-},{"oMfpAn":38,"warning":63}],42:[function(require,module,exports){
+},{"oMfpAn":39,"warning":64}],43:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -1222,13 +2905,13 @@ function supportsGoWithoutReloadUsingHash() {
   var ua = navigator.userAgent;
   return ua.indexOf('Firefox') === -1;
 }
-},{}],43:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
 var canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
 exports.canUseDOM = canUseDOM;
-},{}],44:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -1271,7 +2954,7 @@ function createDOMHistory(options) {
 exports['default'] = createDOMHistory;
 module.exports = exports['default'];
 }).call(this,require("oMfpAn"))
-},{"./DOMUtils":42,"./ExecutionEnvironment":43,"./createHistory":46,"invariant":58,"oMfpAn":38}],45:[function(require,module,exports){
+},{"./DOMUtils":43,"./ExecutionEnvironment":44,"./createHistory":47,"invariant":59,"oMfpAn":39}],46:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -1499,7 +3182,7 @@ function createHashHistory() {
 exports['default'] = createHashHistory;
 module.exports = exports['default'];
 }).call(this,require("oMfpAn"))
-},{"./Actions":39,"./DOMStateStorage":41,"./DOMUtils":42,"./ExecutionEnvironment":43,"./createDOMHistory":44,"invariant":58,"oMfpAn":38,"warning":63}],46:[function(require,module,exports){
+},{"./Actions":40,"./DOMStateStorage":42,"./DOMUtils":43,"./ExecutionEnvironment":44,"./createDOMHistory":45,"invariant":59,"oMfpAn":39,"warning":64}],47:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -1770,7 +3453,7 @@ function createHistory() {
 
 exports['default'] = createHistory;
 module.exports = exports['default'];
-},{"./Actions":39,"./AsyncUtils":40,"./createLocation":47,"./deprecate":49,"./runTransitionHook":52,"deep-equal":55}],47:[function(require,module,exports){
+},{"./Actions":40,"./AsyncUtils":41,"./createLocation":48,"./deprecate":50,"./runTransitionHook":53,"deep-equal":56}],48:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -1807,7 +3490,7 @@ function createLocation() {
 
 exports['default'] = createLocation;
 module.exports = exports['default'];
-},{"./Actions":39,"./parsePath":51}],48:[function(require,module,exports){
+},{"./Actions":40,"./parsePath":52}],49:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -1952,7 +3635,7 @@ function createMemoryHistory() {
 exports['default'] = createMemoryHistory;
 module.exports = exports['default'];
 }).call(this,require("oMfpAn"))
-},{"./Actions":39,"./createHistory":46,"invariant":58,"oMfpAn":38}],49:[function(require,module,exports){
+},{"./Actions":40,"./createHistory":47,"invariant":59,"oMfpAn":39}],50:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -1974,7 +3657,7 @@ function deprecate(fn, message) {
 exports['default'] = deprecate;
 module.exports = exports['default'];
 }).call(this,require("oMfpAn"))
-},{"oMfpAn":38,"warning":63}],50:[function(require,module,exports){
+},{"oMfpAn":39,"warning":64}],51:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -1988,7 +3671,7 @@ function extractPath(string) {
 
 exports["default"] = extractPath;
 module.exports = exports["default"];
-},{}],51:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -2035,7 +3718,7 @@ function parsePath(path) {
 exports['default'] = parsePath;
 module.exports = exports['default'];
 }).call(this,require("oMfpAn"))
-},{"./extractPath":50,"oMfpAn":38,"warning":63}],52:[function(require,module,exports){
+},{"./extractPath":51,"oMfpAn":39,"warning":64}],53:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -2062,7 +3745,7 @@ function runTransitionHook(hook, location, callback) {
 exports['default'] = runTransitionHook;
 module.exports = exports['default'];
 }).call(this,require("oMfpAn"))
-},{"oMfpAn":38,"warning":63}],53:[function(require,module,exports){
+},{"oMfpAn":39,"warning":64}],54:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -2192,7 +3875,7 @@ function useBasename(createHistory) {
 
 exports['default'] = useBasename;
 module.exports = exports['default'];
-},{"./ExecutionEnvironment":43,"./extractPath":50,"./parsePath":51,"./runTransitionHook":52}],54:[function(require,module,exports){
+},{"./ExecutionEnvironment":44,"./extractPath":51,"./parsePath":52,"./runTransitionHook":53}],55:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -2308,7 +3991,7 @@ function useQueries(createHistory) {
 
 exports['default'] = useQueries;
 module.exports = exports['default'];
-},{"./parsePath":51,"./runTransitionHook":52,"qs":59}],55:[function(require,module,exports){
+},{"./parsePath":52,"./runTransitionHook":53,"qs":60}],56:[function(require,module,exports){
 var pSlice = Array.prototype.slice;
 var objectKeys = require('./lib/keys.js');
 var isArguments = require('./lib/is_arguments.js');
@@ -2404,7 +4087,7 @@ function objEquiv(a, b, opts) {
   return typeof a === typeof b;
 }
 
-},{"./lib/is_arguments.js":56,"./lib/keys.js":57}],56:[function(require,module,exports){
+},{"./lib/is_arguments.js":57,"./lib/keys.js":58}],57:[function(require,module,exports){
 var supportsArgumentsClass = (function(){
   return Object.prototype.toString.call(arguments)
 })() == '[object Arguments]';
@@ -2426,7 +4109,7 @@ function unsupported(object){
     false;
 };
 
-},{}],57:[function(require,module,exports){
+},{}],58:[function(require,module,exports){
 exports = module.exports = typeof Object.keys === 'function'
   ? Object.keys : shim;
 
@@ -2437,7 +4120,7 @@ function shim (obj) {
   return keys;
 }
 
-},{}],58:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -2492,7 +4175,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 
 }).call(this,require("oMfpAn"))
-},{"oMfpAn":38}],59:[function(require,module,exports){
+},{"oMfpAn":39}],60:[function(require,module,exports){
 // Load modules
 
 var Stringify = require('./stringify');
@@ -2509,7 +4192,7 @@ module.exports = {
     parse: Parse
 };
 
-},{"./parse":60,"./stringify":61}],60:[function(require,module,exports){
+},{"./parse":61,"./stringify":62}],61:[function(require,module,exports){
 // Load modules
 
 var Utils = require('./utils');
@@ -2697,7 +4380,7 @@ module.exports = function (str, options) {
     return Utils.compact(obj);
 };
 
-},{"./utils":62}],61:[function(require,module,exports){
+},{"./utils":63}],62:[function(require,module,exports){
 // Load modules
 
 var Utils = require('./utils');
@@ -2820,7 +4503,7 @@ module.exports = function (obj, options) {
     return keys.join(delimiter);
 };
 
-},{"./utils":62}],62:[function(require,module,exports){
+},{"./utils":63}],63:[function(require,module,exports){
 // Load modules
 
 
@@ -3012,7 +4695,7 @@ exports.isBuffer = function (obj) {
               obj.constructor.isBuffer(obj));
 };
 
-},{}],63:[function(require,module,exports){
+},{}],64:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -3076,78 +4759,610 @@ if (process.env.NODE_ENV !== 'production') {
 module.exports = warning;
 
 }).call(this,require("oMfpAn"))
-},{"oMfpAn":38}],64:[function(require,module,exports){
+},{"oMfpAn":39}],65:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var _fieldStateJs = require('./field-state.js');
+
+var _rulesJs = require('./rules.js');
+
+var _validationContextJs = require('./validation-context.js');
+
+/**
+ * Context class.
+ * Manages the state of all the components.
+ */
+
+var Context = (function () {
+    /**
+     * Constructor.
+     */
+
+    function Context(config) {
+        _classCallCheck(this, Context);
+
+        this.fields = [];
+        this.listeners = [];
+        this.config = this.normalizeConfig(config);
+    }
+
+    _createClass(Context, [{
+        key: 'normalizeConfig',
+
+        /**
+         * The config object can be written in different ways. This function normalizes it so that it
+         * is easier to use later.
+         */
+        value: function normalizeConfig(config) {
+            for (var key in config) {
+                if (config.hasOwnProperty(key)) {
+                    if (config[key] instanceof _rulesJs.Rules) {
+                        // replace by an object with rules inside
+                        config[key] = {
+                            rules: config[key]
+                        };
+                    } else if (config.rules === undefined) {
+                        // recursively normalizes the config
+                        this.normalizeConfig(config[key]);
+                    }
+                }
+            }
+            return config;
+        }
+
+        /**
+         * Registers a component.
+         */
+    }, {
+        key: 'register',
+        value: function register(component) {
+            this.fields.push(new _fieldStateJs.FieldState(component, { validated: false }));
+        }
+    }, {
+        key: 'unregister',
+
+        /**
+         * Unregisters a component.
+         */
+        value: function unregister(component) {
+            var fields = this.fields;
+            for (var i = 0; i < fields.length; i++) {
+                if (fields[i].getComponent() === component) {
+                    fields.splice(i, 1);
+                    break;
+                }
+            }
+        }
+    }, {
+        key: 'addListener',
+
+        /**
+         * Registers a listener.
+         */
+        value: function addListener(object) {
+            this.listeners.push(object);
+        }
+    }, {
+        key: 'removeListener',
+
+        /**
+         * Unregisters a listener.
+         */
+        value: function removeListener(object) {
+            // remove object from list of listeners
+            var index = this.listeners.indexOf(object);
+            if (index !== -1) {
+                this.listeners.splice(index, 1);
+            }
+        }
+    }, {
+        key: 'getField',
+
+        /**
+         * Returns the information that this class stores about a component.
+         */
+        value: function getField(component) {
+            var fields = this.fields;
+            for (var i = 0; i < fields.length; i++) {
+                var field = fields[i];
+                if (field.getComponent() === component) {
+                    return field;
+                }
+            }
+        }
+    }, {
+        key: 'getFieldState',
+
+        /**
+         * Returns a field's state.
+         */
+        value: function getFieldState(component) {
+            var field = this.getField(component);
+            if (field) {
+                return field.getState();
+            }
+        }
+    }, {
+        key: 'getFieldByName',
+
+        /**
+         * Returns the information that this class stores about a component by looking for its name.
+         */
+        value: function getFieldByName(name) {
+            var fields = this.fields;
+            for (var i = 0; i < fields.length; i++) {
+                var field = fields[i],
+                    fieldName = field.getName();
+                if (fieldName === name) {
+                    return field;
+                }
+            }
+        }
+    }, {
+        key: 'getFieldStateByName',
+
+        /**
+         * Returns a field's state by looking for its name.
+         */
+        value: function getFieldStateByName(name) {
+            var data = this.getFieldByName(name);
+            if (data) {
+                return data.state;
+            }
+        }
+    }, {
+        key: 'getFieldsData',
+
+        /**
+         * Returns the values of all the fields.
+         */
+        value: function getFieldsData() {
+            var ret = {};
+
+            // get all the fields
+            this.fields.forEach(function (field) {
+                var name = field.getName();
+                if (!ret[name]) {
+                    ret[name] = {
+                        fields: []
+                    };
+                }
+                ret[name].fields.push(field);
+            }, this);
+
+            // compute values for all the fields
+            for (var key in ret) {
+                if (ret.hasOwnProperty(key)) {
+                    var data = ret[key],
+                        firstField = data.fields[0],
+                        firstComponent = firstField.component,
+                        isList = firstComponent.isList ? firstComponent.isList() : false;
+
+                    // prepare lists
+                    if (isList) {
+                        data.value = [];
+                        data.fields.forEach(function (field) {
+                            var component = field.component,
+                                checked = component.isChecked ? component.isChecked() : true;
+                            if (checked === undefined || checked === true) {
+                                data.value.push(field.component.getValue());
+                            }
+                        });
+                    } else {
+                        if (data.fields.length > 1) {
+                            data.fields.forEach(function (field) {
+                                var component = field.component,
+                                    checked = component.isChecked ? component.isChecked() : true;
+                                if (checked === true) {
+                                    data.value = component.getValue();
+                                }
+                            });
+                        } else {
+                            var checked = firstComponent.isChecked ? firstComponent.isChecked() : true;
+                            if (checked === undefined || checked === true) {
+                                data.value = firstComponent.getValue();
+                            }
+                        }
+                    }
+                }
+            }
+
+            return ret;
+        }
+    }, {
+        key: 'refineData',
+
+        /**
+         * Processes extract form data to have a better formated object.
+         *
+         * my.key.prop => {my: {key: {prop: ?}}}
+         * my.key[?].prop => {my: {key: [{prop: ?}]}}
+         */
+        value: function refineData(data) {
+            var ret = {};
+
+            var parseKey = function parseKey(key) {
+                var paths = key.split('.');
+                return paths.map(function (path) {
+                    var parts = path.match(/([^\[]*)(\[(.*?)\])?/),
+                        key = parts[1],
+                        index = parts[3];
+                    return {
+                        key: key,
+                        index: index,
+                        isList: !!index
+                    };
+                });
+            };
+
+            var setValue = function setValue(obj, paths, value) {
+                for (var i = 0; i < paths.length; i++) {
+                    var path = paths[i],
+                        isLast = i === paths.length - 1;
+
+                    // create object
+                    if (path.isList) {
+                        if (!obj[path.key]) {
+                            obj[path.key] = [];
+                        }
+                        if (isLast) {
+                            obj[path.key][path.index] = value;
+                        } else {
+                            obj = obj[path.key][path.index] = obj[path.key][path.index] || {};
+                        }
+                    } else {
+                        if (isLast) {
+                            obj[path.key] = value;
+                        } else {
+                            obj = obj[path.key] = obj[path.key] || {};
+                        }
+                    }
+                }
+            };
+
+            // create objects out of keys that contains dots.
+            for (var key in data) {
+                if (data.hasOwnProperty(key)) {
+                    var value = data[key],
+                        paths = parseKey(key);
+                    setValue(ret, paths, value.value);
+                }
+            }
+
+            return ret;
+        }
+    }, {
+        key: 'getRulesForField',
+
+        /**
+         * Returns the rules that apply for a given field.
+         */
+        value: function getRulesForField(field) {
+            // any special rules defined on that field?
+            var fieldRules = field.getRules();
+            if (fieldRules) {
+                return fieldRules;
+            } else {
+                // get full name minus the [keys].
+                var path = field.getName().replace(/\[[^\]+]\]/g, '').split('.'),
+                    configField = this.config.fields;
+
+                // traverse config to where the rules should be
+                while (path.length > 0 && configField) {
+                    configField = configField[path.shift()];
+                }
+
+                if (configField) {
+                    return configField.rules;
+                }
+            }
+        }
+
+        /**
+         * Validates a field.
+         */
+    }, {
+        key: 'validateField',
+        value: function validateField(field, data, force) {
+            var rules = this.getRulesForField(field);
+            if (rules) {
+                var name = field.getName(),
+                    state = data[name],
+                    firstField = state.fields[0];
+
+                // if field hasn't been validated yet, only validate it if force is true
+                if (!firstField.state.validated && !force) {
+                    return;
+                }
+
+                // mark fields as validated
+                state.fields.forEach(function (field) {
+                    field.state.validated = true;
+                });
+
+                // validate field value
+                var result = rules.validate(state.value, new _validationContextJs.ValidationContext(data, field));
+                if (result !== true) {
+                    state.fields.forEach(function (field) {
+                        field.state.valid = false;
+                        field.state.error = result.message;
+                    });
+                    return false;
+                }
+
+                // update fields state
+                state.fields.forEach(function (field) {
+                    field.state.valid = true;
+                    field.state.error = null;
+                });
+
+                return true;
+            }
+        }
+
+        /**
+         * Validates all the fields or the field given as parameter.
+         */
+    }, {
+        key: 'validate',
+        value: function validate(target, force) {
+            var data = this.getFieldsData();
+
+            var valid = true;
+            if (target) {
+                // validate just one field
+                var field = this.getFieldByName(target.props.name);
+                valid &= this.validateField(field, data, force);
+            } else {
+                // validate all the fields
+                this.fields.forEach(function (field) {
+                    valid &= this.validateField(field, data, force);
+                }, this);
+            }
+
+            // prepare result
+            var ret = {
+                valid: valid,
+                state: data,
+                data: this.refineData(data)
+            };
+
+            // call listeners
+            this.listeners.forEach(function (listener) {
+                if (listener.formDidValidate) {
+                    listener.formDidValidate(ret);
+                }
+            });
+
+            return ret;
+        }
+    }]);
+
+    return Context;
+})();
+
+exports.Context = Context;
+},{"./field-state.js":67,"./rules.js":73,"./validation-context.js":76}],66:[function(require,module,exports){
 (function (global){
 'use strict';
 
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var React = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null),
-    ListenerMixin = require('./listener-mixin.js');
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'Error',
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _react = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _utilsJs = require('./utils.js');
+
+var Error = (function (_React$Component) {
+    _inherits(Error, _React$Component);
 
     /**
-     * Mixins
+     * Constructor.
      */
-    mixins: [ListenerMixin],
+
+    function Error(props, context) {
+        _classCallCheck(this, Error);
+
+        _get(Object.getPrototypeOf(Error.prototype), 'constructor', this).call(this, props, context);
+        this.state = this.getFieldState();
+    }
 
     /**
      * Properties type.
      */
-    propTypes: {
-        form: React.PropTypes.any.isRequired,
-        forName: React.PropTypes.string.isRequired
-    },
 
     /**
-     * Returns the initial state of the component.
+     * Called when the component is going to be mounted.
      */
-    getInitialState: function getInitialState() {
-        return this.getFieldState();
-    },
 
-    /**
-     * Called by the listener mixin when the form is validated.
-     */
-    formDidValidate: function formDidValidate(result) {
-        this.setState(this.getFieldState());
-    },
-
-    getFieldState: function getFieldState() {
-        var fieldState = this.props.form.getFieldStateByName(this.props.forName);
-        return {
-            error: fieldState ? fieldState.error : undefined,
-            valid: fieldState ? fieldState.valid : undefined
-        };
-    },
-
-    /**
-     * Renders the input.
-     */
-    render: function render() {
-        if (this.state.valid === false) {
-            return React.createElement(
-                'label',
-                _extends({ className: 'error' }, this.props, { form: null }),
-                this.state.error
-            );
-        } else {
-            return null;
+    _createClass(Error, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            var form = _utilsJs.Utils.getForm(this);
+            if (form) {
+                form.addListener(this);
+            }
         }
-    }
 
-});
+        /**
+         * Called when the component is going to unmount.
+         */
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            var form = _utilsJs.Utils.getForm(this);
+            if (form) {
+                form.removeListener(this);
+            }
+        }
+
+        /**
+         * Called by the listener mixin when the form is validated.
+         */
+    }, {
+        key: 'formDidValidate',
+        value: function formDidValidate(result) {
+            this.setState(this.getFieldState());
+        }
+    }, {
+        key: 'getFieldState',
+        value: function getFieldState() {
+            var form = _utilsJs.Utils.getForm(this),
+                fieldState = form.getFieldStateByName(this.props.forName);
+            return {
+                error: fieldState ? fieldState.error : undefined,
+                valid: fieldState ? fieldState.valid : undefined
+            };
+        }
+
+        /**
+         * Renders the input.
+         */
+    }, {
+        key: 'render',
+        value: function render() {
+            if (this.state.valid === false) {
+                return _react2['default'].createElement(
+                    'label',
+                    _extends({ className: 'error' }, this.props, { form: null }),
+                    this.state.error
+                );
+            } else {
+                return null;
+            }
+        }
+    }]);
+
+    return Error;
+})(_react2['default'].Component);
+
+exports.Error = Error;
+Error.propTypes = {
+    form: _react2['default'].PropTypes.any,
+    forName: _react2['default'].PropTypes.string.isRequired
+};
+
+/**
+ * Context types.
+ */
+Error.contextTypes = {
+    form: _react2['default'].PropTypes.any
+};
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./listener-mixin.js":72}],65:[function(require,module,exports){
+},{"./utils.js":75}],67:[function(require,module,exports){
 'use strict';
 
 /**
- * This mixin registers the component as a field in the parent form.
+ * Field class.
+ * Represents a field stored in the form context.
+ */
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var FieldState = (function () {
+    function FieldState(component, state) {
+        _classCallCheck(this, FieldState);
+
+        this.component = component;
+        this.state = state;
+    }
+
+    /**
+     * Returns the name of this field.
+     */
+
+    _createClass(FieldState, [{
+        key: 'getName',
+        value: function getName() {
+            return this.component.props.name;
+        }
+
+        /**
+         * Returns the component.
+         */
+    }, {
+        key: 'getComponent',
+        value: function getComponent() {
+            return this.component;
+        }
+
+        /**
+         * Returns the rules specified on the component.
+         */
+    }, {
+        key: 'getRules',
+        value: function getRules() {
+            return this.component.props.rules;
+        }
+
+        /**
+         * Returns a field's state.
+         */
+    }, {
+        key: 'getState',
+        value: function getState() {
+            return this.state;
+        }
+    }]);
+
+    return FieldState;
+})();
+
+exports.FieldState = FieldState;
+},{}],68:[function(require,module,exports){
+(function (global){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _react = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _utilsJs = require('./utils.js');
+
+/**
+ * This Field class registers the component as a field in the parent form.
  *
  * Required props:
  *   - form, the form owning the component
@@ -3159,793 +5374,606 @@ module.exports = React.createClass({
  * Required methods:
  *   - getValue(), should return the value of the current component.
  */
-module.exports = {
-    /**
-     * When the component will mount register it in the form.
-     */
-    componentWillMount: function componentWillMount() {
-        if (this.props.form) {
-            this.props.form.register(this);
-        }
-    },
 
-    /**
-     * When the component is removed, unregister it from the form.
-     */
-    componentWillUnmount: function componentWillUnmount() {
-        if (this.props.form) {
-            this.props.form.unregister(this);
-        }
-    },
+var Field = (function (_React$Component) {
+    _inherits(Field, _React$Component);
 
-    /**
-     * Can be called to tell the form that the component's value has changed.
-     */
-    validateField: function validateField(force) {
-        if (this.props.form) {
-            this.props.form.validate(this, force);
-        }
+    function Field() {
+        _classCallCheck(this, Field);
+
+        _get(Object.getPrototypeOf(Field.prototype), 'constructor', this).apply(this, arguments);
     }
-};
-},{}],66:[function(require,module,exports){
-'use strict';
 
-/**
- * Field class.
- * Represents a field stored in the form instance.
- */
-var Field = function Field(component, part, state) {
-    this.component = component;
-    this.part = part;
-    this.state = state;
-};
+    /**
+     * Context types.
+     */
 
-/**
- * Returns the name of this field.
- */
-Field.prototype.getName = function () {
-    return this.component.props.name;
-};
+    _createClass(Field, [{
+        key: 'componentWillMount',
 
-/**
- * Returns the component.
- */
-Field.prototype.getComponent = function () {
-    return this.component;
-};
-
-/**
- * Returns the rules specified on the component.
- */
-Field.prototype.getRules = function () {
-    return this.component.props.rules;
-};
-
-/**
- * Returns the path of this field.
- */
-Field.prototype.getPath = function () {
-    var part = this.part,
-        ret = [];
-    while (part) {
-        if (part.key !== undefined) {
-            ret.splice(0, 0, part.name + '[' + part.key + ']');
-        } else {
-            ret.splice(0, 0, part.name);
+        /**
+         * When the component will mount register it in the form.
+         */
+        value: function componentWillMount() {
+            var form = _utilsJs.Utils.getForm(this);
+            if (form) {
+                form.register(this);
+            }
         }
-        part = part.parent;
-    }
-    return ret.join('.');
-};
 
-/**
- * Returns the full name of this field.
- */
-Field.prototype.getFullName = function () {
-    var path = this.getPath();
-    return path ? path + '.' + this.getName() : this.getName();
-};
+        /**
+         * When the component is removed, unregister it from the form.
+         */
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            var form = _utilsJs.Utils.getForm(this);
+            if (form) {
+                form.unregister(this);
+            }
+        }
 
-/**
- * Returns a field's state.
- */
-Field.prototype.getState = function () {
-    return this.state;
-};
+        /**
+         * Can be called to tell the form that the component's value has changed.
+         */
+    }, {
+        key: 'validateField',
+        value: function validateField(force) {
+            var form = _utilsJs.Utils.getForm(this);
+            if (form) {
+                form.validate(this, force);
+            }
+        }
+    }]);
 
-module.exports = Field;
-},{}],67:[function(require,module,exports){
+    return Field;
+})(_react2['default'].Component);
+
+exports.Field = Field;
+Field.contextTypes = {
+    form: _react2['default'].PropTypes.any
+};
+}).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./utils.js":75}],69:[function(require,module,exports){
 (function (global){
 'use strict';
 
-var React = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _react = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
+
+var _react2 = _interopRequireDefault(_react);
 
 /**
  * Form component.
  */
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'Form',
 
-    /**
-     * Properties type.
-     */
-    propTypes: {
-        form: React.PropTypes.any.isRequired
-    },
+var Form = (function (_React$Component) {
+    _inherits(Form, _React$Component);
 
-    /**
-     * Called when the form is submitted.
-     */
-    onSubmit: function onSubmit(event) {
-        event.preventDefault();
+    function Form() {
+        _classCallCheck(this, Form);
 
-        // validate form, then call callback
-        var result = this.props.form.validate(undefined, true);
-        if (this.props.onSubmit) {
-            this.props.onSubmit(result.valid, result.data, this.props.form);
-        }
-
-        // scroll to error
-        if (this.props.scrollToError) {
-            // TODO: find first error then .scrollIntoView();
-        }
-    },
-
-    /**
-     * Renders the component.
-     */
-    render: function render() {
-        return React.createElement(
-            'form',
-            { className: this.props.className, noValidate: true, onSubmit: this.onSubmit },
-            this.props.children
-        );
+        _get(Object.getPrototypeOf(Form.prototype), 'constructor', this).apply(this, arguments);
     }
-});
 
-module.exports.Form = require('./form.js');
-module.exports.Instance = require('./instance.js');
-module.exports.Input = require('./input.js');
-module.exports.Error = require('./error.js');
-module.exports.FieldMixin = require('./field-mixin.js');
-module.exports.Rules = require('./rules.js');
-module.exports.Select = require('./select.js');
-module.exports.ListenerMixin = require('./listener-mixin.js');
+    /**
+     * Context types.
+     */
+
+    _createClass(Form, [{
+        key: 'onSubmit',
+
+        /**
+         * Called when the form is submitted.
+         */
+        value: function onSubmit(event) {
+            // validate form, then call callback
+            var result = this.props.form.validate(undefined, true);
+            if (this.props.onSubmit) {
+                this.props.onSubmit(event, result.valid, result.data, this.props.form);
+            }
+
+            // prevent form submission if not valid
+            if (!result.valid) {
+                event.preventDefault();
+            }
+
+            // scroll to error
+            if (this.props.scrollToError) {
+                // TODO: find first error then .scrollIntoView();
+            }
+        }
+
+        /**
+         * Returns the form context.
+         */
+    }, {
+        key: 'getChildContext',
+        value: function getChildContext() {
+            return {
+                form: this.props.form
+            };
+        }
+
+        /**
+         * Renders the component.
+         */
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2['default'].createElement(
+                'form',
+                _extends({}, this.props, { noValidate: true, onSubmit: this.onSubmit.bind(this) }),
+                this.props.children
+            );
+        }
+    }]);
+
+    return Form;
+})(_react2['default'].Component);
+
+exports.Form = Form;
+Form.childContextTypes = {
+    form: _react2['default'].PropTypes.any
+};
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./error.js":64,"./field-mixin.js":65,"./form.js":67,"./input.js":70,"./instance.js":71,"./listener-mixin.js":72,"./rules.js":73,"./select.js":74}],68:[function(require,module,exports){
+},{}],70:[function(require,module,exports){
 (function (global){
 'use strict';
 
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var React = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null),
-    ListenerMixin = require('./listener-mixin.js');
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'Hint',
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
-    /**
-     * Mixins
-     */
-    mixins: [ListenerMixin],
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-    /**
-     * Properties type.
-     */
-    propTypes: {
-        display: React.PropTypes.string,
-        text: React.PropTypes.string,
-        form: React.PropTypes.any.isRequired,
-        forName: React.PropTypes.string.isRequired
-    },
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _react = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _utilsJs = require('./utils.js');
+
+var Hint = (function (_React$Component) {
+    _inherits(Hint, _React$Component);
 
     /**
-     * Returns the default props.
+     * Constructor
      */
-    getDefaultProps: function getDefaultProps() {
-        return {
-            display: 'pristine|valid'
-        };
-    },
 
-    /**
-     * Returns the initial state of the component.
-     */
-    getInitialState: function getInitialState() {
-        return {
-            state: this.props.form.getFieldStateByName(this.props.forName),
+    function Hint(props, context) {
+        _classCallCheck(this, Hint);
+
+        _get(Object.getPrototypeOf(Hint.prototype), 'constructor', this).call(this, props, context);
+        var form = _utilsJs.Utils.getForm(this);
+        this.state = {
+            state: form.getFieldStateByName(this.props.forName),
             display: this.parseDisplayString(this.props.display)
         };
-    },
-
-    /**
-     * Called when the component's props have changed.
-     */
-    componentWillReceiveProps: function componentWillReceiveProps(newProps) {
-        if (newProps.display !== this.props.display) {
-            this.setState({
-                display: this.parseDisplayString(newProps.display)
-            });
-        }
-    },
-
-    /**
-     * Converts the display property to an object.
-     */
-    parseDisplayString: function parseDisplayString(display) {
-        var ret = {};
-        (display || '').split(/[\|,]/).forEach(function (item) {
-            ret[item] = true;
-        });
-        return ret;
-    },
-
-    /**
-     * Called by the listener mixin when the form is validated.
-     */
-    formDidValidate: function formDidValidate(result) {
-        this.setState({
-            state: this.props.form.getFieldStateByName(this.props.forName)
-        });
-    },
-
-    /**
-     * Renders the input.
-     */
-    render: function render() {
-        var display = this.state.display,
-            state = this.state.state;
-        if (display.error && state.valid === false || display.pristine && state.validated !== true || display.valid && state.valid === true) {
-            return React.createElement(
-                'label',
-                _extends({ className: 'hint' }, this.props, { form: null }),
-                this.props.text || this.props.children
-            );
-        } else {
-            return null;
-        }
     }
-
-});
-}).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./listener-mixin.js":72}],69:[function(require,module,exports){
-'use strict';
-
-module.exports.Error = require('./error.js');
-module.exports.FieldMixin = require('./field-mixin.js');
-module.exports.Field = require('./field.js');
-module.exports.Form = require('./form.js');
-module.exports.Hint = require('./hint.js');
-module.exports.Input = require('./input.js');
-module.exports.Instance = require('./instance.js');
-module.exports.ListenerMixin = require('./listener-mixin.js');
-module.exports.Rules = require('./rules.js');
-module.exports.Select = require('./select.js');
-},{"./error.js":64,"./field-mixin.js":65,"./field.js":66,"./form.js":67,"./hint.js":68,"./input.js":70,"./instance.js":71,"./listener-mixin.js":72,"./rules.js":73,"./select.js":74}],70:[function(require,module,exports){
-(function (global){
-'use strict';
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var React = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null),
-    ReactDOM = (typeof window !== "undefined" ? window['ReactDOM'] : typeof global !== "undefined" ? global['ReactDOM'] : null),
-    FieldMixin = require('./field-mixin.js'),
-    ListenerMixin = require('./listener-mixin.js');
-
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'Input',
-
-    /**
-     * Mixins.
-     */
-    mixins: [FieldMixin, ListenerMixin],
 
     /**
      * Properties type.
      */
-    propTypes: {
-        form: React.PropTypes.any.isRequired,
-        name: React.PropTypes.string.isRequired
-    },
 
     /**
-     * Called to check if the field is checked.
+     * Called when the component is going to be mounted.
      */
-    isChecked: function isChecked() {
-        var type = this.props.type;
-        if (type === 'checkbox' || type === 'radio') {
-            var element = ReactDOM.findDOMNode(this);
-            return element.checked;
-        }
-    },
 
-    /**
-     * Called to check if the field is a list.
-     */
-    isList: function isList() {
-        var type = this.props.type;
-        return type === 'checkbox';
-    },
-
-    /**
-     * Returns the value of the input.
-     */
-    getValue: function getValue() {
-        var element = ReactDOM.findDOMNode(this);
-        return element.value;
-    },
-
-    /**
-     * Called when the value of the input has changed.
-     */
-    onChange: function onChange(event) {
-        this.validateField();
-
-        // call parent prop
-        if (this.props.onChange) {
-            this.props.onChange(event);
-        }
-    },
-
-    /**
-     * Called when the field looses focus.
-     * This forces validation of the field.
-     */
-    onBlur: function onBlur() {
-        this.validateField(true);
-
-        // call parent prop
-        if (this.props.onBlur) {
-            this.props.onBlur(event);
-        }
-    },
-
-    /**
-     * Called by the listener mixin after the form is validated.
-     */
-    formDidValidate: function formDidValidate() {
-        // TODO: implement getting the field state
-    },
-
-    /**
-     * Returns the component's className.
-     */
-    className: function className(fieldState) {
-        var ret = [];
-        if (this.props.className) {
-            ret.push(this.props.className);
-        }
-        if (fieldState.validated !== true) {
-            ret.push('pristine');
-        }
-        if (fieldState.valid === false) {
-            ret.push('error');
-        }
-        return ret.join(' ');
-    },
-
-    /**
-     * Renders the input.
-     */
-    render: function render() {
-        var fieldState = this.props.form.getFieldState(this);
-        return React.createElement('input', _extends({}, this.props, { className: this.className(fieldState),
-            onChange: this.onChange, onBlur: this.onBlur, form: null }));
-    }
-
-});
-}).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./field-mixin.js":65,"./listener-mixin.js":72}],71:[function(require,module,exports){
-'use strict';
-
-var Field = require('./field.js'),
-    Rules = require('./rules.js'),
-    ValidationContext = require('./validation-context.js');
-
-/**
- * Instance class.
- * Manages the state of all the components.
- */
-var Instance = function Instance(config) {
-    this.fields = [];
-    this.listeners = [];
-    this.config = this.normalizeConfig(config);
-};
-
-/**
- * The config object can be written in different ways. This function normalizes it so that it
- * is easier to use later.
- */
-Instance.prototype.normalizeConfig = function (config) {
-    for (var key in config) {
-        if (config.hasOwnProperty(key)) {
-            if (config[key] instanceof Rules) {
-                // replace by an object with rules inside
-                config[key] = {
-                    rules: config[key]
-                };
-            } else if (config.rules === undefined) {
-                // recursively normalizes the config
-                this.normalizeConfig(config[key]);
+    _createClass(Hint, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            var form = _utilsJs.Utils.getForm(this);
+            if (form) {
+                form.addListener(this);
             }
         }
-    }
-    return config;
-},
 
-/**
- * Creates a sub form. Returns a proxy of the current object with an extra "part" property
- * that is used to identify subparts of a form.
- */
-Instance.prototype.fieldset = function (name, key) {
-    var form = function form() {};
-    form.prototype = this;
-    var proxy = new form();
-    proxy.part = {
-        parent: this.part,
-        name: name,
-        key: key
-    };
-    return proxy;
-};
-
-/**
- * Registers a component.
- */
-Instance.prototype.register = function (component) {
-    this.fields.push(new Field(component, this.part, { validated: false }));
-};
-
-/**
- * Unregisters a component.
- */
-Instance.prototype.unregister = function (component) {
-    var fields = this.fields;
-    for (var i = 0; i < fields.length; i++) {
-        if (fields[i].getComponent() === component) {
-            fields.splice(i, 1);
-            break;
+        /**
+         * Called when the component is going to unmount.
+         */
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            var form = _utilsJs.Utils.getForm(this);
+            if (form) {
+                form.removeListener(this);
+            }
         }
-    }
-};
 
-/**
- * Registers a listener.
- */
-Instance.prototype.addListener = function (object) {
-    this.listeners.push(object);
-};
-
-/**
- * Unregisters a listener.
- */
-Instance.prototype.removeListener = function (object) {
-    // remove object from list of listeners
-    var index = this.listeners.indexOf(object);
-    if (index !== -1) {
-        this.listeners.splice(index, 1);
-    }
-};
-
-/**
- * Returns the information that this class stores about a component.
- */
-Instance.prototype.getField = function (component) {
-    var fields = this.fields;
-    for (var i = 0; i < fields.length; i++) {
-        var field = fields[i];
-        if (field.getComponent() === component) {
-            return field;
-        }
-    }
-};
-
-/**
- * Returns a field's state.
- */
-Instance.prototype.getFieldState = function (component) {
-    var field = this.getField(component);
-    if (field) {
-        return field.getState();
-    }
-};
-
-Instance.prototype.getFieldsetPath = function (fieldOrForm) {
-    var part = fieldOrForm.part,
-        ret = [];
-    while (part) {
-        ret.push(part.name + (part.key ? '[' + part.key + ']' : ''));
-        part = part.parent;
-    }
-    return ret.join('.');
-};
-
-/**
- * Returns the information that this class stores about a component by looking for its name.
- * Will only search in the current fieldset (if in a fieldset).
- */
-Instance.prototype.getFieldByName = function (name) {
-    var fields = this.fields;
-    for (var i = 0; i < fields.length; i++) {
-        var field = fields[i],
-            fieldName = field.component.props.name;
-        if (fieldName === name && this.getFieldsetPath(this) === this.getFieldsetPath(field)) {
-            return field;
-        }
-    }
-};
-
-/**
- * Returns a field's state by looking for its name.
- * Will only search in the current fieldset (if in a fieldset).
- */
-Instance.prototype.getFieldStateByName = function (name) {
-    var data = this.getFieldByName(name);
-    if (data) {
-        return data.state;
-    }
-};
-
-/**
- * Returns the values of all the fields.
- */
-Instance.prototype.getFieldsData = function () {
-    var ret = {};
-
-    // get all the fields
-    this.fields.forEach(function (field) {
-        var fullName = field.getFullName();
-        if (!ret[fullName]) {
-            ret[fullName] = {
-                fields: []
-            };
-        }
-        ret[fullName].fields.push(field);
-    }, this);
-
-    // compute values for all the fields
-    for (var key in ret) {
-        if (ret.hasOwnProperty(key)) {
-            var data = ret[key],
-                firstField = data.fields[0],
-                firstComponent = firstField.component,
-                isList = firstComponent.isList ? firstComponent.isList() : false;
-
-            // prepare lists
-            if (isList) {
-                data.value = [];
-                data.fields.forEach(function (field) {
-                    var component = field.component,
-                        checked = component.isChecked ? component.isChecked() : true;
-                    if (checked === undefined || checked === true) {
-                        data.value.push(field.component.getValue());
-                    }
+        /**
+         * Called when the component's props have changed.
+         */
+    }, {
+        key: 'componentWillReceiveProps',
+        value: function componentWillReceiveProps(newProps) {
+            if (newProps.display !== this.props.display) {
+                this.setState({
+                    display: this.parseDisplayString(newProps.display)
                 });
-            } else {
-                if (data.fields.length > 1) {
-                    data.fields.forEach(function (field) {
-                        var component = field.component,
-                            checked = component.isChecked ? component.isChecked() : true;
-                        if (checked === true) {
-                            data.value = component.getValue();
-                        }
-                    });
-                } else {
-                    var checked = firstComponent.isChecked ? firstComponent.isChecked() : true;
-                    if (checked === undefined || checked === true) {
-                        data.value = firstComponent.getValue();
-                    }
-                }
             }
         }
-    }
 
-    return ret;
-};
-
-/**
- * Processes extract form data to have a better formated object.
- *
- * my.key.prop => {my: {key: {prop: ?}}}
- * my.key[?].prop => {my: {key: [{prop: ?}]}}
- */
-Instance.prototype.refineData = function (data) {
-    var ret = {};
-
-    var parseKey = function parseKey(key) {
-        var paths = key.split('.');
-        return paths.map(function (path) {
-            var parts = path.match(/([^\[]*)(\[(.*?)\])?/),
-                key = parts[1],
-                index = parts[3];
-            return {
-                key: key,
-                index: index,
-                isList: !!index
-            };
-        });
-    };
-
-    var setValue = function setValue(obj, paths, value) {
-        for (var i = 0; i < paths.length; i++) {
-            var path = paths[i],
-                isLast = i === paths.length - 1;
-
-            // create object
-            if (path.isList) {
-                if (!obj[path.key]) {
-                    obj[path.key] = [];
-                }
-                if (isLast) {
-                    obj[path.key][path.index] = value;
-                } else {
-                    obj = obj[path.key][path.index] = obj[path.key][path.index] || {};
-                }
-            } else {
-                if (isLast) {
-                    obj[path.key] = value;
-                } else {
-                    obj = obj[path.key] = obj[path.key] || {};
-                }
-            }
-        }
-    };
-
-    // create objects out of keys that contains dots.
-    for (var key in data) {
-        if (data.hasOwnProperty(key)) {
-            var value = data[key],
-                paths = parseKey(key);
-            setValue(ret, paths, value.value);
-        }
-    }
-
-    return ret;
-};
-
-/**
- * Returns the rules that apply for a given field.
- */
-Instance.prototype.getRulesForField = function (field) {
-    // any special rules defined on that field?
-    var fieldRules = field.getRules();
-    if (fieldRules) {
-        return fieldRules;
-    } else {
-        // get full name minus the [keys].
-        var path = field.getFullName().replace(/\[[^\]+]\]/g, '').split('.'),
-            configField = this.config.fields;
-
-        // traverse config to where the rules should be
-        while (path.length > 0 && configField) {
-            configField = configField[path.shift()];
-        }
-
-        if (configField) {
-            return configField.rules;
-        }
-    }
-};
-
-/**
- * Validates a field.
- */
-Instance.prototype.validateField = function (field, data, force) {
-    var rules = this.getRulesForField(field);
-    if (rules) {
-        var fullName = field.getFullName(),
-            state = data[fullName],
-            firstField = state.fields[0];
-
-        // if field hasn't been validated yet, only validate it if force is true
-        if (!firstField.state.validated && !force) {
-            return;
-        }
-
-        // mark fields as validated
-        state.fields.forEach(function (field) {
-            field.state.validated = true;
-        });
-
-        // validate field value
-        var result = rules.validate(state.value, new ValidationContext(data, field));
-        if (result !== true) {
-            state.fields.forEach(function (field) {
-                field.state.valid = false;
-                field.state.error = result.message;
+        /**
+         * Converts the display property to an object.
+         */
+    }, {
+        key: 'parseDisplayString',
+        value: function parseDisplayString(display) {
+            var ret = {};
+            (display || '').split(/[\|,]/).forEach(function (item) {
+                ret[item] = true;
             });
-            return false;
+            return ret;
         }
 
-        // update fields state
-        state.fields.forEach(function (field) {
-            field.state.valid = true;
-            field.state.error = null;
-        });
+        /**
+         * Called by the listener mixin when the form is validated.
+         */
+    }, {
+        key: 'formDidValidate',
+        value: function formDidValidate(result) {
+            var form = _utilsJs.Utils.getForm(this);
+            this.setState({
+                state: form.getFieldStateByName(this.props.forName)
+            });
+        }
 
-        return true;
-    }
+        /**
+         * Renders the input.
+         */
+    }, {
+        key: 'render',
+        value: function render() {
+            var display = this.state.display,
+                state = this.state.state;
+            if (display.error && state.valid === false || display.pristine && state.validated !== true || display.valid && state.valid === true) {
+                return _react2['default'].createElement(
+                    'label',
+                    _extends({ className: 'hint' }, this.props, { form: null }),
+                    this.props.text || this.props.children
+                );
+            } else {
+                return null;
+            }
+        }
+    }]);
+
+    return Hint;
+})(_react2['default'].Component);
+
+exports.Hint = Hint;
+Hint.propTypes = {
+    display: _react2['default'].PropTypes.string,
+    text: _react2['default'].PropTypes.string,
+    form: _react2['default'].PropTypes.any,
+    forName: _react2['default'].PropTypes.string.isRequired
 };
 
 /**
- * Validates all the fields or the field given as parameter.
+ * The default props.
  */
-Instance.prototype.validate = function (target, force) {
-    var data = this.getFieldsData();
-
-    var valid = true;
-    if (target) {
-        // validate just one field
-        var field = target.props.form.getFieldByName(target.props.name);
-        valid &= this.validateField(field, data, force);
-    } else {
-        // validate all the fields
-        this.fields.forEach(function (field) {
-            valid &= this.validateField(field, data, force);
-        }, this);
-    }
-
-    // prepare result
-    var ret = {
-        valid: valid,
-        state: data,
-        data: this.refineData(data)
-    };
-
-    // call listeners
-    this.listeners.forEach(function (listener) {
-        if (listener.formDidValidate) {
-            listener.formDidValidate(ret);
-        }
-    });
-
-    return ret;
+Hint.defaultProps = {
+    display: 'pristine|valid'
 };
-
-module.exports = Instance;
-},{"./field.js":66,"./rules.js":73,"./validation-context.js":75}],72:[function(require,module,exports){
-'use strict';
 
 /**
- * This mixin registers the component as a listener in the parent form.
- *
- * Required props:
- *   - form, the form owning the component
- *
- * The following functions can be implement:
- *   - formDidValidate
+ * Context types.
  */
-module.exports = {
-    /**
-     * When the component will mount register it in the form.
-     */
-    componentWillMount: function componentWillMount() {
-        if (this.props.form) {
-            this.props.form.addListener(this);
-        }
-    },
-
-    /**
-     * When the component is removed, unregister it from the form.
-     */
-    componentWillUnmount: function componentWillUnmount() {
-        if (this.props.form) {
-            this.props.form.removeListener(this);
-        }
-    }
+Hint.contextTypes = {
+    form: _react2['default'].PropTypes.any
 };
-},{}],73:[function(require,module,exports){
+}).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./utils.js":75}],71:[function(require,module,exports){
 'use strict';
 
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _errorJs = require('./error.js');
+
+Object.defineProperty(exports, 'Error', {
+  enumerable: true,
+  get: function get() {
+    return _errorJs.Error;
+  }
+});
+
+var _fieldJs = require('./field.js');
+
+Object.defineProperty(exports, 'Field', {
+  enumerable: true,
+  get: function get() {
+    return _fieldJs.Field;
+  }
+});
+
+var _formJs = require('./form.js');
+
+Object.defineProperty(exports, 'Form', {
+  enumerable: true,
+  get: function get() {
+    return _formJs.Form;
+  }
+});
+
+var _hintJs = require('./hint.js');
+
+Object.defineProperty(exports, 'Hint', {
+  enumerable: true,
+  get: function get() {
+    return _hintJs.Hint;
+  }
+});
+
+var _inputJs = require('./input.js');
+
+Object.defineProperty(exports, 'Input', {
+  enumerable: true,
+  get: function get() {
+    return _inputJs.Input;
+  }
+});
+
+var _contextJs = require('./context.js');
+
+Object.defineProperty(exports, 'Context', {
+  enumerable: true,
+  get: function get() {
+    return _contextJs.Context;
+  }
+});
+
+var _rulesJs = require('./rules.js');
+
+Object.defineProperty(exports, 'Rules', {
+  enumerable: true,
+  get: function get() {
+    return _rulesJs.Rules;
+  }
+});
+
+var _selectJs = require('./select.js');
+
+Object.defineProperty(exports, 'Select', {
+  enumerable: true,
+  get: function get() {
+    return _selectJs.Select;
+  }
+});
+
+var _utilsJs = require('./utils.js');
+
+Object.defineProperty(exports, 'Utils', {
+  enumerable: true,
+  get: function get() {
+    return _utilsJs.Utils;
+  }
+});
+},{"./context.js":65,"./error.js":66,"./field.js":68,"./form.js":69,"./hint.js":70,"./input.js":72,"./rules.js":73,"./select.js":74,"./utils.js":75}],72:[function(require,module,exports){
+(function (global){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _react = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = (typeof window !== "undefined" ? window['ReactDOM'] : typeof global !== "undefined" ? global['ReactDOM'] : null);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _fieldJs = require('./field.js');
+
+var _utilsJs = require('./utils.js');
+
+var Input = (function (_Field) {
+    _inherits(Input, _Field);
+
+    function Input() {
+        _classCallCheck(this, Input);
+
+        _get(Object.getPrototypeOf(Input.prototype), 'constructor', this).apply(this, arguments);
+    }
+
+    /**
+     * Properties type.
+     */
+
+    _createClass(Input, [{
+        key: 'componentWillMount',
+
+        /**
+         * Called when the component is going to be mounted.
+         */
+        value: function componentWillMount() {
+            _get(Object.getPrototypeOf(Input.prototype), 'componentWillMount', this).call(this);
+
+            var form = _utilsJs.Utils.getForm(this);
+            if (form) {
+                form.addListener(this);
+            }
+        }
+
+        /**
+         * Called when the component is going to unmount.
+         */
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            _get(Object.getPrototypeOf(Input.prototype), 'componentWillUnmount', this).call(this);
+
+            var form = _utilsJs.Utils.getForm(this);
+            if (form) {
+                form.removeListener(this);
+            }
+        }
+
+        /**
+         * Called to check if the field is checked.
+         */
+    }, {
+        key: 'isChecked',
+        value: function isChecked() {
+            var type = this.props.type;
+            if (type === 'checkbox' || type === 'radio') {
+                var element = _reactDom2['default'].findDOMNode(this);
+                return element.checked;
+            }
+        }
+
+        /**
+         * Called to check if the field is a list.
+         */
+    }, {
+        key: 'isList',
+        value: function isList() {
+            var type = this.props.type;
+            return type === 'checkbox';
+        }
+
+        /**
+         * Returns the value of the input.
+         */
+    }, {
+        key: 'getValue',
+        value: function getValue() {
+            var element = _reactDom2['default'].findDOMNode(this);
+            return element.value;
+        }
+
+        /**
+         * Called when the value of the input has changed.
+         */
+    }, {
+        key: 'onChange',
+        value: function onChange(event) {
+            _get(Object.getPrototypeOf(Input.prototype), 'validateField', this).call(this);
+
+            // call parent prop
+            if (this.props.onChange) {
+                this.props.onChange(event);
+            }
+        }
+
+        /**
+         * Called when the field looses focus.
+         * This forces validation of the field.
+         */
+    }, {
+        key: 'onBlur',
+        value: function onBlur() {
+            _get(Object.getPrototypeOf(Input.prototype), 'validateField', this).call(this, true);
+
+            // call parent prop
+            if (this.props.onBlur) {
+                this.props.onBlur(event);
+            }
+        }
+
+        /**
+         * Called by the listener mixin after the form is validated.
+         */
+    }, {
+        key: 'formDidValidate',
+        value: function formDidValidate() {}
+        // TODO: implement getting the field state
+
+        /**
+         * Returns the component's className.
+         */
+
+    }, {
+        key: 'className',
+        value: function className(fieldState) {
+            var ret = [];
+            if (this.props.className) {
+                ret.push(this.props.className);
+            }
+            if (fieldState.validated !== true) {
+                ret.push('pristine');
+            }
+            if (fieldState.valid === false) {
+                ret.push('error');
+            }
+            return ret.join(' ');
+        }
+
+        /**
+         * Renders the input.
+         */
+    }, {
+        key: 'render',
+        value: function render() {
+            var form = _utilsJs.Utils.getForm(this),
+                fieldState = form.getFieldState(this);
+
+            return _react2['default'].createElement('input', _extends({}, this.props, { className: this.className(fieldState),
+                onChange: this.onChange.bind(this), onBlur: this.onBlur.bind(this), form: null }));
+        }
+    }]);
+
+    return Input;
+})(_fieldJs.Field);
+
+exports.Input = Input;
+Input.propTypes = {
+    name: _react2['default'].PropTypes.string.isRequired
+};
+
+/**
+ * Context types.
+ */
+Input.contextTypes = {
+    form: _react2['default'].PropTypes.any
+};
+}).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./field.js":68,"./utils.js":75}],73:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
 var EMAIL_REGEXP = new RegExp('^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]' + '{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$');
 
 /**
@@ -4071,12 +6099,12 @@ Rules.register('required', function (message) {
 /**
  * Registers a rule for validating an email.
  */
-Rules.register('email', function () {
+Rules.register('email', function (message) {
     return {
         check: function check(value) {
             return EMAIL_REGEXP.test(value);
         },
-        message: 'This is not a valid email address'
+        message: message || 'This is not a valid email address'
     };
 });
 
@@ -4108,19 +6136,20 @@ Rules.register('regex', function (regex, message) {
 /**
  * Registers a rule for checking that something equals something else.
  */
-Rules.register('equals', function (otherFieldName) {
+Rules.register('equals', function (otherFieldName, message) {
     return {
         check: function check(value, context) {
             return context.getFieldValue(otherFieldName) === value;
         },
-        message: 'This field does not match ' + otherFieldName
+        message: message || 'This field does not match ' + otherFieldName
     };
 });
 
 /**
  * Registers a rule for validating password.
  */
-Rules.register('password', function () {
+Rules.register('password', function (messages) {
+    messages = messages || {};
     return {
         check: function check(value) {
             if (!value || value.length < 8) {
@@ -4138,10 +6167,10 @@ Rules.register('password', function () {
             return true;
         },
         messages: {
-            length: 'Password should be at least 8 characters',
-            upper: 'Password should contain at least one uppercase letter',
-            lower: 'Password should contain at least one lowercase letter',
-            num: 'Password should contain at least one number'
+            length: messages.length || 'Password should be at least 8 characters',
+            upper: messages.upper || 'Password should contain at least one uppercase letter',
+            lower: messages.lower || 'Password should contain at least one lowercase letter',
+            num: messages.num || 'Password should contain at least one number'
         }
     };
 });
@@ -4149,140 +6178,237 @@ Rules.register('password', function () {
 /**
  * Registers a rule for validating minimum age.
  */
-Rules.register('minAge', function (minAge) {
+Rules.register('minAge', function (minAge, message) {
     return {
         check: function check(value) {
             var diff = new Date(Date.now() - value.getTime()),
                 age = Math.abs(diff.getUTCFullYear() - 1970);
             return age >= minAge;
         },
-        message: 'You must be at least ' + minAge + ' years old.'
+        message: message || 'You must be at least ' + minAge + ' years old.'
     };
 });
 
-/**
- * Export the class.
- */
-module.exports = Rules;
+exports.Rules = Rules;
 },{}],74:[function(require,module,exports){
 (function (global){
 'use strict';
 
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var React = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null),
-    ReactDOM = (typeof window !== "undefined" ? window['ReactDOM'] : typeof global !== "undefined" ? global['ReactDOM'] : null),
-    FieldMixin = require('./field-mixin.js');
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'Select',
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
-    /**
-     * Mixins.
-     */
-    mixins: [FieldMixin],
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _react = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = (typeof window !== "undefined" ? window['ReactDOM'] : typeof global !== "undefined" ? global['ReactDOM'] : null);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _fieldJs = require('./field.js');
+
+var _utilsJs = require('./utils.js');
+
+var Select = (function (_Field) {
+    _inherits(Select, _Field);
+
+    function Select() {
+        _classCallCheck(this, Select);
+
+        _get(Object.getPrototypeOf(Select.prototype), 'constructor', this).apply(this, arguments);
+    }
 
     /**
      * Properties type.
      */
-    propTypes: {
-        form: React.PropTypes.any.isRequired,
-        name: React.PropTypes.string.isRequired
-    },
 
-    /**
-     * Returns the value of the input.
-     */
-    getValue: function getValue() {
-        var element = ReactDOM.findDOMNode(this);
-        return element.value;
-    },
+    _createClass(Select, [{
+        key: 'getValue',
 
-    /**
-     * Called when the value of the input has changed.
-     */
-    onChange: function onChange() {
-        this.validateField(true);
-    },
-
-    /**
-     * Returns the component's className.
-     */
-    rootClassName: function rootClassName(fieldState) {
-        var ret = [];
-        if (this.props.className) {
-            ret.push(this.props.className);
+        /**
+         * Returns the value of the input.
+         */
+        value: function getValue() {
+            var element = _reactDom2['default'].findDOMNode(this);
+            return element.value;
         }
-        if (fieldState.pristine) {
-            ret.push('pristine');
-        }
-        if (!fieldState.valid) {
-            ret.push('error');
-        }
-        return ret.join(' ');
-    },
 
-    /**
-     * Renders the select.
-     */
-    render: function render() {
-        var fieldState = this.props.form.getFieldState(this);
-        return React.createElement(
-            'select',
-            _extends({}, this.props, { className: this.rootClassName(fieldState),
-                onChange: this.onChange, onBlur: this.onBlur }),
-            this.props.children
-        );
+        /**
+         * Called when the value of the input has changed.
+         */
+    }, {
+        key: 'onChange',
+        value: function onChange() {
+            _get(Object.getPrototypeOf(Select.prototype), 'validateField', this).call(this, true);
+        }
+
+        /**
+         * Returns the component's className.
+         */
+    }, {
+        key: 'rootClassName',
+        value: function rootClassName(fieldState) {
+            var ret = [];
+            if (this.props.className) {
+                ret.push(this.props.className);
+            }
+            if (fieldState.pristine) {
+                ret.push('pristine');
+            }
+            if (!fieldState.valid) {
+                ret.push('error');
+            }
+            return ret.join(' ');
+        }
+
+        /**
+         * Renders the select.
+         */
+    }, {
+        key: 'render',
+        value: function render() {
+            var form = _utilsJs.Utils.getForm(this),
+                fieldState = form.getFieldState(this);
+
+            return _react2['default'].createElement(
+                'select',
+                _extends({}, this.props, { className: this.rootClassName(fieldState),
+                    onChange: this.onChange.bind(this), onBlur: this.onBlur.bind(this) }),
+                this.props.children
+            );
+        }
+    }]);
+
+    return Select;
+})(_fieldJs.Field);
+
+exports.Select = Select;
+Select.propTypes = {
+    form: _react2['default'].PropTypes.any,
+    name: _react2['default'].PropTypes.string.isRequired
+};
+
+/**
+ * Context types.
+ */
+Select.contextTypes = {
+    form: _react2['default'].PropTypes.any
+};
+}).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./field.js":68,"./utils.js":75}],75:[function(require,module,exports){
+'use strict';
+
+/**
+ * Utils class.
+ * A bunch of reusable static functions.
+ */
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var Utils = (function () {
+    function Utils() {
+        _classCallCheck(this, Utils);
     }
 
-});
-}).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./field-mixin.js":65}],75:[function(require,module,exports){
+    _createClass(Utils, null, [{
+        key: 'getForm',
+
+        /**
+         * Retrieves the form for a component.
+         * The form can be given either using props or context.
+         */
+        value: function getForm(component) {
+            if (component.props && component.props.form) {
+                return component.props.form;
+            } else if (component.context && component.context.form) {
+                return component.context.form;
+            } else {
+                console.error('Could not find form context. The component might not be in a <Form> ' + 'or might have a wrong form property', component);
+            }
+        }
+    }]);
+
+    return Utils;
+})();
+
+exports.Utils = Utils;
+},{}],76:[function(require,module,exports){
 'use strict';
 
 /**
  * ValidationContext class.
  * Simplifies access to data during validation.
  */
-var ValidationContext = function ValidationContext(data, field) {
-    this.data = data;
-    this.field = field;
-};
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
 
-/**
- * Returns the value a field from its name.
- * It searches the closest field with the given name.
- */
-ValidationContext.prototype.getFieldValue = function (name) {
-    var fieldPath = this.field.getPath(),
-        possibleFullName = fieldPath ? fieldPath + '.' + name : name;
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-    while (true) {
-        if (this.data[possibleFullName]) {
-            return this.data[possibleFullName].value;
-        } else {
-            if (possibleFullName.indexOf('.') !== -1) {
-                var parts = /(.*\.)([^.]+\.)([^\.]+)$/.exec(possibleFullName);
-                possibleFullName = parts[1] ? parts[1] + parts[3] : parts[3];
-            } else {
-                break;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var ValidationContext = (function () {
+    function ValidationContext(data, field) {
+        _classCallCheck(this, ValidationContext);
+
+        this.data = data;
+        this.field = field;
+    }
+
+    /**
+     * Returns the value a field from its name.
+     * It searches the closest field with the given name.
+     */
+
+    _createClass(ValidationContext, [{
+        key: 'getFieldValue',
+        value: function getFieldValue(name) {
+            var fieldName = this.field.getName(),
+                parts = fieldName.split('.');
+
+            while (parts.length > 0) {
+                parts.pop();
+
+                var newName = parts.concat(name).join('.');
+                if (this.data[newName]) {
+                    return this.data[newName].value;
+                }
             }
         }
-    }
-};
 
-/**
- * Returns the raw data from the form.
- */
-ValidationContext.prototype.getData = function () {
-    return this.data;
-};
+        /**
+         * Returns the raw data from the form.
+         */
+    }, {
+        key: 'getData',
+        value: function getData() {
+            return this.data;
+        }
+    }]);
 
-module.exports = ValidationContext;
-},{}],76:[function(require,module,exports){
+    return ValidationContext;
+})();
+
+exports.ValidationContext = ValidationContext;
+},{}],77:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -4341,7 +6467,7 @@ function mapAsync(array, work, callback) {
     });
   });
 }
-},{}],77:[function(require,module,exports){
+},{}],78:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -4365,7 +6491,7 @@ var History = {
 
 exports['default'] = History;
 module.exports = exports['default'];
-},{"./PropTypes":84}],78:[function(require,module,exports){
+},{"./PropTypes":85}],79:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -4408,7 +6534,7 @@ var IndexLink = (function (_Component) {
 
 exports['default'] = IndexLink;
 module.exports = exports['default'];
-},{"./Link":82,"react":257}],79:[function(require,module,exports){
+},{"./Link":83,"react":258}],80:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -4490,7 +6616,7 @@ var IndexRedirect = (function (_Component) {
 exports['default'] = IndexRedirect;
 module.exports = exports['default'];
 }).call(this,require("oMfpAn"))
-},{"./PropTypes":84,"./Redirect":85,"invariant":100,"oMfpAn":38,"react":257,"warning":101}],80:[function(require,module,exports){
+},{"./PropTypes":85,"./Redirect":86,"invariant":101,"oMfpAn":39,"react":258,"warning":102}],81:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -4569,7 +6695,7 @@ var IndexRoute = (function (_Component) {
 exports['default'] = IndexRoute;
 module.exports = exports['default'];
 }).call(this,require("oMfpAn"))
-},{"./PropTypes":84,"./RouteUtils":88,"invariant":100,"oMfpAn":38,"react":257,"warning":101}],81:[function(require,module,exports){
+},{"./PropTypes":85,"./RouteUtils":89,"invariant":101,"oMfpAn":39,"react":258,"warning":102}],82:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -4636,7 +6762,7 @@ var Lifecycle = {
 exports['default'] = Lifecycle;
 module.exports = exports['default'];
 }).call(this,require("oMfpAn"))
-},{"invariant":100,"oMfpAn":38,"react":257}],82:[function(require,module,exports){
+},{"invariant":101,"oMfpAn":39,"react":258}],83:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -4810,7 +6936,7 @@ var Link = (function (_Component) {
 
 exports['default'] = Link;
 module.exports = exports['default'];
-},{"react":257}],83:[function(require,module,exports){
+},{"react":258}],84:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -5040,7 +7166,7 @@ function formatPattern(pattern, params) {
   return pathname.replace(/\/+/g, '/');
 }
 }).call(this,require("oMfpAn"))
-},{"invariant":100,"oMfpAn":38}],84:[function(require,module,exports){
+},{"invariant":101,"oMfpAn":39}],85:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -5094,7 +7220,7 @@ exports['default'] = {
   components: components,
   route: route
 };
-},{"react":257}],85:[function(require,module,exports){
+},{"react":258}],86:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -5210,7 +7336,7 @@ var Redirect = (function (_Component) {
 exports['default'] = Redirect;
 module.exports = exports['default'];
 }).call(this,require("oMfpAn"))
-},{"./PatternUtils":83,"./PropTypes":84,"./RouteUtils":88,"invariant":100,"oMfpAn":38,"react":257}],86:[function(require,module,exports){
+},{"./PatternUtils":84,"./PropTypes":85,"./RouteUtils":89,"invariant":101,"oMfpAn":39,"react":258}],87:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -5288,7 +7414,7 @@ var Route = (function (_Component) {
 exports['default'] = Route;
 module.exports = exports['default'];
 }).call(this,require("oMfpAn"))
-},{"./PropTypes":84,"./RouteUtils":88,"invariant":100,"oMfpAn":38,"react":257}],87:[function(require,module,exports){
+},{"./PropTypes":85,"./RouteUtils":89,"invariant":101,"oMfpAn":39,"react":258}],88:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -5327,7 +7453,7 @@ var RouteContext = {
 
 exports['default'] = RouteContext;
 module.exports = exports['default'];
-},{"react":257}],88:[function(require,module,exports){
+},{"react":258}],89:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -5444,7 +7570,7 @@ function createRoutes(routes) {
   return routes;
 }
 }).call(this,require("oMfpAn"))
-},{"oMfpAn":38,"react":257,"warning":101}],89:[function(require,module,exports){
+},{"oMfpAn":39,"react":258,"warning":102}],90:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -5618,7 +7744,7 @@ var Router = (function (_Component) {
 exports['default'] = Router;
 module.exports = exports['default'];
 }).call(this,require("oMfpAn"))
-},{"./PropTypes":84,"./RouteUtils":88,"./RoutingContext":90,"./useRoutes":99,"history/lib/createHashHistory":45,"oMfpAn":38,"react":257,"warning":101}],90:[function(require,module,exports){
+},{"./PropTypes":85,"./RouteUtils":89,"./RoutingContext":91,"./useRoutes":100,"history/lib/createHashHistory":46,"oMfpAn":39,"react":258,"warning":102}],91:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -5761,7 +7887,7 @@ var RoutingContext = (function (_Component) {
 exports['default'] = RoutingContext;
 module.exports = exports['default'];
 }).call(this,require("oMfpAn"))
-},{"./RouteUtils":88,"./getRouteParams":94,"invariant":100,"oMfpAn":38,"react":257}],91:[function(require,module,exports){
+},{"./RouteUtils":89,"./getRouteParams":95,"invariant":101,"oMfpAn":39,"react":258}],92:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -5834,7 +7960,7 @@ function runLeaveHooks(routes) {
     if (routes[i].onLeave) routes[i].onLeave.call(routes[i]);
   }
 }
-},{"./AsyncUtils":76}],92:[function(require,module,exports){
+},{"./AsyncUtils":77}],93:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -5891,7 +8017,7 @@ function computeChangedRoutes(prevState, nextState) {
 
 exports['default'] = computeChangedRoutes;
 module.exports = exports['default'];
-},{"./PatternUtils":83}],93:[function(require,module,exports){
+},{"./PatternUtils":84}],94:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -5925,7 +8051,7 @@ function getComponents(nextState, callback) {
 
 exports['default'] = getComponents;
 module.exports = exports['default'];
-},{"./AsyncUtils":76}],94:[function(require,module,exports){
+},{"./AsyncUtils":77}],95:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -5950,7 +8076,7 @@ function getRouteParams(route, params) {
 
 exports['default'] = getRouteParams;
 module.exports = exports['default'];
-},{"./PatternUtils":83}],95:[function(require,module,exports){
+},{"./PatternUtils":84}],96:[function(require,module,exports){
 /* components */
 'use strict';
 
@@ -6055,7 +8181,7 @@ exports.match = _match3['default'];
 var _Router4 = _interopRequireDefault(_Router2);
 
 exports['default'] = _Router4['default'];
-},{"./History":77,"./IndexLink":78,"./IndexRedirect":79,"./IndexRoute":80,"./Lifecycle":81,"./Link":82,"./PropTypes":84,"./Redirect":85,"./Route":86,"./RouteContext":87,"./RouteUtils":88,"./Router":89,"./RoutingContext":90,"./match":97,"./useRoutes":99}],96:[function(require,module,exports){
+},{"./History":78,"./IndexLink":79,"./IndexRedirect":80,"./IndexRoute":81,"./Lifecycle":82,"./Link":83,"./PropTypes":85,"./Redirect":86,"./Route":87,"./RouteContext":88,"./RouteUtils":89,"./Router":90,"./RoutingContext":91,"./match":98,"./useRoutes":100}],97:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -6179,7 +8305,7 @@ function isActive(pathname, query, indexOnly, location, routes, params) {
 
 exports['default'] = isActive;
 module.exports = exports['default'];
-},{"./PatternUtils":83}],97:[function(require,module,exports){
+},{"./PatternUtils":84}],98:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -6245,7 +8371,7 @@ function match(_ref, callback) {
 exports['default'] = match;
 module.exports = exports['default'];
 }).call(this,require("oMfpAn"))
-},{"./RouteUtils":88,"./useRoutes":99,"history/lib/createMemoryHistory":48,"history/lib/useBasename":53,"invariant":100,"oMfpAn":38}],98:[function(require,module,exports){
+},{"./RouteUtils":89,"./useRoutes":100,"history/lib/createMemoryHistory":49,"history/lib/useBasename":54,"invariant":101,"oMfpAn":39}],99:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -6436,7 +8562,7 @@ function matchRoutes(routes, location, callback) {
 exports['default'] = matchRoutes;
 module.exports = exports['default'];
 }).call(this,require("oMfpAn"))
-},{"./AsyncUtils":76,"./PatternUtils":83,"./RouteUtils":88,"oMfpAn":38,"warning":101}],99:[function(require,module,exports){
+},{"./AsyncUtils":77,"./PatternUtils":84,"./RouteUtils":89,"oMfpAn":39,"warning":102}],100:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -6730,11 +8856,11 @@ function useRoutes(createHistory) {
 exports['default'] = useRoutes;
 module.exports = exports['default'];
 }).call(this,require("oMfpAn"))
-},{"./TransitionUtils":91,"./computeChangedRoutes":92,"./getComponents":93,"./isActive":96,"./matchRoutes":98,"history/lib/Actions":39,"history/lib/useQueries":54,"oMfpAn":38,"warning":101}],100:[function(require,module,exports){
-module.exports=require(58)
-},{"oMfpAn":38}],101:[function(require,module,exports){
-module.exports=require(63)
-},{"oMfpAn":38}],102:[function(require,module,exports){
+},{"./TransitionUtils":92,"./computeChangedRoutes":93,"./getComponents":94,"./isActive":97,"./matchRoutes":99,"history/lib/Actions":40,"history/lib/useQueries":55,"oMfpAn":39,"warning":102}],101:[function(require,module,exports){
+module.exports=require(59)
+},{"oMfpAn":39}],102:[function(require,module,exports){
+module.exports=require(64)
+},{"oMfpAn":39}],103:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -6771,7 +8897,7 @@ var AutoFocusUtils = {
 };
 
 module.exports = AutoFocusUtils;
-},{"./ReactMount":166,"./findDOMNode":209,"fbjs/lib/focusNode":239}],103:[function(require,module,exports){
+},{"./ReactMount":167,"./findDOMNode":210,"fbjs/lib/focusNode":240}],104:[function(require,module,exports){
 /**
  * Copyright 2013-2015 Facebook, Inc.
  * All rights reserved.
@@ -7177,7 +9303,7 @@ var BeforeInputEventPlugin = {
 };
 
 module.exports = BeforeInputEventPlugin;
-},{"./EventConstants":115,"./EventPropagators":119,"./FallbackCompositionState":120,"./SyntheticCompositionEvent":191,"./SyntheticInputEvent":195,"fbjs/lib/ExecutionEnvironment":231,"fbjs/lib/keyOf":249}],104:[function(require,module,exports){
+},{"./EventConstants":116,"./EventPropagators":120,"./FallbackCompositionState":121,"./SyntheticCompositionEvent":192,"./SyntheticInputEvent":196,"fbjs/lib/ExecutionEnvironment":232,"fbjs/lib/keyOf":250}],105:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -7317,7 +9443,7 @@ var CSSProperty = {
 };
 
 module.exports = CSSProperty;
-},{}],105:[function(require,module,exports){
+},{}],106:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -7495,7 +9621,7 @@ ReactPerf.measureMethods(CSSPropertyOperations, 'CSSPropertyOperations', {
 
 module.exports = CSSPropertyOperations;
 }).call(this,require("oMfpAn"))
-},{"./CSSProperty":104,"./ReactPerf":172,"./dangerousStyleValue":206,"fbjs/lib/ExecutionEnvironment":231,"fbjs/lib/camelizeStyleName":233,"fbjs/lib/hyphenateStyleName":244,"fbjs/lib/memoizeStringOnly":251,"fbjs/lib/warning":256,"oMfpAn":38}],106:[function(require,module,exports){
+},{"./CSSProperty":105,"./ReactPerf":173,"./dangerousStyleValue":207,"fbjs/lib/ExecutionEnvironment":232,"fbjs/lib/camelizeStyleName":234,"fbjs/lib/hyphenateStyleName":245,"fbjs/lib/memoizeStringOnly":252,"fbjs/lib/warning":257,"oMfpAn":39}],107:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -7591,7 +9717,7 @@ PooledClass.addPoolingTo(CallbackQueue);
 
 module.exports = CallbackQueue;
 }).call(this,require("oMfpAn"))
-},{"./Object.assign":123,"./PooledClass":124,"fbjs/lib/invariant":245,"oMfpAn":38}],107:[function(require,module,exports){
+},{"./Object.assign":124,"./PooledClass":125,"fbjs/lib/invariant":246,"oMfpAn":39}],108:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -7913,7 +10039,7 @@ var ChangeEventPlugin = {
 };
 
 module.exports = ChangeEventPlugin;
-},{"./EventConstants":115,"./EventPluginHub":116,"./EventPropagators":119,"./ReactUpdates":184,"./SyntheticEvent":193,"./getEventTarget":215,"./isEventSupported":220,"./isTextInputElement":221,"fbjs/lib/ExecutionEnvironment":231,"fbjs/lib/keyOf":249}],108:[function(require,module,exports){
+},{"./EventConstants":116,"./EventPluginHub":117,"./EventPropagators":120,"./ReactUpdates":185,"./SyntheticEvent":194,"./getEventTarget":216,"./isEventSupported":221,"./isTextInputElement":222,"fbjs/lib/ExecutionEnvironment":232,"fbjs/lib/keyOf":250}],109:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -7937,7 +10063,7 @@ var ClientReactRootIndex = {
 };
 
 module.exports = ClientReactRootIndex;
-},{}],109:[function(require,module,exports){
+},{}],110:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -8069,7 +10195,7 @@ ReactPerf.measureMethods(DOMChildrenOperations, 'DOMChildrenOperations', {
 
 module.exports = DOMChildrenOperations;
 }).call(this,require("oMfpAn"))
-},{"./Danger":112,"./ReactMultiChildUpdateTypes":168,"./ReactPerf":172,"./setInnerHTML":225,"./setTextContent":226,"fbjs/lib/invariant":245,"oMfpAn":38}],110:[function(require,module,exports){
+},{"./Danger":113,"./ReactMultiChildUpdateTypes":169,"./ReactPerf":173,"./setInnerHTML":226,"./setTextContent":227,"fbjs/lib/invariant":246,"oMfpAn":39}],111:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -8306,7 +10432,7 @@ var DOMProperty = {
 
 module.exports = DOMProperty;
 }).call(this,require("oMfpAn"))
-},{"fbjs/lib/invariant":245,"oMfpAn":38}],111:[function(require,module,exports){
+},{"fbjs/lib/invariant":246,"oMfpAn":39}],112:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -8534,7 +10660,7 @@ ReactPerf.measureMethods(DOMPropertyOperations, 'DOMPropertyOperations', {
 
 module.exports = DOMPropertyOperations;
 }).call(this,require("oMfpAn"))
-},{"./DOMProperty":110,"./ReactPerf":172,"./quoteAttributeValueForBrowser":223,"fbjs/lib/warning":256,"oMfpAn":38}],112:[function(require,module,exports){
+},{"./DOMProperty":111,"./ReactPerf":173,"./quoteAttributeValueForBrowser":224,"fbjs/lib/warning":257,"oMfpAn":39}],113:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -8682,7 +10808,7 @@ var Danger = {
 
 module.exports = Danger;
 }).call(this,require("oMfpAn"))
-},{"fbjs/lib/ExecutionEnvironment":231,"fbjs/lib/createNodesFromMarkup":236,"fbjs/lib/emptyFunction":237,"fbjs/lib/getMarkupWrap":241,"fbjs/lib/invariant":245,"oMfpAn":38}],113:[function(require,module,exports){
+},{"fbjs/lib/ExecutionEnvironment":232,"fbjs/lib/createNodesFromMarkup":237,"fbjs/lib/emptyFunction":238,"fbjs/lib/getMarkupWrap":242,"fbjs/lib/invariant":246,"oMfpAn":39}],114:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -8710,7 +10836,7 @@ var keyOf = require('fbjs/lib/keyOf');
 var DefaultEventPluginOrder = [keyOf({ ResponderEventPlugin: null }), keyOf({ SimpleEventPlugin: null }), keyOf({ TapEventPlugin: null }), keyOf({ EnterLeaveEventPlugin: null }), keyOf({ ChangeEventPlugin: null }), keyOf({ SelectEventPlugin: null }), keyOf({ BeforeInputEventPlugin: null })];
 
 module.exports = DefaultEventPluginOrder;
-},{"fbjs/lib/keyOf":249}],114:[function(require,module,exports){
+},{"fbjs/lib/keyOf":250}],115:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -8835,7 +10961,7 @@ var EnterLeaveEventPlugin = {
 };
 
 module.exports = EnterLeaveEventPlugin;
-},{"./EventConstants":115,"./EventPropagators":119,"./ReactMount":166,"./SyntheticMouseEvent":197,"fbjs/lib/keyOf":249}],115:[function(require,module,exports){
+},{"./EventConstants":116,"./EventPropagators":120,"./ReactMount":167,"./SyntheticMouseEvent":198,"fbjs/lib/keyOf":250}],116:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -8928,7 +11054,7 @@ var EventConstants = {
 };
 
 module.exports = EventConstants;
-},{"fbjs/lib/keyMirror":248}],116:[function(require,module,exports){
+},{"fbjs/lib/keyMirror":249}],117:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -9210,7 +11336,7 @@ var EventPluginHub = {
 
 module.exports = EventPluginHub;
 }).call(this,require("oMfpAn"))
-},{"./EventPluginRegistry":117,"./EventPluginUtils":118,"./ReactErrorUtils":157,"./accumulateInto":203,"./forEachAccumulated":211,"fbjs/lib/invariant":245,"fbjs/lib/warning":256,"oMfpAn":38}],117:[function(require,module,exports){
+},{"./EventPluginRegistry":118,"./EventPluginUtils":119,"./ReactErrorUtils":158,"./accumulateInto":204,"./forEachAccumulated":212,"fbjs/lib/invariant":246,"fbjs/lib/warning":257,"oMfpAn":39}],118:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -9433,7 +11559,7 @@ var EventPluginRegistry = {
 
 module.exports = EventPluginRegistry;
 }).call(this,require("oMfpAn"))
-},{"fbjs/lib/invariant":245,"oMfpAn":38}],118:[function(require,module,exports){
+},{"fbjs/lib/invariant":246,"oMfpAn":39}],119:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -9638,7 +11764,7 @@ var EventPluginUtils = {
 
 module.exports = EventPluginUtils;
 }).call(this,require("oMfpAn"))
-},{"./EventConstants":115,"./ReactErrorUtils":157,"fbjs/lib/invariant":245,"fbjs/lib/warning":256,"oMfpAn":38}],119:[function(require,module,exports){
+},{"./EventConstants":116,"./ReactErrorUtils":158,"fbjs/lib/invariant":246,"fbjs/lib/warning":257,"oMfpAn":39}],120:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -9776,7 +11902,7 @@ var EventPropagators = {
 
 module.exports = EventPropagators;
 }).call(this,require("oMfpAn"))
-},{"./EventConstants":115,"./EventPluginHub":116,"./accumulateInto":203,"./forEachAccumulated":211,"fbjs/lib/warning":256,"oMfpAn":38}],120:[function(require,module,exports){
+},{"./EventConstants":116,"./EventPluginHub":117,"./accumulateInto":204,"./forEachAccumulated":212,"fbjs/lib/warning":257,"oMfpAn":39}],121:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -9872,7 +11998,7 @@ assign(FallbackCompositionState.prototype, {
 PooledClass.addPoolingTo(FallbackCompositionState);
 
 module.exports = FallbackCompositionState;
-},{"./Object.assign":123,"./PooledClass":124,"./getTextContentAccessor":218}],121:[function(require,module,exports){
+},{"./Object.assign":124,"./PooledClass":125,"./getTextContentAccessor":219}],122:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -10105,7 +12231,7 @@ var HTMLDOMPropertyConfig = {
 };
 
 module.exports = HTMLDOMPropertyConfig;
-},{"./DOMProperty":110,"fbjs/lib/ExecutionEnvironment":231}],122:[function(require,module,exports){
+},{"./DOMProperty":111,"fbjs/lib/ExecutionEnvironment":232}],123:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -10242,7 +12368,7 @@ var LinkedValueUtils = {
 
 module.exports = LinkedValueUtils;
 }).call(this,require("oMfpAn"))
-},{"./ReactPropTypeLocations":174,"./ReactPropTypes":175,"fbjs/lib/invariant":245,"fbjs/lib/warning":256,"oMfpAn":38}],123:[function(require,module,exports){
+},{"./ReactPropTypeLocations":175,"./ReactPropTypes":176,"fbjs/lib/invariant":246,"fbjs/lib/warning":257,"oMfpAn":39}],124:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -10290,7 +12416,7 @@ function assign(target, sources) {
 }
 
 module.exports = assign;
-},{}],124:[function(require,module,exports){
+},{}],125:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -10412,7 +12538,7 @@ var PooledClass = {
 
 module.exports = PooledClass;
 }).call(this,require("oMfpAn"))
-},{"fbjs/lib/invariant":245,"oMfpAn":38}],125:[function(require,module,exports){
+},{"fbjs/lib/invariant":246,"oMfpAn":39}],126:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -10453,7 +12579,7 @@ React.__SECRET_DOM_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactDOM;
 React.__SECRET_DOM_SERVER_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactDOMServer;
 
 module.exports = React;
-},{"./Object.assign":123,"./ReactDOM":136,"./ReactDOMServer":146,"./ReactIsomorphic":164,"./deprecated":207}],126:[function(require,module,exports){
+},{"./Object.assign":124,"./ReactDOM":137,"./ReactDOMServer":147,"./ReactIsomorphic":165,"./deprecated":208}],127:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -10492,7 +12618,7 @@ var ReactBrowserComponentMixin = {
 
 module.exports = ReactBrowserComponentMixin;
 }).call(this,require("oMfpAn"))
-},{"./ReactInstanceMap":163,"./findDOMNode":209,"fbjs/lib/warning":256,"oMfpAn":38}],127:[function(require,module,exports){
+},{"./ReactInstanceMap":164,"./findDOMNode":210,"fbjs/lib/warning":257,"oMfpAn":39}],128:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -10817,7 +12943,7 @@ ReactPerf.measureMethods(ReactBrowserEventEmitter, 'ReactBrowserEventEmitter', {
 });
 
 module.exports = ReactBrowserEventEmitter;
-},{"./EventConstants":115,"./EventPluginHub":116,"./EventPluginRegistry":117,"./Object.assign":123,"./ReactEventEmitterMixin":158,"./ReactPerf":172,"./ViewportMetrics":202,"./isEventSupported":220}],128:[function(require,module,exports){
+},{"./EventConstants":116,"./EventPluginHub":117,"./EventPluginRegistry":118,"./Object.assign":124,"./ReactEventEmitterMixin":159,"./ReactPerf":173,"./ViewportMetrics":203,"./isEventSupported":221}],129:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -10942,7 +13068,7 @@ var ReactChildReconciler = {
 
 module.exports = ReactChildReconciler;
 }).call(this,require("oMfpAn"))
-},{"./ReactReconciler":177,"./instantiateReactComponent":219,"./shouldUpdateReactComponent":227,"./traverseAllChildren":228,"fbjs/lib/warning":256,"oMfpAn":38}],129:[function(require,module,exports){
+},{"./ReactReconciler":178,"./instantiateReactComponent":220,"./shouldUpdateReactComponent":228,"./traverseAllChildren":229,"fbjs/lib/warning":257,"oMfpAn":39}],130:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -11125,7 +13251,7 @@ var ReactChildren = {
 };
 
 module.exports = ReactChildren;
-},{"./PooledClass":124,"./ReactElement":153,"./traverseAllChildren":228,"fbjs/lib/emptyFunction":237}],130:[function(require,module,exports){
+},{"./PooledClass":125,"./ReactElement":154,"./traverseAllChildren":229,"fbjs/lib/emptyFunction":238}],131:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -11899,7 +14025,7 @@ var ReactClass = {
 
 module.exports = ReactClass;
 }).call(this,require("oMfpAn"))
-},{"./Object.assign":123,"./ReactComponent":131,"./ReactElement":153,"./ReactNoopUpdateQueue":170,"./ReactPropTypeLocationNames":173,"./ReactPropTypeLocations":174,"fbjs/lib/emptyObject":238,"fbjs/lib/invariant":245,"fbjs/lib/keyMirror":248,"fbjs/lib/keyOf":249,"fbjs/lib/warning":256,"oMfpAn":38}],131:[function(require,module,exports){
+},{"./Object.assign":124,"./ReactComponent":132,"./ReactElement":154,"./ReactNoopUpdateQueue":171,"./ReactPropTypeLocationNames":174,"./ReactPropTypeLocations":175,"fbjs/lib/emptyObject":239,"fbjs/lib/invariant":246,"fbjs/lib/keyMirror":249,"fbjs/lib/keyOf":250,"fbjs/lib/warning":257,"oMfpAn":39}],132:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -12024,7 +14150,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = ReactComponent;
 }).call(this,require("oMfpAn"))
-},{"./ReactNoopUpdateQueue":170,"./canDefineProperty":205,"fbjs/lib/emptyObject":238,"fbjs/lib/invariant":245,"fbjs/lib/warning":256,"oMfpAn":38}],132:[function(require,module,exports){
+},{"./ReactNoopUpdateQueue":171,"./canDefineProperty":206,"fbjs/lib/emptyObject":239,"fbjs/lib/invariant":246,"fbjs/lib/warning":257,"oMfpAn":39}],133:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -12066,7 +14192,7 @@ var ReactComponentBrowserEnvironment = {
 };
 
 module.exports = ReactComponentBrowserEnvironment;
-},{"./ReactDOMIDOperations":141,"./ReactMount":166}],133:[function(require,module,exports){
+},{"./ReactDOMIDOperations":142,"./ReactMount":167}],134:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -12120,7 +14246,7 @@ var ReactComponentEnvironment = {
 
 module.exports = ReactComponentEnvironment;
 }).call(this,require("oMfpAn"))
-},{"fbjs/lib/invariant":245,"oMfpAn":38}],134:[function(require,module,exports){
+},{"fbjs/lib/invariant":246,"oMfpAn":39}],135:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -12817,7 +14943,7 @@ var ReactCompositeComponent = {
 
 module.exports = ReactCompositeComponent;
 }).call(this,require("oMfpAn"))
-},{"./Object.assign":123,"./ReactComponentEnvironment":133,"./ReactCurrentOwner":135,"./ReactElement":153,"./ReactInstanceMap":163,"./ReactPerf":172,"./ReactPropTypeLocationNames":173,"./ReactPropTypeLocations":174,"./ReactReconciler":177,"./ReactUpdateQueue":183,"./shouldUpdateReactComponent":227,"fbjs/lib/emptyObject":238,"fbjs/lib/invariant":245,"fbjs/lib/warning":256,"oMfpAn":38}],135:[function(require,module,exports){
+},{"./Object.assign":124,"./ReactComponentEnvironment":134,"./ReactCurrentOwner":136,"./ReactElement":154,"./ReactInstanceMap":164,"./ReactPerf":173,"./ReactPropTypeLocationNames":174,"./ReactPropTypeLocations":175,"./ReactReconciler":178,"./ReactUpdateQueue":184,"./shouldUpdateReactComponent":228,"fbjs/lib/emptyObject":239,"fbjs/lib/invariant":246,"fbjs/lib/warning":257,"oMfpAn":39}],136:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -12848,7 +14974,7 @@ var ReactCurrentOwner = {
 };
 
 module.exports = ReactCurrentOwner;
-},{}],136:[function(require,module,exports){
+},{}],137:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -12943,7 +15069,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = React;
 }).call(this,require("oMfpAn"))
-},{"./ReactCurrentOwner":135,"./ReactDOMTextComponent":147,"./ReactDefaultInjection":150,"./ReactInstanceHandles":162,"./ReactMount":166,"./ReactPerf":172,"./ReactReconciler":177,"./ReactUpdates":184,"./ReactVersion":185,"./findDOMNode":209,"./renderSubtreeIntoContainer":224,"fbjs/lib/ExecutionEnvironment":231,"fbjs/lib/warning":256,"oMfpAn":38}],137:[function(require,module,exports){
+},{"./ReactCurrentOwner":136,"./ReactDOMTextComponent":148,"./ReactDefaultInjection":151,"./ReactInstanceHandles":163,"./ReactMount":167,"./ReactPerf":173,"./ReactReconciler":178,"./ReactUpdates":185,"./ReactVersion":186,"./findDOMNode":210,"./renderSubtreeIntoContainer":225,"fbjs/lib/ExecutionEnvironment":232,"fbjs/lib/warning":257,"oMfpAn":39}],138:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -12994,7 +15120,7 @@ var ReactDOMButton = {
 };
 
 module.exports = ReactDOMButton;
-},{}],138:[function(require,module,exports){
+},{}],139:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -13959,7 +16085,7 @@ assign(ReactDOMComponent.prototype, ReactDOMComponent.Mixin, ReactMultiChild.Mix
 
 module.exports = ReactDOMComponent;
 }).call(this,require("oMfpAn"))
-},{"./AutoFocusUtils":102,"./CSSPropertyOperations":105,"./DOMProperty":110,"./DOMPropertyOperations":111,"./EventConstants":115,"./Object.assign":123,"./ReactBrowserEventEmitter":127,"./ReactComponentBrowserEnvironment":132,"./ReactDOMButton":137,"./ReactDOMInput":142,"./ReactDOMOption":143,"./ReactDOMSelect":144,"./ReactDOMTextarea":148,"./ReactMount":166,"./ReactMultiChild":167,"./ReactPerf":172,"./ReactUpdateQueue":183,"./canDefineProperty":205,"./escapeTextContentForBrowser":208,"./isEventSupported":220,"./setInnerHTML":225,"./setTextContent":226,"./validateDOMNesting":229,"fbjs/lib/invariant":245,"fbjs/lib/keyOf":249,"fbjs/lib/shallowEqual":254,"fbjs/lib/warning":256,"oMfpAn":38}],139:[function(require,module,exports){
+},{"./AutoFocusUtils":103,"./CSSPropertyOperations":106,"./DOMProperty":111,"./DOMPropertyOperations":112,"./EventConstants":116,"./Object.assign":124,"./ReactBrowserEventEmitter":128,"./ReactComponentBrowserEnvironment":133,"./ReactDOMButton":138,"./ReactDOMInput":143,"./ReactDOMOption":144,"./ReactDOMSelect":145,"./ReactDOMTextarea":149,"./ReactMount":167,"./ReactMultiChild":168,"./ReactPerf":173,"./ReactUpdateQueue":184,"./canDefineProperty":206,"./escapeTextContentForBrowser":209,"./isEventSupported":221,"./setInnerHTML":226,"./setTextContent":227,"./validateDOMNesting":230,"fbjs/lib/invariant":246,"fbjs/lib/keyOf":250,"fbjs/lib/shallowEqual":255,"fbjs/lib/warning":257,"oMfpAn":39}],140:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -14139,7 +16265,7 @@ var ReactDOMFactories = mapObject({
 
 module.exports = ReactDOMFactories;
 }).call(this,require("oMfpAn"))
-},{"./ReactElement":153,"./ReactElementValidator":154,"fbjs/lib/mapObject":250,"oMfpAn":38}],140:[function(require,module,exports){
+},{"./ReactElement":154,"./ReactElementValidator":155,"fbjs/lib/mapObject":251,"oMfpAn":39}],141:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -14158,7 +16284,7 @@ var ReactDOMFeatureFlags = {
 };
 
 module.exports = ReactDOMFeatureFlags;
-},{}],141:[function(require,module,exports){
+},{}],142:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -14255,7 +16381,7 @@ ReactPerf.measureMethods(ReactDOMIDOperations, 'ReactDOMIDOperations', {
 
 module.exports = ReactDOMIDOperations;
 }).call(this,require("oMfpAn"))
-},{"./DOMChildrenOperations":109,"./DOMPropertyOperations":111,"./ReactMount":166,"./ReactPerf":172,"fbjs/lib/invariant":245,"oMfpAn":38}],142:[function(require,module,exports){
+},{"./DOMChildrenOperations":110,"./DOMPropertyOperations":112,"./ReactMount":167,"./ReactPerf":173,"fbjs/lib/invariant":246,"oMfpAn":39}],143:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -14411,7 +16537,7 @@ function _handleChange(event) {
 
 module.exports = ReactDOMInput;
 }).call(this,require("oMfpAn"))
-},{"./LinkedValueUtils":122,"./Object.assign":123,"./ReactDOMIDOperations":141,"./ReactMount":166,"./ReactUpdates":184,"fbjs/lib/invariant":245,"oMfpAn":38}],143:[function(require,module,exports){
+},{"./LinkedValueUtils":123,"./Object.assign":124,"./ReactDOMIDOperations":142,"./ReactMount":167,"./ReactUpdates":185,"fbjs/lib/invariant":246,"oMfpAn":39}],144:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -14500,7 +16626,7 @@ var ReactDOMOption = {
 
 module.exports = ReactDOMOption;
 }).call(this,require("oMfpAn"))
-},{"./Object.assign":123,"./ReactChildren":129,"./ReactDOMSelect":144,"fbjs/lib/warning":256,"oMfpAn":38}],144:[function(require,module,exports){
+},{"./Object.assign":124,"./ReactChildren":130,"./ReactDOMSelect":145,"fbjs/lib/warning":257,"oMfpAn":39}],145:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -14691,7 +16817,7 @@ function _handleChange(event) {
 
 module.exports = ReactDOMSelect;
 }).call(this,require("oMfpAn"))
-},{"./LinkedValueUtils":122,"./Object.assign":123,"./ReactMount":166,"./ReactUpdates":184,"fbjs/lib/warning":256,"oMfpAn":38}],145:[function(require,module,exports){
+},{"./LinkedValueUtils":123,"./Object.assign":124,"./ReactMount":167,"./ReactUpdates":185,"fbjs/lib/warning":257,"oMfpAn":39}],146:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -14904,7 +17030,7 @@ var ReactDOMSelection = {
 };
 
 module.exports = ReactDOMSelection;
-},{"./getNodeForCharacterOffset":217,"./getTextContentAccessor":218,"fbjs/lib/ExecutionEnvironment":231}],146:[function(require,module,exports){
+},{"./getNodeForCharacterOffset":218,"./getTextContentAccessor":219,"fbjs/lib/ExecutionEnvironment":232}],147:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -14931,7 +17057,7 @@ var ReactDOMServer = {
 };
 
 module.exports = ReactDOMServer;
-},{"./ReactDefaultInjection":150,"./ReactServerRendering":181,"./ReactVersion":185}],147:[function(require,module,exports){
+},{"./ReactDefaultInjection":151,"./ReactServerRendering":182,"./ReactVersion":186}],148:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -15061,7 +17187,7 @@ assign(ReactDOMTextComponent.prototype, {
 
 module.exports = ReactDOMTextComponent;
 }).call(this,require("oMfpAn"))
-},{"./DOMChildrenOperations":109,"./DOMPropertyOperations":111,"./Object.assign":123,"./ReactComponentBrowserEnvironment":132,"./ReactMount":166,"./escapeTextContentForBrowser":208,"./setTextContent":226,"./validateDOMNesting":229,"oMfpAn":38}],148:[function(require,module,exports){
+},{"./DOMChildrenOperations":110,"./DOMPropertyOperations":112,"./Object.assign":124,"./ReactComponentBrowserEnvironment":133,"./ReactMount":167,"./escapeTextContentForBrowser":209,"./setTextContent":227,"./validateDOMNesting":230,"oMfpAn":39}],149:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -15177,7 +17303,7 @@ function _handleChange(event) {
 
 module.exports = ReactDOMTextarea;
 }).call(this,require("oMfpAn"))
-},{"./LinkedValueUtils":122,"./Object.assign":123,"./ReactDOMIDOperations":141,"./ReactUpdates":184,"fbjs/lib/invariant":245,"fbjs/lib/warning":256,"oMfpAn":38}],149:[function(require,module,exports){
+},{"./LinkedValueUtils":123,"./Object.assign":124,"./ReactDOMIDOperations":142,"./ReactUpdates":185,"fbjs/lib/invariant":246,"fbjs/lib/warning":257,"oMfpAn":39}],150:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -15245,7 +17371,7 @@ var ReactDefaultBatchingStrategy = {
 };
 
 module.exports = ReactDefaultBatchingStrategy;
-},{"./Object.assign":123,"./ReactUpdates":184,"./Transaction":201,"fbjs/lib/emptyFunction":237}],150:[function(require,module,exports){
+},{"./Object.assign":124,"./ReactUpdates":185,"./Transaction":202,"fbjs/lib/emptyFunction":238}],151:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -15345,7 +17471,7 @@ module.exports = {
   inject: inject
 };
 }).call(this,require("oMfpAn"))
-},{"./BeforeInputEventPlugin":103,"./ChangeEventPlugin":107,"./ClientReactRootIndex":108,"./DefaultEventPluginOrder":113,"./EnterLeaveEventPlugin":114,"./HTMLDOMPropertyConfig":121,"./ReactBrowserComponentMixin":126,"./ReactComponentBrowserEnvironment":132,"./ReactDOMComponent":138,"./ReactDOMTextComponent":147,"./ReactDefaultBatchingStrategy":149,"./ReactDefaultPerf":151,"./ReactEventListener":159,"./ReactInjection":160,"./ReactInstanceHandles":162,"./ReactMount":166,"./ReactReconcileTransaction":176,"./SVGDOMPropertyConfig":186,"./SelectEventPlugin":187,"./ServerReactRootIndex":188,"./SimpleEventPlugin":189,"fbjs/lib/ExecutionEnvironment":231,"oMfpAn":38}],151:[function(require,module,exports){
+},{"./BeforeInputEventPlugin":104,"./ChangeEventPlugin":108,"./ClientReactRootIndex":109,"./DefaultEventPluginOrder":114,"./EnterLeaveEventPlugin":115,"./HTMLDOMPropertyConfig":122,"./ReactBrowserComponentMixin":127,"./ReactComponentBrowserEnvironment":133,"./ReactDOMComponent":139,"./ReactDOMTextComponent":148,"./ReactDefaultBatchingStrategy":150,"./ReactDefaultPerf":152,"./ReactEventListener":160,"./ReactInjection":161,"./ReactInstanceHandles":163,"./ReactMount":167,"./ReactReconcileTransaction":177,"./SVGDOMPropertyConfig":187,"./SelectEventPlugin":188,"./ServerReactRootIndex":189,"./SimpleEventPlugin":190,"fbjs/lib/ExecutionEnvironment":232,"oMfpAn":39}],152:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -15583,7 +17709,7 @@ var ReactDefaultPerf = {
 };
 
 module.exports = ReactDefaultPerf;
-},{"./DOMProperty":110,"./ReactDefaultPerfAnalysis":152,"./ReactMount":166,"./ReactPerf":172,"fbjs/lib/performanceNow":253}],152:[function(require,module,exports){
+},{"./DOMProperty":111,"./ReactDefaultPerfAnalysis":153,"./ReactMount":167,"./ReactPerf":173,"fbjs/lib/performanceNow":254}],153:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -15783,7 +17909,7 @@ var ReactDefaultPerfAnalysis = {
 };
 
 module.exports = ReactDefaultPerfAnalysis;
-},{"./Object.assign":123}],153:[function(require,module,exports){
+},{"./Object.assign":124}],154:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -16033,7 +18159,7 @@ ReactElement.isValidElement = function (object) {
 
 module.exports = ReactElement;
 }).call(this,require("oMfpAn"))
-},{"./Object.assign":123,"./ReactCurrentOwner":135,"./canDefineProperty":205,"oMfpAn":38}],154:[function(require,module,exports){
+},{"./Object.assign":124,"./ReactCurrentOwner":136,"./canDefineProperty":206,"oMfpAn":39}],155:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -16317,7 +18443,7 @@ var ReactElementValidator = {
 
 module.exports = ReactElementValidator;
 }).call(this,require("oMfpAn"))
-},{"./ReactCurrentOwner":135,"./ReactElement":153,"./ReactPropTypeLocationNames":173,"./ReactPropTypeLocations":174,"./canDefineProperty":205,"./getIteratorFn":216,"fbjs/lib/invariant":245,"fbjs/lib/warning":256,"oMfpAn":38}],155:[function(require,module,exports){
+},{"./ReactCurrentOwner":136,"./ReactElement":154,"./ReactPropTypeLocationNames":174,"./ReactPropTypeLocations":175,"./canDefineProperty":206,"./getIteratorFn":217,"fbjs/lib/invariant":246,"fbjs/lib/warning":257,"oMfpAn":39}],156:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -16369,7 +18495,7 @@ assign(ReactEmptyComponent.prototype, {
 ReactEmptyComponent.injection = ReactEmptyComponentInjection;
 
 module.exports = ReactEmptyComponent;
-},{"./Object.assign":123,"./ReactElement":153,"./ReactEmptyComponentRegistry":156,"./ReactReconciler":177}],156:[function(require,module,exports){
+},{"./Object.assign":124,"./ReactElement":154,"./ReactEmptyComponentRegistry":157,"./ReactReconciler":178}],157:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -16418,7 +18544,7 @@ var ReactEmptyComponentRegistry = {
 };
 
 module.exports = ReactEmptyComponentRegistry;
-},{}],157:[function(require,module,exports){
+},{}],158:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -16498,7 +18624,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = ReactErrorUtils;
 }).call(this,require("oMfpAn"))
-},{"oMfpAn":38}],158:[function(require,module,exports){
+},{"oMfpAn":39}],159:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -16537,7 +18663,7 @@ var ReactEventEmitterMixin = {
 };
 
 module.exports = ReactEventEmitterMixin;
-},{"./EventPluginHub":116}],159:[function(require,module,exports){
+},{"./EventPluginHub":117}],160:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -16749,7 +18875,7 @@ var ReactEventListener = {
 };
 
 module.exports = ReactEventListener;
-},{"./Object.assign":123,"./PooledClass":124,"./ReactInstanceHandles":162,"./ReactMount":166,"./ReactUpdates":184,"./getEventTarget":215,"fbjs/lib/EventListener":230,"fbjs/lib/ExecutionEnvironment":231,"fbjs/lib/getUnboundedScrollPosition":242}],160:[function(require,module,exports){
+},{"./Object.assign":124,"./PooledClass":125,"./ReactInstanceHandles":163,"./ReactMount":167,"./ReactUpdates":185,"./getEventTarget":216,"fbjs/lib/EventListener":231,"fbjs/lib/ExecutionEnvironment":232,"fbjs/lib/getUnboundedScrollPosition":243}],161:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -16788,7 +18914,7 @@ var ReactInjection = {
 };
 
 module.exports = ReactInjection;
-},{"./DOMProperty":110,"./EventPluginHub":116,"./ReactBrowserEventEmitter":127,"./ReactClass":130,"./ReactComponentEnvironment":133,"./ReactEmptyComponent":155,"./ReactNativeComponent":169,"./ReactPerf":172,"./ReactRootIndex":179,"./ReactUpdates":184}],161:[function(require,module,exports){
+},{"./DOMProperty":111,"./EventPluginHub":117,"./ReactBrowserEventEmitter":128,"./ReactClass":131,"./ReactComponentEnvironment":134,"./ReactEmptyComponent":156,"./ReactNativeComponent":170,"./ReactPerf":173,"./ReactRootIndex":180,"./ReactUpdates":185}],162:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -16913,7 +19039,7 @@ var ReactInputSelection = {
 };
 
 module.exports = ReactInputSelection;
-},{"./ReactDOMSelection":145,"fbjs/lib/containsNode":234,"fbjs/lib/focusNode":239,"fbjs/lib/getActiveElement":240}],162:[function(require,module,exports){
+},{"./ReactDOMSelection":146,"fbjs/lib/containsNode":235,"fbjs/lib/focusNode":240,"fbjs/lib/getActiveElement":241}],163:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -17218,7 +19344,7 @@ var ReactInstanceHandles = {
 
 module.exports = ReactInstanceHandles;
 }).call(this,require("oMfpAn"))
-},{"./ReactRootIndex":179,"fbjs/lib/invariant":245,"oMfpAn":38}],163:[function(require,module,exports){
+},{"./ReactRootIndex":180,"fbjs/lib/invariant":246,"oMfpAn":39}],164:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -17266,7 +19392,7 @@ var ReactInstanceMap = {
 };
 
 module.exports = ReactInstanceMap;
-},{}],164:[function(require,module,exports){
+},{}],165:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -17343,7 +19469,7 @@ var React = {
 
 module.exports = React;
 }).call(this,require("oMfpAn"))
-},{"./Object.assign":123,"./ReactChildren":129,"./ReactClass":130,"./ReactComponent":131,"./ReactDOMFactories":139,"./ReactElement":153,"./ReactElementValidator":154,"./ReactPropTypes":175,"./ReactVersion":185,"./onlyChild":222,"oMfpAn":38}],165:[function(require,module,exports){
+},{"./Object.assign":124,"./ReactChildren":130,"./ReactClass":131,"./ReactComponent":132,"./ReactDOMFactories":140,"./ReactElement":154,"./ReactElementValidator":155,"./ReactPropTypes":176,"./ReactVersion":186,"./onlyChild":223,"oMfpAn":39}],166:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -17389,7 +19515,7 @@ var ReactMarkupChecksum = {
 };
 
 module.exports = ReactMarkupChecksum;
-},{"./adler32":204}],166:[function(require,module,exports){
+},{"./adler32":205}],167:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -18242,7 +20368,7 @@ ReactPerf.measureMethods(ReactMount, 'ReactMount', {
 
 module.exports = ReactMount;
 }).call(this,require("oMfpAn"))
-},{"./DOMProperty":110,"./Object.assign":123,"./ReactBrowserEventEmitter":127,"./ReactCurrentOwner":135,"./ReactDOMFeatureFlags":140,"./ReactElement":153,"./ReactEmptyComponentRegistry":156,"./ReactInstanceHandles":162,"./ReactInstanceMap":163,"./ReactMarkupChecksum":165,"./ReactPerf":172,"./ReactReconciler":177,"./ReactUpdateQueue":183,"./ReactUpdates":184,"./instantiateReactComponent":219,"./setInnerHTML":225,"./shouldUpdateReactComponent":227,"./validateDOMNesting":229,"fbjs/lib/containsNode":234,"fbjs/lib/emptyObject":238,"fbjs/lib/invariant":245,"fbjs/lib/warning":256,"oMfpAn":38}],167:[function(require,module,exports){
+},{"./DOMProperty":111,"./Object.assign":124,"./ReactBrowserEventEmitter":128,"./ReactCurrentOwner":136,"./ReactDOMFeatureFlags":141,"./ReactElement":154,"./ReactEmptyComponentRegistry":157,"./ReactInstanceHandles":163,"./ReactInstanceMap":164,"./ReactMarkupChecksum":166,"./ReactPerf":173,"./ReactReconciler":178,"./ReactUpdateQueue":184,"./ReactUpdates":185,"./instantiateReactComponent":220,"./setInnerHTML":226,"./shouldUpdateReactComponent":228,"./validateDOMNesting":230,"fbjs/lib/containsNode":235,"fbjs/lib/emptyObject":239,"fbjs/lib/invariant":246,"fbjs/lib/warning":257,"oMfpAn":39}],168:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -18741,7 +20867,7 @@ var ReactMultiChild = {
 
 module.exports = ReactMultiChild;
 }).call(this,require("oMfpAn"))
-},{"./ReactChildReconciler":128,"./ReactComponentEnvironment":133,"./ReactCurrentOwner":135,"./ReactMultiChildUpdateTypes":168,"./ReactReconciler":177,"./flattenChildren":210,"oMfpAn":38}],168:[function(require,module,exports){
+},{"./ReactChildReconciler":129,"./ReactComponentEnvironment":134,"./ReactCurrentOwner":136,"./ReactMultiChildUpdateTypes":169,"./ReactReconciler":178,"./flattenChildren":211,"oMfpAn":39}],169:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -18774,7 +20900,7 @@ var ReactMultiChildUpdateTypes = keyMirror({
 });
 
 module.exports = ReactMultiChildUpdateTypes;
-},{"fbjs/lib/keyMirror":248}],169:[function(require,module,exports){
+},{"fbjs/lib/keyMirror":249}],170:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -18871,7 +20997,7 @@ var ReactNativeComponent = {
 
 module.exports = ReactNativeComponent;
 }).call(this,require("oMfpAn"))
-},{"./Object.assign":123,"fbjs/lib/invariant":245,"oMfpAn":38}],170:[function(require,module,exports){
+},{"./Object.assign":124,"fbjs/lib/invariant":246,"oMfpAn":39}],171:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2015, Facebook, Inc.
@@ -18992,7 +21118,7 @@ var ReactNoopUpdateQueue = {
 
 module.exports = ReactNoopUpdateQueue;
 }).call(this,require("oMfpAn"))
-},{"fbjs/lib/warning":256,"oMfpAn":38}],171:[function(require,module,exports){
+},{"fbjs/lib/warning":257,"oMfpAn":39}],172:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -19086,7 +21212,7 @@ var ReactOwner = {
 
 module.exports = ReactOwner;
 }).call(this,require("oMfpAn"))
-},{"fbjs/lib/invariant":245,"oMfpAn":38}],172:[function(require,module,exports){
+},{"fbjs/lib/invariant":246,"oMfpAn":39}],173:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -19185,7 +21311,7 @@ function _noMeasure(objName, fnName, func) {
 
 module.exports = ReactPerf;
 }).call(this,require("oMfpAn"))
-},{"oMfpAn":38}],173:[function(require,module,exports){
+},{"oMfpAn":39}],174:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -19212,7 +21338,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = ReactPropTypeLocationNames;
 }).call(this,require("oMfpAn"))
-},{"oMfpAn":38}],174:[function(require,module,exports){
+},{"oMfpAn":39}],175:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -19235,7 +21361,7 @@ var ReactPropTypeLocations = keyMirror({
 });
 
 module.exports = ReactPropTypeLocations;
-},{"fbjs/lib/keyMirror":248}],175:[function(require,module,exports){
+},{"fbjs/lib/keyMirror":249}],176:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -19592,7 +21718,7 @@ function getClassName(propValue) {
 }
 
 module.exports = ReactPropTypes;
-},{"./ReactElement":153,"./ReactPropTypeLocationNames":173,"./getIteratorFn":216,"fbjs/lib/emptyFunction":237}],176:[function(require,module,exports){
+},{"./ReactElement":154,"./ReactPropTypeLocationNames":174,"./getIteratorFn":217,"fbjs/lib/emptyFunction":238}],177:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -19744,7 +21870,7 @@ assign(ReactReconcileTransaction.prototype, Transaction.Mixin, Mixin);
 PooledClass.addPoolingTo(ReactReconcileTransaction);
 
 module.exports = ReactReconcileTransaction;
-},{"./CallbackQueue":106,"./Object.assign":123,"./PooledClass":124,"./ReactBrowserEventEmitter":127,"./ReactDOMFeatureFlags":140,"./ReactInputSelection":161,"./Transaction":201}],177:[function(require,module,exports){
+},{"./CallbackQueue":107,"./Object.assign":124,"./PooledClass":125,"./ReactBrowserEventEmitter":128,"./ReactDOMFeatureFlags":141,"./ReactInputSelection":162,"./Transaction":202}],178:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -19852,7 +21978,7 @@ var ReactReconciler = {
 };
 
 module.exports = ReactReconciler;
-},{"./ReactRef":178}],178:[function(require,module,exports){
+},{"./ReactRef":179}],179:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -19931,7 +22057,7 @@ ReactRef.detachRefs = function (instance, element) {
 };
 
 module.exports = ReactRef;
-},{"./ReactOwner":171}],179:[function(require,module,exports){
+},{"./ReactOwner":172}],180:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -19961,7 +22087,7 @@ var ReactRootIndex = {
 };
 
 module.exports = ReactRootIndex;
-},{}],180:[function(require,module,exports){
+},{}],181:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -19985,7 +22111,7 @@ var ReactServerBatchingStrategy = {
 };
 
 module.exports = ReactServerBatchingStrategy;
-},{}],181:[function(require,module,exports){
+},{}],182:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -20071,7 +22197,7 @@ module.exports = {
   renderToStaticMarkup: renderToStaticMarkup
 };
 }).call(this,require("oMfpAn"))
-},{"./ReactDefaultBatchingStrategy":149,"./ReactElement":153,"./ReactInstanceHandles":162,"./ReactMarkupChecksum":165,"./ReactServerBatchingStrategy":180,"./ReactServerRenderingTransaction":182,"./ReactUpdates":184,"./instantiateReactComponent":219,"fbjs/lib/emptyObject":238,"fbjs/lib/invariant":245,"oMfpAn":38}],182:[function(require,module,exports){
+},{"./ReactDefaultBatchingStrategy":150,"./ReactElement":154,"./ReactInstanceHandles":163,"./ReactMarkupChecksum":166,"./ReactServerBatchingStrategy":181,"./ReactServerRenderingTransaction":183,"./ReactUpdates":185,"./instantiateReactComponent":220,"fbjs/lib/emptyObject":239,"fbjs/lib/invariant":246,"oMfpAn":39}],183:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -20159,7 +22285,7 @@ assign(ReactServerRenderingTransaction.prototype, Transaction.Mixin, Mixin);
 PooledClass.addPoolingTo(ReactServerRenderingTransaction);
 
 module.exports = ReactServerRenderingTransaction;
-},{"./CallbackQueue":106,"./Object.assign":123,"./PooledClass":124,"./Transaction":201,"fbjs/lib/emptyFunction":237}],183:[function(require,module,exports){
+},{"./CallbackQueue":107,"./Object.assign":124,"./PooledClass":125,"./Transaction":202,"fbjs/lib/emptyFunction":238}],184:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2015, Facebook, Inc.
@@ -20419,7 +22545,7 @@ var ReactUpdateQueue = {
 
 module.exports = ReactUpdateQueue;
 }).call(this,require("oMfpAn"))
-},{"./Object.assign":123,"./ReactCurrentOwner":135,"./ReactElement":153,"./ReactInstanceMap":163,"./ReactUpdates":184,"fbjs/lib/invariant":245,"fbjs/lib/warning":256,"oMfpAn":38}],184:[function(require,module,exports){
+},{"./Object.assign":124,"./ReactCurrentOwner":136,"./ReactElement":154,"./ReactInstanceMap":164,"./ReactUpdates":185,"fbjs/lib/invariant":246,"fbjs/lib/warning":257,"oMfpAn":39}],185:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -20645,7 +22771,7 @@ var ReactUpdates = {
 
 module.exports = ReactUpdates;
 }).call(this,require("oMfpAn"))
-},{"./CallbackQueue":106,"./Object.assign":123,"./PooledClass":124,"./ReactPerf":172,"./ReactReconciler":177,"./Transaction":201,"fbjs/lib/invariant":245,"oMfpAn":38}],185:[function(require,module,exports){
+},{"./CallbackQueue":107,"./Object.assign":124,"./PooledClass":125,"./ReactPerf":173,"./ReactReconciler":178,"./Transaction":202,"fbjs/lib/invariant":246,"oMfpAn":39}],186:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -20660,7 +22786,7 @@ module.exports = ReactUpdates;
 'use strict';
 
 module.exports = '0.14.3';
-},{}],186:[function(require,module,exports){
+},{}],187:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -20788,7 +22914,7 @@ var SVGDOMPropertyConfig = {
 };
 
 module.exports = SVGDOMPropertyConfig;
-},{"./DOMProperty":110}],187:[function(require,module,exports){
+},{"./DOMProperty":111}],188:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -20990,7 +23116,7 @@ var SelectEventPlugin = {
 };
 
 module.exports = SelectEventPlugin;
-},{"./EventConstants":115,"./EventPropagators":119,"./ReactInputSelection":161,"./SyntheticEvent":193,"./isTextInputElement":221,"fbjs/lib/ExecutionEnvironment":231,"fbjs/lib/getActiveElement":240,"fbjs/lib/keyOf":249,"fbjs/lib/shallowEqual":254}],188:[function(require,module,exports){
+},{"./EventConstants":116,"./EventPropagators":120,"./ReactInputSelection":162,"./SyntheticEvent":194,"./isTextInputElement":222,"fbjs/lib/ExecutionEnvironment":232,"fbjs/lib/getActiveElement":241,"fbjs/lib/keyOf":250,"fbjs/lib/shallowEqual":255}],189:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -21020,7 +23146,7 @@ var ServerReactRootIndex = {
 };
 
 module.exports = ServerReactRootIndex;
-},{}],189:[function(require,module,exports){
+},{}],190:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -21610,7 +23736,7 @@ var SimpleEventPlugin = {
 
 module.exports = SimpleEventPlugin;
 }).call(this,require("oMfpAn"))
-},{"./EventConstants":115,"./EventPropagators":119,"./ReactMount":166,"./SyntheticClipboardEvent":190,"./SyntheticDragEvent":192,"./SyntheticEvent":193,"./SyntheticFocusEvent":194,"./SyntheticKeyboardEvent":196,"./SyntheticMouseEvent":197,"./SyntheticTouchEvent":198,"./SyntheticUIEvent":199,"./SyntheticWheelEvent":200,"./getEventCharCode":212,"fbjs/lib/EventListener":230,"fbjs/lib/emptyFunction":237,"fbjs/lib/invariant":245,"fbjs/lib/keyOf":249,"oMfpAn":38}],190:[function(require,module,exports){
+},{"./EventConstants":116,"./EventPropagators":120,"./ReactMount":167,"./SyntheticClipboardEvent":191,"./SyntheticDragEvent":193,"./SyntheticEvent":194,"./SyntheticFocusEvent":195,"./SyntheticKeyboardEvent":197,"./SyntheticMouseEvent":198,"./SyntheticTouchEvent":199,"./SyntheticUIEvent":200,"./SyntheticWheelEvent":201,"./getEventCharCode":213,"fbjs/lib/EventListener":231,"fbjs/lib/emptyFunction":238,"fbjs/lib/invariant":246,"fbjs/lib/keyOf":250,"oMfpAn":39}],191:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -21650,7 +23776,7 @@ function SyntheticClipboardEvent(dispatchConfig, dispatchMarker, nativeEvent, na
 SyntheticEvent.augmentClass(SyntheticClipboardEvent, ClipboardEventInterface);
 
 module.exports = SyntheticClipboardEvent;
-},{"./SyntheticEvent":193}],191:[function(require,module,exports){
+},{"./SyntheticEvent":194}],192:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -21688,7 +23814,7 @@ function SyntheticCompositionEvent(dispatchConfig, dispatchMarker, nativeEvent, 
 SyntheticEvent.augmentClass(SyntheticCompositionEvent, CompositionEventInterface);
 
 module.exports = SyntheticCompositionEvent;
-},{"./SyntheticEvent":193}],192:[function(require,module,exports){
+},{"./SyntheticEvent":194}],193:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -21726,7 +23852,7 @@ function SyntheticDragEvent(dispatchConfig, dispatchMarker, nativeEvent, nativeE
 SyntheticMouseEvent.augmentClass(SyntheticDragEvent, DragEventInterface);
 
 module.exports = SyntheticDragEvent;
-},{"./SyntheticMouseEvent":197}],193:[function(require,module,exports){
+},{"./SyntheticMouseEvent":198}],194:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -21906,7 +24032,7 @@ PooledClass.addPoolingTo(SyntheticEvent, PooledClass.fourArgumentPooler);
 
 module.exports = SyntheticEvent;
 }).call(this,require("oMfpAn"))
-},{"./Object.assign":123,"./PooledClass":124,"fbjs/lib/emptyFunction":237,"fbjs/lib/warning":256,"oMfpAn":38}],194:[function(require,module,exports){
+},{"./Object.assign":124,"./PooledClass":125,"fbjs/lib/emptyFunction":238,"fbjs/lib/warning":257,"oMfpAn":39}],195:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -21944,7 +24070,7 @@ function SyntheticFocusEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticUIEvent.augmentClass(SyntheticFocusEvent, FocusEventInterface);
 
 module.exports = SyntheticFocusEvent;
-},{"./SyntheticUIEvent":199}],195:[function(require,module,exports){
+},{"./SyntheticUIEvent":200}],196:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -21983,7 +24109,7 @@ function SyntheticInputEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticEvent.augmentClass(SyntheticInputEvent, InputEventInterface);
 
 module.exports = SyntheticInputEvent;
-},{"./SyntheticEvent":193}],196:[function(require,module,exports){
+},{"./SyntheticEvent":194}],197:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22069,7 +24195,7 @@ function SyntheticKeyboardEvent(dispatchConfig, dispatchMarker, nativeEvent, nat
 SyntheticUIEvent.augmentClass(SyntheticKeyboardEvent, KeyboardEventInterface);
 
 module.exports = SyntheticKeyboardEvent;
-},{"./SyntheticUIEvent":199,"./getEventCharCode":212,"./getEventKey":213,"./getEventModifierState":214}],197:[function(require,module,exports){
+},{"./SyntheticUIEvent":200,"./getEventCharCode":213,"./getEventKey":214,"./getEventModifierState":215}],198:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22143,7 +24269,7 @@ function SyntheticMouseEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticUIEvent.augmentClass(SyntheticMouseEvent, MouseEventInterface);
 
 module.exports = SyntheticMouseEvent;
-},{"./SyntheticUIEvent":199,"./ViewportMetrics":202,"./getEventModifierState":214}],198:[function(require,module,exports){
+},{"./SyntheticUIEvent":200,"./ViewportMetrics":203,"./getEventModifierState":215}],199:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22190,7 +24316,7 @@ function SyntheticTouchEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticUIEvent.augmentClass(SyntheticTouchEvent, TouchEventInterface);
 
 module.exports = SyntheticTouchEvent;
-},{"./SyntheticUIEvent":199,"./getEventModifierState":214}],199:[function(require,module,exports){
+},{"./SyntheticUIEvent":200,"./getEventModifierState":215}],200:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22251,7 +24377,7 @@ function SyntheticUIEvent(dispatchConfig, dispatchMarker, nativeEvent, nativeEve
 SyntheticEvent.augmentClass(SyntheticUIEvent, UIEventInterface);
 
 module.exports = SyntheticUIEvent;
-},{"./SyntheticEvent":193,"./getEventTarget":215}],200:[function(require,module,exports){
+},{"./SyntheticEvent":194,"./getEventTarget":216}],201:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22307,7 +24433,7 @@ function SyntheticWheelEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticMouseEvent.augmentClass(SyntheticWheelEvent, WheelEventInterface);
 
 module.exports = SyntheticWheelEvent;
-},{"./SyntheticMouseEvent":197}],201:[function(require,module,exports){
+},{"./SyntheticMouseEvent":198}],202:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -22541,7 +24667,7 @@ var Transaction = {
 
 module.exports = Transaction;
 }).call(this,require("oMfpAn"))
-},{"fbjs/lib/invariant":245,"oMfpAn":38}],202:[function(require,module,exports){
+},{"fbjs/lib/invariant":246,"oMfpAn":39}],203:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22569,7 +24695,7 @@ var ViewportMetrics = {
 };
 
 module.exports = ViewportMetrics;
-},{}],203:[function(require,module,exports){
+},{}],204:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -22631,7 +24757,7 @@ function accumulateInto(current, next) {
 
 module.exports = accumulateInto;
 }).call(this,require("oMfpAn"))
-},{"fbjs/lib/invariant":245,"oMfpAn":38}],204:[function(require,module,exports){
+},{"fbjs/lib/invariant":246,"oMfpAn":39}],205:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22674,7 +24800,7 @@ function adler32(data) {
 }
 
 module.exports = adler32;
-},{}],205:[function(require,module,exports){
+},{}],206:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -22701,7 +24827,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = canDefineProperty;
 }).call(this,require("oMfpAn"))
-},{"oMfpAn":38}],206:[function(require,module,exports){
+},{"oMfpAn":39}],207:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22757,7 +24883,7 @@ function dangerousStyleValue(name, value) {
 }
 
 module.exports = dangerousStyleValue;
-},{"./CSSProperty":104}],207:[function(require,module,exports){
+},{"./CSSProperty":105}],208:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -22808,7 +24934,7 @@ function deprecated(fnName, newModule, newPackage, ctx, fn) {
 
 module.exports = deprecated;
 }).call(this,require("oMfpAn"))
-},{"./Object.assign":123,"fbjs/lib/warning":256,"oMfpAn":38}],208:[function(require,module,exports){
+},{"./Object.assign":124,"fbjs/lib/warning":257,"oMfpAn":39}],209:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22847,7 +24973,7 @@ function escapeTextContentForBrowser(text) {
 }
 
 module.exports = escapeTextContentForBrowser;
-},{}],209:[function(require,module,exports){
+},{}],210:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -22899,7 +25025,7 @@ function findDOMNode(componentOrElement) {
 
 module.exports = findDOMNode;
 }).call(this,require("oMfpAn"))
-},{"./ReactCurrentOwner":135,"./ReactInstanceMap":163,"./ReactMount":166,"fbjs/lib/invariant":245,"fbjs/lib/warning":256,"oMfpAn":38}],210:[function(require,module,exports){
+},{"./ReactCurrentOwner":136,"./ReactInstanceMap":164,"./ReactMount":167,"fbjs/lib/invariant":246,"fbjs/lib/warning":257,"oMfpAn":39}],211:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -22950,7 +25076,7 @@ function flattenChildren(children) {
 
 module.exports = flattenChildren;
 }).call(this,require("oMfpAn"))
-},{"./traverseAllChildren":228,"fbjs/lib/warning":256,"oMfpAn":38}],211:[function(require,module,exports){
+},{"./traverseAllChildren":229,"fbjs/lib/warning":257,"oMfpAn":39}],212:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22980,7 +25106,7 @@ var forEachAccumulated = function (arr, cb, scope) {
 };
 
 module.exports = forEachAccumulated;
-},{}],212:[function(require,module,exports){
+},{}],213:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23031,7 +25157,7 @@ function getEventCharCode(nativeEvent) {
 }
 
 module.exports = getEventCharCode;
-},{}],213:[function(require,module,exports){
+},{}],214:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23135,7 +25261,7 @@ function getEventKey(nativeEvent) {
 }
 
 module.exports = getEventKey;
-},{"./getEventCharCode":212}],214:[function(require,module,exports){
+},{"./getEventCharCode":213}],215:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23180,7 +25306,7 @@ function getEventModifierState(nativeEvent) {
 }
 
 module.exports = getEventModifierState;
-},{}],215:[function(require,module,exports){
+},{}],216:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23210,7 +25336,7 @@ function getEventTarget(nativeEvent) {
 }
 
 module.exports = getEventTarget;
-},{}],216:[function(require,module,exports){
+},{}],217:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23251,7 +25377,7 @@ function getIteratorFn(maybeIterable) {
 }
 
 module.exports = getIteratorFn;
-},{}],217:[function(require,module,exports){
+},{}],218:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23325,7 +25451,7 @@ function getNodeForCharacterOffset(root, offset) {
 }
 
 module.exports = getNodeForCharacterOffset;
-},{}],218:[function(require,module,exports){
+},{}],219:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23359,7 +25485,7 @@ function getTextContentAccessor() {
 }
 
 module.exports = getTextContentAccessor;
-},{"fbjs/lib/ExecutionEnvironment":231}],219:[function(require,module,exports){
+},{"fbjs/lib/ExecutionEnvironment":232}],220:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -23474,7 +25600,7 @@ function instantiateReactComponent(node) {
 
 module.exports = instantiateReactComponent;
 }).call(this,require("oMfpAn"))
-},{"./Object.assign":123,"./ReactCompositeComponent":134,"./ReactEmptyComponent":155,"./ReactNativeComponent":169,"fbjs/lib/invariant":245,"fbjs/lib/warning":256,"oMfpAn":38}],220:[function(require,module,exports){
+},{"./Object.assign":124,"./ReactCompositeComponent":135,"./ReactEmptyComponent":156,"./ReactNativeComponent":170,"fbjs/lib/invariant":246,"fbjs/lib/warning":257,"oMfpAn":39}],221:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23535,7 +25661,7 @@ function isEventSupported(eventNameSuffix, capture) {
 }
 
 module.exports = isEventSupported;
-},{"fbjs/lib/ExecutionEnvironment":231}],221:[function(require,module,exports){
+},{"fbjs/lib/ExecutionEnvironment":232}],222:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23576,7 +25702,7 @@ function isTextInputElement(elem) {
 }
 
 module.exports = isTextInputElement;
-},{}],222:[function(require,module,exports){
+},{}],223:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -23612,7 +25738,7 @@ function onlyChild(children) {
 
 module.exports = onlyChild;
 }).call(this,require("oMfpAn"))
-},{"./ReactElement":153,"fbjs/lib/invariant":245,"oMfpAn":38}],223:[function(require,module,exports){
+},{"./ReactElement":154,"fbjs/lib/invariant":246,"oMfpAn":39}],224:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23639,7 +25765,7 @@ function quoteAttributeValueForBrowser(value) {
 }
 
 module.exports = quoteAttributeValueForBrowser;
-},{"./escapeTextContentForBrowser":208}],224:[function(require,module,exports){
+},{"./escapeTextContentForBrowser":209}],225:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23656,7 +25782,7 @@ module.exports = quoteAttributeValueForBrowser;
 var ReactMount = require('./ReactMount');
 
 module.exports = ReactMount.renderSubtreeIntoContainer;
-},{"./ReactMount":166}],225:[function(require,module,exports){
+},{"./ReactMount":167}],226:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23747,7 +25873,7 @@ if (ExecutionEnvironment.canUseDOM) {
 }
 
 module.exports = setInnerHTML;
-},{"fbjs/lib/ExecutionEnvironment":231}],226:[function(require,module,exports){
+},{"fbjs/lib/ExecutionEnvironment":232}],227:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23788,7 +25914,7 @@ if (ExecutionEnvironment.canUseDOM) {
 }
 
 module.exports = setTextContent;
-},{"./escapeTextContentForBrowser":208,"./setInnerHTML":225,"fbjs/lib/ExecutionEnvironment":231}],227:[function(require,module,exports){
+},{"./escapeTextContentForBrowser":209,"./setInnerHTML":226,"fbjs/lib/ExecutionEnvironment":232}],228:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23832,7 +25958,7 @@ function shouldUpdateReactComponent(prevElement, nextElement) {
 }
 
 module.exports = shouldUpdateReactComponent;
-},{}],228:[function(require,module,exports){
+},{}],229:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -24024,7 +26150,7 @@ function traverseAllChildren(children, callback, traverseContext) {
 
 module.exports = traverseAllChildren;
 }).call(this,require("oMfpAn"))
-},{"./ReactCurrentOwner":135,"./ReactElement":153,"./ReactInstanceHandles":162,"./getIteratorFn":216,"fbjs/lib/invariant":245,"fbjs/lib/warning":256,"oMfpAn":38}],229:[function(require,module,exports){
+},{"./ReactCurrentOwner":136,"./ReactElement":154,"./ReactInstanceHandles":163,"./getIteratorFn":217,"fbjs/lib/invariant":246,"fbjs/lib/warning":257,"oMfpAn":39}],230:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2015, Facebook, Inc.
@@ -24390,7 +26516,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = validateDOMNesting;
 }).call(this,require("oMfpAn"))
-},{"./Object.assign":123,"fbjs/lib/emptyFunction":237,"fbjs/lib/warning":256,"oMfpAn":38}],230:[function(require,module,exports){
+},{"./Object.assign":124,"fbjs/lib/emptyFunction":238,"fbjs/lib/warning":257,"oMfpAn":39}],231:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -24477,7 +26603,7 @@ var EventListener = {
 
 module.exports = EventListener;
 }).call(this,require("oMfpAn"))
-},{"./emptyFunction":237,"oMfpAn":38}],231:[function(require,module,exports){
+},{"./emptyFunction":238,"oMfpAn":39}],232:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -24514,7 +26640,7 @@ var ExecutionEnvironment = {
 };
 
 module.exports = ExecutionEnvironment;
-},{}],232:[function(require,module,exports){
+},{}],233:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -24547,7 +26673,7 @@ function camelize(string) {
 }
 
 module.exports = camelize;
-},{}],233:[function(require,module,exports){
+},{}],234:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -24588,7 +26714,7 @@ function camelizeStyleName(string) {
 }
 
 module.exports = camelizeStyleName;
-},{"./camelize":232}],234:[function(require,module,exports){
+},{"./camelize":233}],235:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -24644,7 +26770,7 @@ function containsNode(_x, _x2) {
 }
 
 module.exports = containsNode;
-},{"./isTextNode":247}],235:[function(require,module,exports){
+},{"./isTextNode":248}],236:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -24730,7 +26856,7 @@ function createArrayFromMixed(obj) {
 }
 
 module.exports = createArrayFromMixed;
-},{"./toArray":255}],236:[function(require,module,exports){
+},{"./toArray":256}],237:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -24817,7 +26943,7 @@ function createNodesFromMarkup(markup, handleScript) {
 
 module.exports = createNodesFromMarkup;
 }).call(this,require("oMfpAn"))
-},{"./ExecutionEnvironment":231,"./createArrayFromMixed":235,"./getMarkupWrap":241,"./invariant":245,"oMfpAn":38}],237:[function(require,module,exports){
+},{"./ExecutionEnvironment":232,"./createArrayFromMixed":236,"./getMarkupWrap":242,"./invariant":246,"oMfpAn":39}],238:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -24856,7 +26982,7 @@ emptyFunction.thatReturnsArgument = function (arg) {
 };
 
 module.exports = emptyFunction;
-},{}],238:[function(require,module,exports){
+},{}],239:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -24879,7 +27005,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = emptyObject;
 }).call(this,require("oMfpAn"))
-},{"oMfpAn":38}],239:[function(require,module,exports){
+},{"oMfpAn":39}],240:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -24906,7 +27032,7 @@ function focusNode(node) {
 }
 
 module.exports = focusNode;
-},{}],240:[function(require,module,exports){
+},{}],241:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -24940,7 +27066,7 @@ function getActiveElement() /*?DOMElement*/{
 }
 
 module.exports = getActiveElement;
-},{}],241:[function(require,module,exports){
+},{}],242:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -25038,7 +27164,7 @@ function getMarkupWrap(nodeName) {
 
 module.exports = getMarkupWrap;
 }).call(this,require("oMfpAn"))
-},{"./ExecutionEnvironment":231,"./invariant":245,"oMfpAn":38}],242:[function(require,module,exports){
+},{"./ExecutionEnvironment":232,"./invariant":246,"oMfpAn":39}],243:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -25077,7 +27203,7 @@ function getUnboundedScrollPosition(scrollable) {
 }
 
 module.exports = getUnboundedScrollPosition;
-},{}],243:[function(require,module,exports){
+},{}],244:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -25111,7 +27237,7 @@ function hyphenate(string) {
 }
 
 module.exports = hyphenate;
-},{}],244:[function(require,module,exports){
+},{}],245:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -25151,7 +27277,7 @@ function hyphenateStyleName(string) {
 }
 
 module.exports = hyphenateStyleName;
-},{"./hyphenate":243}],245:[function(require,module,exports){
+},{"./hyphenate":244}],246:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -25203,7 +27329,7 @@ var invariant = function (condition, format, a, b, c, d, e, f) {
 
 module.exports = invariant;
 }).call(this,require("oMfpAn"))
-},{"oMfpAn":38}],246:[function(require,module,exports){
+},{"oMfpAn":39}],247:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -25227,7 +27353,7 @@ function isNode(object) {
 }
 
 module.exports = isNode;
-},{}],247:[function(require,module,exports){
+},{}],248:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -25253,7 +27379,7 @@ function isTextNode(object) {
 }
 
 module.exports = isTextNode;
-},{"./isNode":246}],248:[function(require,module,exports){
+},{"./isNode":247}],249:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -25304,7 +27430,7 @@ var keyMirror = function (obj) {
 
 module.exports = keyMirror;
 }).call(this,require("oMfpAn"))
-},{"./invariant":245,"oMfpAn":38}],249:[function(require,module,exports){
+},{"./invariant":246,"oMfpAn":39}],250:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -25340,7 +27466,7 @@ var keyOf = function (oneKeyObj) {
 };
 
 module.exports = keyOf;
-},{}],250:[function(require,module,exports){
+},{}],251:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -25392,7 +27518,7 @@ function mapObject(object, callback, context) {
 }
 
 module.exports = mapObject;
-},{}],251:[function(require,module,exports){
+},{}],252:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -25424,7 +27550,7 @@ function memoizeStringOnly(callback) {
 }
 
 module.exports = memoizeStringOnly;
-},{}],252:[function(require,module,exports){
+},{}],253:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -25448,7 +27574,7 @@ if (ExecutionEnvironment.canUseDOM) {
 }
 
 module.exports = performance || {};
-},{"./ExecutionEnvironment":231}],253:[function(require,module,exports){
+},{"./ExecutionEnvironment":232}],254:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -25478,7 +27604,7 @@ if (!curPerformance || !curPerformance.now) {
 var performanceNow = curPerformance.now.bind(curPerformance);
 
 module.exports = performanceNow;
-},{"./performance":252}],254:[function(require,module,exports){
+},{"./performance":253}],255:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -25529,7 +27655,7 @@ function shallowEqual(objA, objB) {
 }
 
 module.exports = shallowEqual;
-},{}],255:[function(require,module,exports){
+},{}],256:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -25589,7 +27715,7 @@ function toArray(obj) {
 
 module.exports = toArray;
 }).call(this,require("oMfpAn"))
-},{"./invariant":245,"oMfpAn":38}],256:[function(require,module,exports){
+},{"./invariant":246,"oMfpAn":39}],257:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -25649,9 +27775,9 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = warning;
 }).call(this,require("oMfpAn"))
-},{"./emptyFunction":237,"oMfpAn":38}],257:[function(require,module,exports){
+},{"./emptyFunction":238,"oMfpAn":39}],258:[function(require,module,exports){
 'use strict';
 
 module.exports = require('./lib/React');
 
-},{"./lib/React":125}]},{},[34])
+},{"./lib/React":126}]},{},[35])

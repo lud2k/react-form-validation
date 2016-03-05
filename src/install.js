@@ -1,20 +1,16 @@
 
-var Code = require('./code.js'),
-    ImportCodeText = require('./import.code.txt');
+import ImportCodeText from './import.code.txt';
+import Code from './code.js';
+import React from 'react';
 
 /**
  * The main page of the website.
  */
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'Main',
-
+export default class Install extends React.Component {
     /**
      * Renders the form.
      */
-    render: function() {
+    render() {
         return (
             <div id="install" className="content">
                 <div className="section">
@@ -54,4 +50,4 @@ module.exports = React.createClass({
             </div>
         );
     }
-});
+}

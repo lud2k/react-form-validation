@@ -2,16 +2,11 @@
 /**
  * The main page of the website.
  */
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'InstanceDocumentation',
-
+export default class InstanceDocumentation extends React.Component {
     /**
      * Renders the form.
      */
-    render: function() {
+    render() {
         return (
             <div className="documentation">
                 <h2> Instance Class </h2>
@@ -21,4 +16,4 @@ module.exports = React.createClass({
             </div>
         );
     }
-});
+}

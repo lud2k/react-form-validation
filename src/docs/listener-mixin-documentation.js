@@ -2,16 +2,11 @@
 /**
  * The main page of the website.
  */
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'ListenerMixinDocumentation',
-
+export default class ListenerMixinDocumentation extends React.Component {
     /**
      * Renders the form.
      */
-    render: function() {
+    render() {
         return (
             <div className="documentation">
                 <h2> Listener Mixin </h2>
@@ -24,4 +19,4 @@ module.exports = React.createClass({
             </div>
         );
     }
-});
+}

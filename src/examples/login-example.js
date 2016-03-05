@@ -1,45 +1,41 @@
 
-var Code = require('../code.js'),
-    LoginForm = require('./login-form.js'),
-    LoginTxt = require('./login-form.txt');
+import Code from '../code.js';
+import LoginForm from './login-form.js';
+import LoginTxt from './login-form.txt';
 
 /**
  * Component that renders an example.
  */
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'LoginExample',
-
+export default class LoginExample extends React.Component {
     /**
      * Returns the initial state of this component.
      */
-    getInitialState: function() {
-        return {};
-    },
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
 
     /**
      * Called when the form is submitted.
      */
-    formSubmitted: function(valid, data) {
+    formSubmitted(event, valid, data) {
         this.setState({
             formData: data,
             formValid: valid
         });
-    },
+    }
 
     /**
      * Renders the example.
      */
-    render: function() {
+    render() {
         return (
             <div className="example">
                 <h2>Login Form</h2>
                 <div className="code-preview">
                     <div className="right-side">
                         <div className="preview">
-                            <LoginForm formSubmitted={this.formSubmitted} />
+                            <LoginForm formSubmitted={this.formSubmitted.bind(this)} />
                         </div>
                         <div className="data">
                             Form is valid: { this.state.formValid ? 'No' : 'Yes' }{'\n'}
@@ -52,4 +48,4 @@ module.exports = React.createClass({
             </div>
         );
     }
-});
+}

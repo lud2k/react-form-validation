@@ -1,19 +1,15 @@
 
-var Link = require('react-router').Link;
+import { Link } from 'react-router';
+import React from 'react';
 
 /**
  * The examples page of the website.
  */
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'Examples',
-
+export default class Example extends React.Component {
     /**
      * Renders the page.
      */
-    render: function() {
+    render() {
         return (
             <div id="documentation" className="content">
                 <div className="side-menu">
@@ -30,4 +26,4 @@ module.exports = React.createClass({
             </div>
         );
     }
-});
+}

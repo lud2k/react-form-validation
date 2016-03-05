@@ -1,20 +1,15 @@
 
-var Code = require('../code.js'),
-    SelectTag = require('./select-tag.html');
+import Code from '../code.js';
+import SelectTag from './select-tag.html';
 
 /**
  * The main page of the website.
  */
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'RulesDocumentation',
-
+export default class SelectDocumentation extends React.Component {
     /**
      * Renders the form.
      */
-    render: function() {
+    render() {
         return (
             <div className="documentation">
                 <h2> &lt;Select&gt; Component </h2>
@@ -25,4 +20,4 @@ module.exports = React.createClass({
             </div>
         );
     }
-});
+}

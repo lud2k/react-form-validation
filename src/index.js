@@ -1,34 +1,33 @@
 
-// render page
-var ReactDOM = require('react-dom'),
-    ReactRouter = require('react-router'),
-    createHashHistory = require('history/lib/createHashHistory'),
-    Router = ReactRouter.Router,
-    Route = ReactRouter.Route,
-    IndexRoute = ReactRouter.IndexRoute,
-    Main = require('./main.js'),
-    Install = require('./install.js'),
-    // example pages
-    Example = require('./example.js'),
-    LoginExample = require('./examples/login-example.js'),
-    RegisterExample = require('./examples/register-example.js'),
-    ListExample = require('./examples/list-example.js'),
-    CustomFieldExample = require('./examples/custom-field-example.js'),
-    CustomRuleExample = require('./examples/custom-rule-example.js'),
-    // documentation pages
-    Documentation = require('./documentation.js'),
-    RulesClassDocumentation = require('./docs/rules-documentation.js'),
-    InstanceClassDocumentation = require('./docs/instance-documentation.js'),
-    FormComponentDocumentation = require('./docs/form-documentation.js'),
-    InputComponentDocumentation = require('./docs/input-documentation.js'),
-    ErrorComponentDocumentation = require('./docs/error-documentation.js'),
-    HintComponentDocumentation = require('./docs/hint-documentation.js'),
-    SelectComponentDocumentation = require('./docs/select-documentation.js'),
-    ListenerMixinDocumentation = require('./docs/listener-mixin-documentation.js'),
-    FieldMixinDocumentation = require('./docs/field-mixin-documentation.js');
+// imports
+import ReactDOM from 'react-dom';
+import { Router, Route, IndexRoute } from 'react-router';
+import createHashHistory from 'history/lib/createHashHistory';
+import Main from './main.js';
+import Install from './install.js';
+
+// example pages
+import Example from './example.js';
+import LoginExample from './examples/login-example.js';
+import RegisterExample from './examples/register-example.js';
+import ListExample from './examples/list-example.js';
+import CustomFieldExample from './examples/custom-field-example.js';
+import CustomRuleExample from './examples/custom-rule-example.js';
+
+// documentation pages
+import Documentation from './documentation.js';
+import RulesClassDocumentation from './docs/rules-documentation.js';
+import InstanceClassDocumentation from './docs/instance-documentation.js';
+import FormComponentDocumentation from './docs/form-documentation.js';
+import InputComponentDocumentation from './docs/input-documentation.js';
+import ErrorComponentDocumentation from './docs/error-documentation.js';
+import HintComponentDocumentation from './docs/hint-documentation.js';
+import SelectComponentDocumentation from './docs/select-documentation.js';
+import ListenerMixinDocumentation from './docs/listener-mixin-documentation.js';
+import FieldMixinDocumentation from './docs/field-mixin-documentation.js';
 
 ReactDOM.render((
-    <Router history={createHashHistory()}>
+    <Router history={createHashHistory({queryKey: false})}>
         <Route path="/" component={Main}>
             <IndexRoute component={Install}/>
             <Route path="install" component={Install} />

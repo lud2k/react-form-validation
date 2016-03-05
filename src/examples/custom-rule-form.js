@@ -1,11 +1,5 @@
 
-var ReactFormValidation = require('react-form-validation'),
-    Instance = ReactFormValidation.Instance,
-    Error = ReactFormValidation.Error,
-    Rules = ReactFormValidation.Rules,
-    Form = ReactFormValidation.Form,
-    Input = ReactFormValidation.Input,
-    Hint = ReactFormValidation.Hint;
+import { Context, Error, Rules, Form, Input, Hint } from 'react-form-validation';
 
 /**
  * Registers a custom rule for validating usernames.
@@ -34,34 +28,35 @@ Rules.register('myCustomUsernameRule', function() {
 });
 
 /**
- * Simple login form.
+ * Custom rule form.
  */
-module.exports = React.createClass({
+export default class CustomRuleForm extends React.Component {
     /**
      * Returns the initial state of the component.
      */
-    getInitialState: function() {
-        return {
-            form: new Instance({
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            form: new Context({
                 fields: {
                     username: Rules.required().myCustomUsernameRule()
                 }
             })
         };
-    },
+    }
 
     /**
      * Renders the form.
      */
-    render: function() {
-        var form = this.state.form;
+    render() {
         return (
-            <Form form={form} onSubmit={this.props.formSubmitted}>
+            <Form form={this.state.form} onSubmit={this.props.formSubmitted}>
                 <h4>Custom Rule</h4>
                 <div className="field">
-                    Username: <Input type="text" name="username" form={form} />
-                    <Error forName="username" form={form} />
-                    <Hint forName="username" form={form} display="error|valid|pristine">
+                    Username: <Input type="text" name="username" />
+                    <Error forName="username" />
+                    <Hint forName="username" display="error|valid|pristine">
                         Should contain at least 5 characters (lowercase letters or numbers) and end
                         with a number. Why? Because!
                     </Hint>
@@ -72,4 +67,4 @@ module.exports = React.createClass({
             </Form>
         );
     }
-});
+}

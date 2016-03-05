@@ -1,45 +1,42 @@
 
-var Code = require('../code.js'),
-    CustomFieldForm = require('./custom-field-form.js'),
-    CustomFieldTxt = require('./custom-field-form.txt');
+import Code from '../code.js';
+import CustomFieldForm from './custom-field-form.js';
+import CustomFieldTxt from './custom-field-form.txt';
 
 /**
  * Component that renders an example.
  */
-module.exports = React.createClass({
-    /**
-     * Name of the component.
-     */
-    displayName: 'CustomRuleExample',
-
+export default class CustomFieldExample extends React.Component {
     /**
      * Returns the initial state of this component.
      */
-    getInitialState: function() {
-        return {};
-    },
+    constructor(props) {
+        super(props);
+
+        this.state = {};
+    }
 
     /**
      * Called when the form is submitted.
      */
-    formSubmitted: function(valid, data) {
+    formSubmitted(event, valid, data) {
         this.setState({
             formData: data,
             formValid: valid
         });
-    },
+    }
 
     /**
      * Renders the example.
      */
-    render: function() {
+    render() {
         return (
             <div className="example">
                 <h2>Custom Field</h2>
                 <div className="code-preview">
                     <div className="right-side">
                         <div className="preview">
-                            <CustomFieldForm formSubmitted={this.formSubmitted} />
+                            <CustomFieldForm formSubmitted={this.formSubmitted.bind(this)} />
                         </div>
                         <div className="data">
                             Form is valid: { this.state.formValid ? 'No' : 'Yes' }{'\n'}
@@ -52,4 +49,4 @@ module.exports = React.createClass({
             </div>
         );
     }
-});
+}

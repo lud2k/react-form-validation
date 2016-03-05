@@ -1,44 +1,41 @@
 
-var ReactFormValidation = require('react-form-validation'),
-    Instance = ReactFormValidation.Instance,
-    Error = ReactFormValidation.Error,
-    Rules = ReactFormValidation.Rules,
-    Form = ReactFormValidation.Form,
-    Input = ReactFormValidation.Input;
+import React from 'react';
+import { Context, Error, Rules, Form, Input } from 'react-form-validation';
 
 /**
  * Simple login form.
  */
-module.exports = React.createClass({
+export default class LoginForm extends React.Component {
     /**
-     * Returns the initial state of the component.
+     * Constructor.
      */
-    getInitialState: function() {
-        return {
-            form: new Instance({
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            form: new Context({
                 fields: {
                     email: Rules.required().email(),
                     password: Rules.required()
                 }
             })
         };
-    },
+    }
 
     /**
      * Renders the form.
      */
-    render: function() {
-        var form = this.state.form;
+    render() {
         return (
-            <Form form={form} onSubmit={this.props.formSubmitted}>
+            <Form form={this.state.form} onSubmit={this.props.formSubmitted}>
                 <h4>Login</h4>
                 <div className="field">
-                    Email: <Input type="text" name="email" form={form} />
-                    <Error forName="email" form={form} />
+                    Email: <Input type="text" name="email" />
+                    <Error forName="email" />
                 </div>
                 <div className="field">
-                    Password: <Input type="password" name="password" form={form} />
-                    <Error forName="password" form={form} />
+                    Password: <Input type="password" name="password" />
+                    <Error forName="password" />
                 </div>
                 <div className="actions">
                     <button>Login</button>
@@ -46,4 +43,4 @@ module.exports = React.createClass({
             </Form>
         );
     }
-});
+}

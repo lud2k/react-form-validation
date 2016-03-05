@@ -13,6 +13,16 @@ body {
     clear: both;
 }
 
+ul {
+    padding: 0 5px;
+    margin: 0 20px;
+}
+
+ul li {
+    margin: 10px 0;
+    padding: 0;
+}
+
 /********************************************************************
  * Header
  ********************************************************************/
@@ -114,6 +124,12 @@ body {
 .code .CodeMirror .CodeMirror-scroll {
     height: auto;
     max-height: 300px;
+}
+
+.inline-code {
+    font-family: monospace;
+    background: rgba(0,0,0,0.04);
+    padding: 1px 3px;
 }
 
 /********************************************************************
