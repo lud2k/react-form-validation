@@ -36,38 +36,10 @@ gulp.task('browserify', ['clean'], function() {
 });
 
 /**
- * Copies the files from the example to the dist directory
+ * Watch files in src and rebuild project if they change.
  */
-gulp.task('example-copy', ['clean'], function() {
-    // copy the html file
-    return gulp.src('example/*')
-        .pipe(gulp.dest('dist/example'))
-        .on('error', function(error) {
-            console.warn('failed to copy files', error);
-        });
-});
-
-/**
- * Packages all files into one big JavaScript file usable in the browser.
- */
-gulp.task('example-build', ['example-copy'], function() {
-    // compile and browserify the javascript
-    return gulp.src('example/index.js')
-        .pipe(browserify({
-            transform: ['babelify']
-        }))
-        .on('error', function(error) {
-            console.log(error.stack.replace(/[ ]+at .*\n?/g, ''));
-        })
-        .pipe(rename('index.js'))
-        .pipe(gulp.dest('dist/example'));
-});
-
-/**
- * Compiles and packages the example files.
- */
-gulp.task('example-dev', ['example-build'], function() {
-    gulp.watch(['example/**/*', 'src/**/*'], ['example-build']);
+gulp.task('watch', ['build'], function() {
+    gulp.watch(['src/**/*'], ['build']);
 });
 
 /**
