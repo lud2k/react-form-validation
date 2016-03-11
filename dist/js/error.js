@@ -77,11 +77,20 @@ var Error = (function (_React$Component) {
         key: 'getFieldState',
         value: function getFieldState() {
             var form = _utilsJs.Utils.getForm(this),
-                fieldState = form.getFieldStateByName(this.props.forName);
+                fieldState = form.getFieldStateByName(this.props.htmlFor);
             return {
                 error: fieldState ? fieldState.error : undefined,
                 valid: fieldState ? fieldState.valid : undefined
             };
+        }
+
+        /**
+         * Returns the htmlFor attribute.
+         */
+    }, {
+        key: 'htmlForAttribute',
+        value: function htmlForAttribute() {
+            return this.props.htmlFor + '-field';
         }
 
         /**
@@ -93,7 +102,9 @@ var Error = (function (_React$Component) {
             if (this.state.valid === false) {
                 return _react2['default'].createElement(
                     'label',
-                    _extends({ className: 'error' }, this.props, { form: null }),
+                    _extends({ className: 'error' }, this.props, {
+                        htmlFor: this.htmlForAttribute(),
+                        context: null }),
                     this.state.error
                 );
             } else {
@@ -107,8 +118,8 @@ var Error = (function (_React$Component) {
 
 exports.Error = Error;
 Error.propTypes = {
-    form: _react2['default'].PropTypes.any,
-    forName: _react2['default'].PropTypes.string.isRequired
+    context: _react2['default'].PropTypes.any,
+    htmlFor: _react2['default'].PropTypes.string.isRequired
 };
 
 /**

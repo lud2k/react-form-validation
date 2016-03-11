@@ -48,8 +48,7 @@ var Select = (function (_Field) {
          * Returns the value of the input.
          */
         value: function getValue() {
-            var element = _reactDom2['default'].findDOMNode(this);
-            return element.value;
+            return this.refs.input.value;
         }
 
         /**
@@ -57,8 +56,28 @@ var Select = (function (_Field) {
          */
     }, {
         key: 'onChange',
-        value: function onChange() {
+        value: function onChange(event) {
+            _get(Object.getPrototypeOf(Select.prototype), 'validateField', this).call(this, false);
+
+            // call parent prop
+            if (this.props.onChange) {
+                this.props.onChange(event);
+            }
+        }
+
+        /**
+         * Called when the field looses focus.
+         * This forces validation of the field.
+         */
+    }, {
+        key: 'onBlur',
+        value: function onBlur(event) {
             _get(Object.getPrototypeOf(Select.prototype), 'validateField', this).call(this, true);
+
+            // call parent prop
+            if (this.props.onBlur) {
+                this.props.onBlur(event);
+            }
         }
 
         /**
@@ -91,8 +110,11 @@ var Select = (function (_Field) {
 
             return _react2['default'].createElement(
                 'select',
-                _extends({}, this.props, { className: this.rootClassName(fieldState),
-                    onChange: this.onChange.bind(this), onBlur: this.onBlur.bind(this) }),
+                _extends({}, this.props, { ref: 'input', context: null,
+                    id: this.props.name + '-field',
+                    className: this.rootClassName(fieldState),
+                    onChange: this.onChange.bind(this),
+                    onBlur: this.onBlur.bind(this) }),
                 this.props.children
             );
         }
@@ -103,7 +125,7 @@ var Select = (function (_Field) {
 
 exports.Select = Select;
 Select.propTypes = {
-    form: _react2['default'].PropTypes.any,
+    context: _react2['default'].PropTypes.any,
     name: _react2['default'].PropTypes.string.isRequired
 };
 

@@ -15,6 +15,8 @@ var _rulesJs = _dereq_('./rules.js');
 
 var _validationContextJs = _dereq_('./validation-context.js');
 
+var _errorsJs = _dereq_('./errors.js');
+
 /**
  * Context class.
  * Manages the state of all the components.
@@ -164,7 +166,19 @@ var Context = (function () {
          * Returns the values of all the fields.
          */
         value: function getFieldsData() {
-            var ret = {};
+            var ret = {},
+                getComponentValue = function getComponentValue(component) {
+                try {
+                    return component.getValue();
+                } catch (e) {
+                    // return errors as FieldValueError
+                    if (e instanceof _errorsJs.FieldValueError) {
+                        return e;
+                    } else {
+                        return new _errorsJs.FieldValueError('exception', e);
+                    }
+                }
+            };
 
             // get all the fields
             this.fields.forEach(function (field) {
@@ -192,7 +206,7 @@ var Context = (function () {
                             var component = field.component,
                                 checked = component.isChecked ? component.isChecked() : true;
                             if (checked === undefined || checked === true) {
-                                data.value.push(field.component.getValue());
+                                data.value.push(getComponentValue(field.component));
                             }
                         });
                     } else {
@@ -201,13 +215,13 @@ var Context = (function () {
                                 var component = field.component,
                                     checked = component.isChecked ? component.isChecked() : true;
                                 if (checked === true) {
-                                    data.value = component.getValue();
+                                    data.value = getComponentValue(component);
                                 }
                             });
                         } else {
                             var checked = firstComponent.isChecked ? firstComponent.isChecked() : true;
                             if (checked === undefined || checked === true) {
-                                data.value = firstComponent.getValue();
+                                data.value = getComponentValue(firstComponent);
                             }
                         }
                     }
@@ -390,7 +404,7 @@ var Context = (function () {
 
 exports.Context = Context;
 
-},{"./field-state.js":4,"./rules.js":9,"./validation-context.js":12}],2:[function(_dereq_,module,exports){
+},{"./errors.js":3,"./field-state.js":5,"./rules.js":10,"./validation-context.js":13}],2:[function(_dereq_,module,exports){
 (function (global){
 'use strict';
 
@@ -471,11 +485,20 @@ var Error = (function (_React$Component) {
         key: 'getFieldState',
         value: function getFieldState() {
             var form = _utilsJs.Utils.getForm(this),
-                fieldState = form.getFieldStateByName(this.props.forName);
+                fieldState = form.getFieldStateByName(this.props.htmlFor);
             return {
                 error: fieldState ? fieldState.error : undefined,
                 valid: fieldState ? fieldState.valid : undefined
             };
+        }
+
+        /**
+         * Returns the htmlFor attribute.
+         */
+    }, {
+        key: 'htmlForAttribute',
+        value: function htmlForAttribute() {
+            return this.props.htmlFor + '-field';
         }
 
         /**
@@ -487,7 +510,9 @@ var Error = (function (_React$Component) {
             if (this.state.valid === false) {
                 return _react2['default'].createElement(
                     'label',
-                    _extends({ className: 'error' }, this.props, { form: null }),
+                    _extends({ className: 'error' }, this.props, {
+                        htmlFor: this.htmlForAttribute(),
+                        context: null }),
                     this.state.error
                 );
             } else {
@@ -501,8 +526,8 @@ var Error = (function (_React$Component) {
 
 exports.Error = Error;
 Error.propTypes = {
-    form: _react2['default'].PropTypes.any,
-    forName: _react2['default'].PropTypes.string.isRequired
+    context: _react2['default'].PropTypes.any,
+    htmlFor: _react2['default'].PropTypes.string.isRequired
 };
 
 /**
@@ -513,7 +538,58 @@ Error.contextTypes = {
 };
 
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./utils.js":11}],3:[function(_dereq_,module,exports){
+},{"./utils.js":12}],3:[function(_dereq_,module,exports){
+'use strict';
+
+/**
+ * An error that can be thrown by a Field if the value of the field is invalid.
+ * This can be used in the rules to show errors.
+ */
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var FieldValueError =
+/**
+ * Constructor.
+ *
+ * @param code (string) a summary of the error as code.
+ * @param error (any) some additional data that can be useful in validation.
+ */
+function FieldValueError(code, error) {
+  _classCallCheck(this, FieldValueError);
+
+  this.code = code;
+  this.error = error;
+}
+
+/**
+ * An error that can be thrown by a Rule when rule execution should stop.
+ * The field is marked as valid even if a later rule would have failed.
+ */
+;
+
+exports.FieldValueError = FieldValueError;
+
+var OptionalRuleError =
+/**
+ * Constructor.
+ *
+ * @param code (string) a summary of the error as code.
+ * @param error (any) some additional data that can be useful in validation.
+ */
+function OptionalRuleError(code, error) {
+  _classCallCheck(this, OptionalRuleError);
+
+  this.code = code;
+  this.error = error;
+};
+
+exports.OptionalRuleError = OptionalRuleError;
+
+},{}],4:[function(_dereq_,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -601,7 +677,16 @@ Object.defineProperty(exports, 'Utils', {
   }
 });
 
-},{"./context.js":1,"./error.js":2,"./field.js":5,"./form.js":6,"./hint.js":7,"./input.js":8,"./rules.js":9,"./select.js":10,"./utils.js":11}],4:[function(_dereq_,module,exports){
+var _errorsJs = _dereq_('./errors.js');
+
+Object.defineProperty(exports, 'FieldValueError', {
+  enumerable: true,
+  get: function get() {
+    return _errorsJs.FieldValueError;
+  }
+});
+
+},{"./context.js":1,"./error.js":2,"./errors.js":3,"./field.js":6,"./form.js":7,"./hint.js":8,"./input.js":9,"./rules.js":10,"./select.js":11,"./utils.js":12}],5:[function(_dereq_,module,exports){
 'use strict';
 
 /**
@@ -667,7 +752,7 @@ var FieldState = (function () {
 
 exports.FieldState = FieldState;
 
-},{}],5:[function(_dereq_,module,exports){
+},{}],6:[function(_dereq_,module,exports){
 (function (global){
 'use strict';
 
@@ -765,7 +850,7 @@ Field.contextTypes = {
 };
 
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./utils.js":11}],6:[function(_dereq_,module,exports){
+},{"./utils.js":12}],7:[function(_dereq_,module,exports){
 (function (global){
 'use strict';
 
@@ -789,6 +874,8 @@ var _react = (typeof window !== "undefined" ? window['React'] : typeof global !=
 
 var _react2 = _interopRequireDefault(_react);
 
+var _utilsJs = _dereq_('./utils.js');
+
 /**
  * Form component.
  */
@@ -803,7 +890,7 @@ var Form = (function (_React$Component) {
     }
 
     /**
-     * Context types.
+     * Properties type.
      */
 
     _createClass(Form, [{
@@ -814,19 +901,19 @@ var Form = (function (_React$Component) {
          */
         value: function onSubmit(event) {
             // validate form, then call callback
-            var result = this.props.form.validate(undefined, true);
+            var result = this.props.context.validate(undefined, true);
             if (this.props.onSubmit) {
-                this.props.onSubmit(event, result.valid, result.data, this.props.form);
+                this.props.onSubmit(event, result.valid, result.data, this.props.context);
             }
 
             // prevent form submission if not valid
-            if (!result.valid) {
+            if (!result.valid || this.props.preventSubmit) {
                 event.preventDefault();
             }
 
             // scroll to error
-            if (this.props.scrollToError) {
-                // TODO: find first error then .scrollIntoView();
+            if (this.props.scrollToError !== false) {
+                _utilsJs.Utils.scrollToFirstError(this.refs.form, this.props.scrollToErrorPadding || 20);
             }
         }
 
@@ -837,7 +924,7 @@ var Form = (function (_React$Component) {
         key: 'getChildContext',
         value: function getChildContext() {
             return {
-                form: this.props.form
+                form: this.props.context
             };
         }
 
@@ -849,7 +936,8 @@ var Form = (function (_React$Component) {
         value: function render() {
             return _react2['default'].createElement(
                 'form',
-                _extends({}, this.props, { noValidate: true, onSubmit: this.onSubmit.bind(this) }),
+                _extends({}, this.props, { noValidate: true, context: null, ref: 'form',
+                    onSubmit: this.onSubmit.bind(this) }),
                 this.props.children
             );
         }
@@ -859,12 +947,20 @@ var Form = (function (_React$Component) {
 })(_react2['default'].Component);
 
 exports.Form = Form;
+Form.propTypes = {
+    context: _react2['default'].PropTypes.any.required,
+    preventSubmit: _react2['default'].PropTypes.bool
+};
+
+/**
+ * Context types.
+ */
 Form.childContextTypes = {
     form: _react2['default'].PropTypes.any
 };
 
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],7:[function(_dereq_,module,exports){
+},{"./utils.js":12}],8:[function(_dereq_,module,exports){
 (function (global){
 'use strict';
 
@@ -903,7 +999,7 @@ var Hint = (function (_React$Component) {
         _get(Object.getPrototypeOf(Hint.prototype), 'constructor', this).call(this, props, context);
         var form = _utilsJs.Utils.getForm(this);
         this.state = {
-            state: form.getFieldStateByName(this.props.forName),
+            state: form.getFieldStateByName(this.props.htmlFor),
             display: this.parseDisplayString(this.props.display)
         };
     }
@@ -971,8 +1067,17 @@ var Hint = (function (_React$Component) {
         value: function formDidValidate(result) {
             var form = _utilsJs.Utils.getForm(this);
             this.setState({
-                state: form.getFieldStateByName(this.props.forName)
+                state: form.getFieldStateByName(this.props.htmlFor)
             });
+        }
+
+        /**
+         * Returns the htmlFor attribute.
+         */
+    }, {
+        key: 'htmlForAttribute',
+        value: function htmlForAttribute() {
+            return this.props.htmlFor + '-field';
         }
 
         /**
@@ -986,7 +1091,9 @@ var Hint = (function (_React$Component) {
             if (display.error && state.valid === false || display.pristine && state.validated !== true || display.valid && state.valid === true) {
                 return _react2['default'].createElement(
                     'label',
-                    _extends({ className: 'hint' }, this.props, { form: null }),
+                    _extends({ className: 'hint' }, this.props, {
+                        htmlFor: this.htmlForAttribute(),
+                        context: null }),
                     this.props.text || this.props.children
                 );
             } else {
@@ -1002,8 +1109,8 @@ exports.Hint = Hint;
 Hint.propTypes = {
     display: _react2['default'].PropTypes.string,
     text: _react2['default'].PropTypes.string,
-    form: _react2['default'].PropTypes.any,
-    forName: _react2['default'].PropTypes.string.isRequired
+    context: _react2['default'].PropTypes.any,
+    htmlFor: _react2['default'].PropTypes.string.isRequired
 };
 
 /**
@@ -1021,7 +1128,7 @@ Hint.contextTypes = {
 };
 
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./utils.js":11}],8:[function(_dereq_,module,exports){
+},{"./utils.js":12}],9:[function(_dereq_,module,exports){
 (function (global){
 'use strict';
 
@@ -1124,8 +1231,7 @@ var Input = (function (_Field) {
     }, {
         key: 'getValue',
         value: function getValue() {
-            var element = _reactDom2['default'].findDOMNode(this);
-            return element.value;
+            return this.refs.input.value;
         }
 
         /**
@@ -1134,7 +1240,7 @@ var Input = (function (_Field) {
     }, {
         key: 'onChange',
         value: function onChange(event) {
-            _get(Object.getPrototypeOf(Input.prototype), 'validateField', this).call(this);
+            _get(Object.getPrototypeOf(Input.prototype), 'validateField', this).call(this, false);
 
             // call parent prop
             if (this.props.onChange) {
@@ -1148,7 +1254,7 @@ var Input = (function (_Field) {
          */
     }, {
         key: 'onBlur',
-        value: function onBlur() {
+        value: function onBlur(event) {
             _get(Object.getPrototypeOf(Input.prototype), 'validateField', this).call(this, true);
 
             // call parent prop
@@ -1162,13 +1268,16 @@ var Input = (function (_Field) {
          */
     }, {
         key: 'formDidValidate',
-        value: function formDidValidate() {}
-        // TODO: implement getting the field state
+        value: function formDidValidate() {
+            var form = _utilsJs.Utils.getForm(this);
+            this.setState({
+                fieldState: form.getFieldState(this)
+            });
+        }
 
         /**
          * Returns the component's className.
          */
-
     }, {
         key: 'className',
         value: function className(fieldState) {
@@ -1194,8 +1303,11 @@ var Input = (function (_Field) {
             var form = _utilsJs.Utils.getForm(this),
                 fieldState = form.getFieldState(this);
 
-            return _react2['default'].createElement('input', _extends({}, this.props, { className: this.className(fieldState),
-                onChange: this.onChange.bind(this), onBlur: this.onBlur.bind(this), form: null }));
+            return _react2['default'].createElement('input', _extends({}, this.props, { ref: 'input', context: null,
+                id: this.props.name + '-field',
+                className: this.className(fieldState),
+                onChange: this.onChange.bind(this),
+                onBlur: this.onBlur.bind(this) }));
         }
     }]);
 
@@ -1204,6 +1316,7 @@ var Input = (function (_Field) {
 
 exports.Input = Input;
 Input.propTypes = {
+    context: _react2['default'].PropTypes.any,
     name: _react2['default'].PropTypes.string.isRequired
 };
 
@@ -1215,13 +1328,17 @@ Input.contextTypes = {
 };
 
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./field.js":5,"./utils.js":11}],9:[function(_dereq_,module,exports){
+},{"./field.js":6,"./utils.js":12}],10:[function(_dereq_,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
     value: true
 });
+
+var _errorsJs = _dereq_('./errors.js');
+
 var EMAIL_REGEXP = new RegExp('^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]' + '{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$');
+var URL_REGEXP = new RegExp('^(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?' + '(\/|\/([\w#!:.?+=&%@!\-\/]))?');
 
 /**
  * Constructor of the Rules class.
@@ -1231,16 +1348,14 @@ var Rules = function Rules(config) {
 };
 
 /**
- * Custom exception that if thrown means that the validation can stop and the field is valid.
- */
-Rules.OPTIONAL_EXCEPTION = 'OPTIONAL_EXCEPTION';
-
-/**
  * Registers a new rule.
  */
 Rules.register = function (name, rule) {
     Rules.prototype[name] = function () {
-        this.rules.push(rule.apply(null, arguments));
+        this.rules.push({
+            rule: rule.apply(null, arguments),
+            name: name
+        });
         return this;
     };
     Rules[name] = function () {
@@ -1251,12 +1366,38 @@ Rules.register = function (name, rule) {
 };
 
 /**
+ * Sets base errors messages that override the defaultMessage(s) in the rules.
+ * It should be a dictionary like:
+ * {
+ *    ruleName: message,
+ *    ruleName: {
+ *        errorCode: message
+ *    }
+ * }
+ */
+Rules.setMessages = function (messages) {
+    Rules.baseMessages = messages;
+};
+
+/**
+ * Gets the error message for a given rule and its result.
+ */
+Rules.getErrorMessage = function (rule, result, name) {
+    var base = Rules.baseMessages || {};
+    if (result === false) {
+        return rule.message || base[name] || rule.defaultMessage;
+    } else {
+        return rule.messages[result] || (base[name] ? base[name][result] : null) || rule.defaultMessages[result];
+    }
+};
+
+/**
  * Validates that the rules are all valid
  */
 Rules.prototype.validate = function (value, context) {
     try {
         for (var i = 0; i < this.rules.length; i++) {
-            var rule = this.rules[i],
+            var rule = this.rules[i].rule,
                 valid = rule.check(value, context);
 
             // validate returned Rules objects
@@ -1268,12 +1409,13 @@ Rules.prototype.validate = function (value, context) {
             if (valid !== true) {
                 return {
                     error: valid,
-                    message: valid === false ? rule.message : rule.messages[valid]
+                    message: Rules.getErrorMessage(rule, valid, this.rules[i].name)
                 };
             }
         }
     } catch (e) {
-        if (e !== Rules.OPTIONAL_EXCEPTION) {
+        // if OptionalRuleError is thrown then the rule is valid. Rule validations stops.
+        if (!(e instanceof _errorsJs.OptionalRuleError)) {
             throw e;
         }
     }
@@ -1288,7 +1430,7 @@ Rules.register('onlyIf', function (fn) {
         check: function check(value, context) {
             var res = fn(value, context);
             if (!res) {
-                throw Rules.OPTIONAL_EXCEPTION;
+                throw new _errorsJs.OptionalRuleError();
             }
             return true;
         }
@@ -1302,7 +1444,7 @@ Rules.register('optional', function () {
     return {
         check: function check(value) {
             if (value === undefined || value === '') {
-                throw Rules.OPTIONAL_EXCEPTION;
+                throw new _errorsJs.OptionalRuleError();
             }
             return true;
         }
@@ -1312,11 +1454,13 @@ Rules.register('optional', function () {
 /**
  * Registers a rule for optional values.
  */
-Rules.register('custom', function (fn) {
+Rules.register('custom', function (fn, message) {
     return {
         check: function check(value, context) {
             return fn(value, context) || true;
-        }
+        },
+        defaultMessage: 'This field is invalid.',
+        message: message
     };
 });
 
@@ -1339,7 +1483,8 @@ Rules.register('required', function (message) {
                 return false;
             }
         },
-        message: message || 'This field is required.'
+        defaultMessage: 'This field is required.',
+        message: message
     };
 });
 
@@ -1351,7 +1496,21 @@ Rules.register('email', function (message) {
         check: function check(value) {
             return EMAIL_REGEXP.test(value);
         },
-        message: message || 'This is not a valid email address'
+        defaultMessage: 'This is not a valid email address.',
+        message: message
+    };
+});
+
+/**
+ * Registers a rule for validating an email.
+ */
+Rules.register('url', function (message) {
+    return {
+        check: function check(value) {
+            return URL_REGEXP.test(value);
+        },
+        defaultMessage: 'This is not a valid url.',
+        message: message
     };
 });
 
@@ -1364,7 +1523,21 @@ Rules.register('integer', function (message) {
             return (/^[0-9]+$/.test(value)
             );
         },
-        message: message || 'This is not a valid integer'
+        defaultMessage: 'This is not a valid integer.',
+        message: message
+    };
+});
+
+/**
+ * Registers a rule for checking the length of a value.
+ */
+Rules.register('minLength', function (minLength, message) {
+    return {
+        check: function check(value) {
+            return value.length >= minLength;
+        },
+        defaultMessage: 'Minimum length of ' + minLength + ' is required.',
+        message: message
     };
 });
 
@@ -1376,7 +1549,8 @@ Rules.register('regex', function (regex, message) {
         check: function check(value) {
             return regex.test(value);
         },
-        message: message || 'This field does not match ' + regex
+        defaultMessage: 'This field does not match ' + regex + '.',
+        message: message
     };
 });
 
@@ -1388,7 +1562,8 @@ Rules.register('equals', function (otherFieldName, message) {
         check: function check(value, context) {
             return context.getFieldValue(otherFieldName) === value;
         },
-        message: message || 'This field does not match ' + otherFieldName
+        defaultMessage: 'This field does not match ' + otherFieldName + '.',
+        message: message
     };
 });
 
@@ -1413,12 +1588,13 @@ Rules.register('password', function (messages) {
             }
             return true;
         },
-        messages: {
-            length: messages.length || 'Password should be at least 8 characters',
-            upper: messages.upper || 'Password should contain at least one uppercase letter',
-            lower: messages.lower || 'Password should contain at least one lowercase letter',
-            num: messages.num || 'Password should contain at least one number'
-        }
+        defaultMessages: {
+            length: 'Password should be at least 8 characters.',
+            upper: 'Password should contain at least one uppercase letter.',
+            lower: 'Password should contain at least one lowercase letter.',
+            num: 'Password should contain at least one number.'
+        },
+        messages: messages
     };
 });
 
@@ -1432,13 +1608,28 @@ Rules.register('minAge', function (minAge, message) {
                 age = Math.abs(diff.getUTCFullYear() - 1970);
             return age >= minAge;
         },
-        message: message || 'You must be at least ' + minAge + ' years old.'
+        defaultMessage: 'You must be at least ' + minAge + ' years old.',
+        message: message
+    };
+});
+
+/**
+ * Registers a rule that checks that there no FieldValueError was thrown while getting the field
+ * value.
+ */
+Rules.register('noError', function (message) {
+    return {
+        check: function check(value) {
+            return !(value instanceof _errorsJs.FieldValueError);
+        },
+        defaultMessage: 'This field is invalid.',
+        message: message
     };
 });
 
 exports.Rules = Rules;
 
-},{}],10:[function(_dereq_,module,exports){
+},{"./errors.js":3}],11:[function(_dereq_,module,exports){
 (function (global){
 'use strict';
 
@@ -1490,8 +1681,7 @@ var Select = (function (_Field) {
          * Returns the value of the input.
          */
         value: function getValue() {
-            var element = _reactDom2['default'].findDOMNode(this);
-            return element.value;
+            return this.refs.input.value;
         }
 
         /**
@@ -1499,8 +1689,28 @@ var Select = (function (_Field) {
          */
     }, {
         key: 'onChange',
-        value: function onChange() {
+        value: function onChange(event) {
+            _get(Object.getPrototypeOf(Select.prototype), 'validateField', this).call(this, false);
+
+            // call parent prop
+            if (this.props.onChange) {
+                this.props.onChange(event);
+            }
+        }
+
+        /**
+         * Called when the field looses focus.
+         * This forces validation of the field.
+         */
+    }, {
+        key: 'onBlur',
+        value: function onBlur(event) {
             _get(Object.getPrototypeOf(Select.prototype), 'validateField', this).call(this, true);
+
+            // call parent prop
+            if (this.props.onBlur) {
+                this.props.onBlur(event);
+            }
         }
 
         /**
@@ -1533,8 +1743,11 @@ var Select = (function (_Field) {
 
             return _react2['default'].createElement(
                 'select',
-                _extends({}, this.props, { className: this.rootClassName(fieldState),
-                    onChange: this.onChange.bind(this), onBlur: this.onBlur.bind(this) }),
+                _extends({}, this.props, { ref: 'input', context: null,
+                    id: this.props.name + '-field',
+                    className: this.rootClassName(fieldState),
+                    onChange: this.onChange.bind(this),
+                    onBlur: this.onBlur.bind(this) }),
                 this.props.children
             );
         }
@@ -1545,7 +1758,7 @@ var Select = (function (_Field) {
 
 exports.Select = Select;
 Select.propTypes = {
-    form: _react2['default'].PropTypes.any,
+    context: _react2['default'].PropTypes.any,
     name: _react2['default'].PropTypes.string.isRequired
 };
 
@@ -1557,7 +1770,7 @@ Select.contextTypes = {
 };
 
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./field.js":5,"./utils.js":11}],11:[function(_dereq_,module,exports){
+},{"./field.js":6,"./utils.js":12}],12:[function(_dereq_,module,exports){
 'use strict';
 
 /**
@@ -1585,12 +1798,30 @@ var Utils = (function () {
          * The form can be given either using props or context.
          */
         value: function getForm(component) {
-            if (component.props && component.props.form) {
-                return component.props.form;
+            if (component.props && component.props.context) {
+                return component.props.context;
             } else if (component.context && component.context.form) {
                 return component.context.form;
             } else {
                 console.error('Could not find form context. The component might not be in a <Form> ' + 'or might have a wrong form property', component);
+            }
+        }
+
+        /**
+         * Scrolls to the first error in the given element.
+         * @param ele element to find th error in.
+         * @param padding spacing minimum with the window edge.
+         */
+    }, {
+        key: 'scrollToFirstError',
+        value: function scrollToFirstError(ele, padding) {
+            var errorEle = ele.querySelector('.error');
+            if (errorEle) {
+                var bounds = errorEle.getBoundingClientRect(),
+                    visible = bounds.top > padding && bounds.top < window.innerHeight - padding;
+                if (!visible) {
+                    window.scrollBy(0, bounds.top - padding);
+                }
             }
         }
     }]);
@@ -1600,7 +1831,7 @@ var Utils = (function () {
 
 exports.Utils = Utils;
 
-},{}],12:[function(_dereq_,module,exports){
+},{}],13:[function(_dereq_,module,exports){
 'use strict';
 
 /**
@@ -1659,6 +1890,6 @@ var ValidationContext = (function () {
 
 exports.ValidationContext = ValidationContext;
 
-},{}]},{},[3])
-(3)
+},{}]},{},[4])
+(4)
 });

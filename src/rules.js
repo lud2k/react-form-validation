@@ -1,7 +1,11 @@
 'use strict';
 
+import { FieldValueError, OptionalRuleError } from './errors.js';
+
 let EMAIL_REGEXP = new RegExp('^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]' +
-        '{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$');
+    '{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$');
+let URL_REGEXP = new RegExp('^(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?' +
+    '(\/|\/([\w#!:.?+=&%@!\-\/]))?');
 
 /**
  * Constructor of the Rules class.
@@ -11,16 +15,14 @@ let Rules = function(config) {
 };
 
 /**
- * Custom exception that if thrown means that the validation can stop and the field is valid.
- */
-Rules.OPTIONAL_EXCEPTION = 'OPTIONAL_EXCEPTION';
-
-/**
  * Registers a new rule.
  */
 Rules.register = function(name, rule) {
     Rules.prototype[name] = function() {
-        this.rules.push(rule.apply(null, arguments));
+        this.rules.push({
+            rule: rule.apply(null, arguments),
+            name: name
+        });
         return this;
     };
     Rules[name] = function() {
@@ -31,12 +33,40 @@ Rules.register = function(name, rule) {
 };
 
 /**
+ * Sets base errors messages that override the defaultMessage(s) in the rules.
+ * It should be a dictionary like:
+ * {
+ *    ruleName: message,
+ *    ruleName: {
+ *        errorCode: message
+ *    }
+ * }
+ */
+Rules.setMessages = function(messages) {
+    Rules.baseMessages = messages;
+};
+
+/**
+ * Gets the error message for a given rule and its result.
+ */
+Rules.getErrorMessage = function(rule, result, name) {
+    var base = Rules.baseMessages || {};
+    if (result === false) {
+        return rule.message || base[name] || rule.defaultMessage;
+    } else {
+        return rule.messages[result] ||
+            (base[name] ? base[name][result] : null) ||
+            rule.defaultMessages[result];
+    }
+};
+
+/**
  * Validates that the rules are all valid
  */
 Rules.prototype.validate = function(value, context) {
     try {
         for (var i=0; i<this.rules.length; i++) {
-            var rule = this.rules[i],
+            var rule = this.rules[i].rule,
                 valid = rule.check(value, context);
 
             // validate returned Rules objects
@@ -48,12 +78,13 @@ Rules.prototype.validate = function(value, context) {
             if (valid !== true) {
                 return {
                     error: valid,
-                    message: valid === false ? rule.message : rule.messages[valid]
+                    message: Rules.getErrorMessage(rule, valid, this.rules[i].name)
                 }
             }
         }
     } catch(e) {
-        if (e !== Rules.OPTIONAL_EXCEPTION) {
+        // if OptionalRuleError is thrown then the rule is valid. Rule validations stops.
+        if (!(e instanceof OptionalRuleError)) {
             throw e;
         }
     }
@@ -68,7 +99,7 @@ Rules.register('onlyIf', function(fn) {
         check: function(value, context) {
             var res = fn(value, context);
             if (!res) {
-                throw Rules.OPTIONAL_EXCEPTION;
+                throw new OptionalRuleError();
             }
             return true;
         }
@@ -82,7 +113,7 @@ Rules.register('optional', function() {
     return {
         check: function(value) {
             if (value === undefined || value === '') {
-                throw Rules.OPTIONAL_EXCEPTION;
+                throw new OptionalRuleError();
             }
             return true;
         }
@@ -92,11 +123,13 @@ Rules.register('optional', function() {
 /**
  * Registers a rule for optional values.
  */
-Rules.register('custom', function(fn) {
+Rules.register('custom', function(fn, message) {
     return {
         check: function(value, context) {
             return fn(value, context) || true;
-        }
+        },
+        defaultMessage: 'This field is invalid.',
+        message: message
     };
 });
 
@@ -122,7 +155,8 @@ Rules.register('required', function(message) {
                 return false;
             }
         },
-        message: message || 'This field is required.'
+        defaultMessage: 'This field is required.',
+        message: message
     };
 });
 
@@ -134,7 +168,21 @@ Rules.register('email', function(message) {
         check: function(value) {
             return EMAIL_REGEXP.test(value);
         },
-        message: message || 'This is not a valid email address'
+        defaultMessage: 'This is not a valid email address.',
+        message: message
+    };
+});
+
+/**
+ * Registers a rule for validating an email.
+ */
+Rules.register('url', function(message) {
+    return {
+        check: function(value) {
+            return URL_REGEXP.test(value);
+        },
+        defaultMessage: 'This is not a valid url.',
+        message: message
     };
 });
 
@@ -146,7 +194,21 @@ Rules.register('integer', function(message) {
         check: function(value) {
             return /^[0-9]+$/.test(value);
         },
-        message: message || 'This is not a valid integer'
+        defaultMessage: 'This is not a valid integer.',
+        message: message
+    };
+});
+
+/**
+ * Registers a rule for checking the length of a value.
+ */
+Rules.register('minLength', function(minLength, message) {
+    return {
+        check: function(value) {
+            return value.length >= minLength;
+        },
+        defaultMessage: 'Minimum length of ' + minLength + ' is required.',
+        message: message
     };
 });
 
@@ -158,7 +220,8 @@ Rules.register('regex', function(regex, message) {
         check: function(value) {
             return regex.test(value);
         },
-        message: message || ('This field does not match ' + regex)
+        defaultMessage: 'This field does not match ' + regex + '.',
+        message: message
     };
 });
 
@@ -170,7 +233,8 @@ Rules.register('equals', function(otherFieldName, message) {
         check: function(value, context) {
             return context.getFieldValue(otherFieldName) === value;
         },
-        message: message || ('This field does not match ' + otherFieldName)
+        defaultMessage: 'This field does not match ' + otherFieldName + '.',
+        message: message
     };
 });
 
@@ -195,12 +259,13 @@ Rules.register('password', function(messages) {
             }
             return true;
         },
-        messages: {
-            length: messages.length || 'Password should be at least 8 characters',
-            upper: messages.upper || 'Password should contain at least one uppercase letter',
-            lower: messages.lower || 'Password should contain at least one lowercase letter',
-            num: messages.num || 'Password should contain at least one number'
-        }
+        defaultMessages: {
+            length: 'Password should be at least 8 characters.',
+            upper: 'Password should contain at least one uppercase letter.',
+            lower: 'Password should contain at least one lowercase letter.',
+            num: 'Password should contain at least one number.'
+        },
+        messages: messages
     };
 });
 
@@ -214,7 +279,22 @@ Rules.register('minAge', function(minAge, message) {
                 age = Math.abs(diff.getUTCFullYear() - 1970);
             return age >= minAge;
         },
-        message: message || ('You must be at least ' + minAge + ' years old.')
+        defaultMessage: 'You must be at least ' + minAge + ' years old.',
+        message: message
+    };
+});
+
+/**
+ * Registers a rule that checks that there no FieldValueError was thrown while getting the field
+ * value.
+ */
+Rules.register('noError', function(message) {
+    return {
+        check: function(value) {
+            return !(value instanceof FieldValueError);
+        },
+        defaultMessage: 'This field is invalid.',
+        message: message,
     };
 });
 

@@ -99,8 +99,7 @@ var Input = (function (_Field) {
     }, {
         key: 'getValue',
         value: function getValue() {
-            var element = _reactDom2['default'].findDOMNode(this);
-            return element.value;
+            return this.refs.input.value;
         }
 
         /**
@@ -109,7 +108,7 @@ var Input = (function (_Field) {
     }, {
         key: 'onChange',
         value: function onChange(event) {
-            _get(Object.getPrototypeOf(Input.prototype), 'validateField', this).call(this);
+            _get(Object.getPrototypeOf(Input.prototype), 'validateField', this).call(this, false);
 
             // call parent prop
             if (this.props.onChange) {
@@ -123,7 +122,7 @@ var Input = (function (_Field) {
          */
     }, {
         key: 'onBlur',
-        value: function onBlur() {
+        value: function onBlur(event) {
             _get(Object.getPrototypeOf(Input.prototype), 'validateField', this).call(this, true);
 
             // call parent prop
@@ -137,13 +136,16 @@ var Input = (function (_Field) {
          */
     }, {
         key: 'formDidValidate',
-        value: function formDidValidate() {}
-        // TODO: implement getting the field state
+        value: function formDidValidate() {
+            var form = _utilsJs.Utils.getForm(this);
+            this.setState({
+                fieldState: form.getFieldState(this)
+            });
+        }
 
         /**
          * Returns the component's className.
          */
-
     }, {
         key: 'className',
         value: function className(fieldState) {
@@ -169,8 +171,11 @@ var Input = (function (_Field) {
             var form = _utilsJs.Utils.getForm(this),
                 fieldState = form.getFieldState(this);
 
-            return _react2['default'].createElement('input', _extends({}, this.props, { className: this.className(fieldState),
-                onChange: this.onChange.bind(this), onBlur: this.onBlur.bind(this), form: null }));
+            return _react2['default'].createElement('input', _extends({}, this.props, { ref: 'input', context: null,
+                id: this.props.name + '-field',
+                className: this.className(fieldState),
+                onChange: this.onChange.bind(this),
+                onBlur: this.onBlur.bind(this) }));
         }
     }]);
 
@@ -179,6 +184,7 @@ var Input = (function (_Field) {
 
 exports.Input = Input;
 Input.propTypes = {
+    context: _react2['default'].PropTypes.any,
     name: _react2['default'].PropTypes.string.isRequired
 };
 

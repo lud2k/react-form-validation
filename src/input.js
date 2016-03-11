@@ -53,15 +53,14 @@ export class Input extends Field {
      * Returns the value of the input.
      */
     getValue() {
-        var element = ReactDOM.findDOMNode(this);
-        return element.value;
+        return this.refs.input.value;
     }
 
     /**
      * Called when the value of the input has changed.
      */
     onChange(event) {
-        super.validateField();
+        super.validateField(false);
 
         // call parent prop
         if (this.props.onChange) {
@@ -73,7 +72,7 @@ export class Input extends Field {
      * Called when the field looses focus.
      * This forces validation of the field.
      */
-    onBlur() {
+    onBlur(event) {
         super.validateField(true);
 
         // call parent prop
@@ -86,7 +85,10 @@ export class Input extends Field {
      * Called by the listener mixin after the form is validated.
      */
     formDidValidate() {
-        // TODO: implement getting the field state
+        var form = Utils.getForm(this);
+        this.setState({
+            fieldState: form.getFieldState(this)
+        });
     }
 
     /**
@@ -113,8 +115,13 @@ export class Input extends Field {
         var form = Utils.getForm(this),
             fieldState = form.getFieldState(this);
 
-        return <input {...this.props} className={this.className(fieldState)}
-            onChange={this.onChange.bind(this)} onBlur={this.onBlur.bind(this)} form={null} />;
+        return (
+            <input {...this.props} ref="input" context={null}
+                    id={this.props.name + '-field'}
+                    className={this.className(fieldState)}
+                    onChange={this.onChange.bind(this)}
+                    onBlur={this.onBlur.bind(this)} />
+        );
     }
 }
 
@@ -122,6 +129,7 @@ export class Input extends Field {
  * Properties type.
  */
 Input.propTypes = {
+    context: React.PropTypes.any,
     name: React.PropTypes.string.isRequired
 };
 

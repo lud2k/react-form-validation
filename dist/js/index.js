@@ -84,3 +84,12 @@ Object.defineProperty(exports, 'Utils', {
     return _utilsJs.Utils;
   }
 });
+
+var _errorsJs = require('./errors.js');
+
+Object.defineProperty(exports, 'FieldValueError', {
+  enumerable: true,
+  get: function get() {
+    return _errorsJs.FieldValueError;
+  }
+});

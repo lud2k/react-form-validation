@@ -14,6 +14,8 @@ var _rulesJs = require('./rules.js');
 
 var _validationContextJs = require('./validation-context.js');
 
+var _errorsJs = require('./errors.js');
+
 /**
  * Context class.
  * Manages the state of all the components.
@@ -163,7 +165,19 @@ var Context = (function () {
          * Returns the values of all the fields.
          */
         value: function getFieldsData() {
-            var ret = {};
+            var ret = {},
+                getComponentValue = function getComponentValue(component) {
+                try {
+                    return component.getValue();
+                } catch (e) {
+                    // return errors as FieldValueError
+                    if (e instanceof _errorsJs.FieldValueError) {
+                        return e;
+                    } else {
+                        return new _errorsJs.FieldValueError('exception', e);
+                    }
+                }
+            };
 
             // get all the fields
             this.fields.forEach(function (field) {
@@ -191,7 +205,7 @@ var Context = (function () {
                             var component = field.component,
                                 checked = component.isChecked ? component.isChecked() : true;
                             if (checked === undefined || checked === true) {
-                                data.value.push(field.component.getValue());
+                                data.value.push(getComponentValue(field.component));
                             }
                         });
                     } else {
@@ -200,13 +214,13 @@ var Context = (function () {
                                 var component = field.component,
                                     checked = component.isChecked ? component.isChecked() : true;
                                 if (checked === true) {
-                                    data.value = component.getValue();
+                                    data.value = getComponentValue(component);
                                 }
                             });
                         } else {
                             var checked = firstComponent.isChecked ? firstComponent.isChecked() : true;
                             if (checked === undefined || checked === true) {
-                                data.value = firstComponent.getValue();
+                                data.value = getComponentValue(firstComponent);
                             }
                         }
                     }

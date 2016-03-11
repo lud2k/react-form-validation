@@ -35,7 +35,7 @@ var Hint = (function (_React$Component) {
         _get(Object.getPrototypeOf(Hint.prototype), 'constructor', this).call(this, props, context);
         var form = _utilsJs.Utils.getForm(this);
         this.state = {
-            state: form.getFieldStateByName(this.props.forName),
+            state: form.getFieldStateByName(this.props.htmlFor),
             display: this.parseDisplayString(this.props.display)
         };
     }
@@ -103,8 +103,17 @@ var Hint = (function (_React$Component) {
         value: function formDidValidate(result) {
             var form = _utilsJs.Utils.getForm(this);
             this.setState({
-                state: form.getFieldStateByName(this.props.forName)
+                state: form.getFieldStateByName(this.props.htmlFor)
             });
+        }
+
+        /**
+         * Returns the htmlFor attribute.
+         */
+    }, {
+        key: 'htmlForAttribute',
+        value: function htmlForAttribute() {
+            return this.props.htmlFor + '-field';
         }
 
         /**
@@ -118,7 +127,9 @@ var Hint = (function (_React$Component) {
             if (display.error && state.valid === false || display.pristine && state.validated !== true || display.valid && state.valid === true) {
                 return _react2['default'].createElement(
                     'label',
-                    _extends({ className: 'hint' }, this.props, { form: null }),
+                    _extends({ className: 'hint' }, this.props, {
+                        htmlFor: this.htmlForAttribute(),
+                        context: null }),
                     this.props.text || this.props.children
                 );
             } else {
@@ -134,8 +145,8 @@ exports.Hint = Hint;
 Hint.propTypes = {
     display: _react2['default'].PropTypes.string,
     text: _react2['default'].PropTypes.string,
-    form: _react2['default'].PropTypes.any,
-    forName: _react2['default'].PropTypes.string.isRequired
+    context: _react2['default'].PropTypes.any,
+    htmlFor: _react2['default'].PropTypes.string.isRequired
 };
 
 /**

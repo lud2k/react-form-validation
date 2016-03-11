@@ -20,6 +20,8 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _utilsJs = require('./utils.js');
+
 /**
  * Form component.
  */
@@ -34,7 +36,7 @@ var Form = (function (_React$Component) {
     }
 
     /**
-     * Context types.
+     * Properties type.
      */
 
     _createClass(Form, [{
@@ -45,19 +47,19 @@ var Form = (function (_React$Component) {
          */
         value: function onSubmit(event) {
             // validate form, then call callback
-            var result = this.props.form.validate(undefined, true);
+            var result = this.props.context.validate(undefined, true);
             if (this.props.onSubmit) {
-                this.props.onSubmit(event, result.valid, result.data, this.props.form);
+                this.props.onSubmit(event, result.valid, result.data, this.props.context);
             }
 
             // prevent form submission if not valid
-            if (!result.valid) {
+            if (!result.valid || this.props.preventSubmit) {
                 event.preventDefault();
             }
 
             // scroll to error
-            if (this.props.scrollToError) {
-                // TODO: find first error then .scrollIntoView();
+            if (this.props.scrollToError !== false) {
+                _utilsJs.Utils.scrollToFirstError(this.refs.form, this.props.scrollToErrorPadding || 20);
             }
         }
 
@@ -68,7 +70,7 @@ var Form = (function (_React$Component) {
         key: 'getChildContext',
         value: function getChildContext() {
             return {
-                form: this.props.form
+                form: this.props.context
             };
         }
 
@@ -80,7 +82,8 @@ var Form = (function (_React$Component) {
         value: function render() {
             return _react2['default'].createElement(
                 'form',
-                _extends({}, this.props, { noValidate: true, onSubmit: this.onSubmit.bind(this) }),
+                _extends({}, this.props, { noValidate: true, context: null, ref: 'form',
+                    onSubmit: this.onSubmit.bind(this) }),
                 this.props.children
             );
         }
@@ -90,6 +93,14 @@ var Form = (function (_React$Component) {
 })(_react2['default'].Component);
 
 exports.Form = Form;
+Form.propTypes = {
+    context: _react2['default'].PropTypes.any.required,
+    preventSubmit: _react2['default'].PropTypes.bool
+};
+
+/**
+ * Context types.
+ */
 Form.childContextTypes = {
     form: _react2['default'].PropTypes.any
 };

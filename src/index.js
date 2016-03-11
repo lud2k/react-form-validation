@@ -9,3 +9,4 @@ export { Context } from './context.js';
 export { Rules } from './rules.js';
 export { Select } from './select.js';
 export { Utils } from './utils.js';
+export { FieldValueError } from './errors.js';

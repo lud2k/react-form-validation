@@ -3,6 +3,7 @@
 import { FieldState } from './field-state.js';
 import { Rules } from './rules.js';
 import { ValidationContext } from './validation-context.js';
+import { FieldValueError } from './errors.js';
 
 /**
  * Context class.
@@ -128,7 +129,19 @@ export class Context {
      * Returns the values of all the fields.
      */
     getFieldsData() {
-        var ret = {};
+        var ret = {},
+            getComponentValue = function(component) {
+                try {
+                    return component.getValue();
+                } catch(e) {
+                    // return errors as FieldValueError
+                    if (e instanceof FieldValueError) {
+                        return e;
+                    } else {
+                        return new FieldValueError('exception', e);
+                    }
+                }
+            };
 
         // get all the fields
         this.fields.forEach(function (field) {
@@ -156,7 +169,7 @@ export class Context {
                         var component = field.component,
                             checked = component.isChecked ? component.isChecked() : true;
                         if (checked === undefined || checked === true) {
-                            data.value.push(field.component.getValue());
+                            data.value.push(getComponentValue(field.component));
                         }
                     });
                 } else {
@@ -165,13 +178,13 @@ export class Context {
                             var component = field.component,
                                 checked = component.isChecked ? component.isChecked() : true;
                             if (checked === true) {
-                                data.value = component.getValue();
+                                data.value = getComponentValue(component);
                             }
                         });
                     } else {
                         var checked = firstComponent.isChecked ? firstComponent.isChecked() : true;
                         if (checked === undefined || checked === true) {
-                            data.value = firstComponent.getValue();
+                            data.value = getComponentValue(firstComponent);
                         }
                     }
                 }

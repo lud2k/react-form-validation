@@ -10,15 +10,32 @@ export class Select extends Field {
      * Returns the value of the input.
      */
     getValue() {
-        var element = ReactDOM.findDOMNode(this);
-        return element.value;
+        return this.refs.input.value;
     }
 
     /**
      * Called when the value of the input has changed.
      */
-    onChange() {
+    onChange(event) {
+        super.validateField(false);
+
+        // call parent prop
+        if (this.props.onChange) {
+            this.props.onChange(event);
+        }
+    }
+
+    /**
+     * Called when the field looses focus.
+     * This forces validation of the field.
+     */
+    onBlur(event) {
         super.validateField(true);
+
+        // call parent prop
+        if (this.props.onBlur) {
+            this.props.onBlur(event);
+        }
     }
 
     /**
@@ -46,8 +63,11 @@ export class Select extends Field {
             fieldState = form.getFieldState(this);
 
         return (
-            <select {...this.props} className={this.rootClassName(fieldState)}
-                    onChange={this.onChange.bind(this)} onBlur={this.onBlur.bind(this)}>
+            <select {...this.props} ref="input" context={null}
+                    id={this.props.name + '-field'}
+                    className={this.rootClassName(fieldState)}
+                    onChange={this.onChange.bind(this)}
+                    onBlur={this.onBlur.bind(this)}>
                 {this.props.children}
             </select>
         );
@@ -58,7 +78,7 @@ export class Select extends Field {
  * Properties type.
  */
 Select.propTypes = {
-    form: React.PropTypes.any,
+    context: React.PropTypes.any,
     name: React.PropTypes.string.isRequired
 };
 

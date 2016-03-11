@@ -11,7 +11,7 @@ export class Hint extends React.Component {
         super(props, context);
         var form = Utils.getForm(this);
         this.state = {
-            state: form.getFieldStateByName(this.props.forName),
+            state: form.getFieldStateByName(this.props.htmlFor),
             display: this.parseDisplayString(this.props.display)
         };
     }
@@ -64,8 +64,15 @@ export class Hint extends React.Component {
     formDidValidate(result) {
         var form = Utils.getForm(this);
         this.setState({
-            state: form.getFieldStateByName(this.props.forName)
+            state: form.getFieldStateByName(this.props.htmlFor)
         });
+    }
+
+    /**
+     * Returns the htmlFor attribute.
+     */
+    htmlForAttribute() {
+        return this.props.htmlFor + '-field';
     }
 
     /**
@@ -78,7 +85,9 @@ export class Hint extends React.Component {
                 (display.pristine && state.validated !== true) ||
                 (display.valid && state.valid === true)) {
             return (
-                <label className="hint" {...this.props} form={null}>
+                <label className="hint" {...this.props}
+                       htmlFor={this.htmlForAttribute()}
+                       context={null}>
                     {this.props.text || this.props.children}
                 </label>
             );
@@ -94,8 +103,8 @@ export class Hint extends React.Component {
 Hint.propTypes = {
     display: React.PropTypes.string,
     text: React.PropTypes.string,
-    form: React.PropTypes.any,
-    forName: React.PropTypes.string.isRequired
+    context: React.PropTypes.any,
+    htmlFor: React.PropTypes.string.isRequired
 };
 
 /**

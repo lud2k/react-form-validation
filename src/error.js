@@ -41,7 +41,7 @@ export class Error extends React.Component {
 
     getFieldState() {
         var form = Utils.getForm(this),
-            fieldState = form.getFieldStateByName(this.props.forName);
+            fieldState = form.getFieldStateByName(this.props.htmlFor);
         return {
             error: fieldState ? fieldState.error : undefined,
             valid: fieldState ? fieldState.valid : undefined
@@ -49,11 +49,24 @@ export class Error extends React.Component {
     }
 
     /**
+     * Returns the htmlFor attribute.
+     */
+    htmlForAttribute() {
+        return this.props.htmlFor + '-field';
+    }
+
+    /**
      * Renders the input.
      */
     render() {
         if (this.state.valid === false) {
-            return <label className="error" {...this.props} form={null}>{this.state.error}</label>;
+            return (
+                <label className="error" {...this.props}
+                       htmlFor={this.htmlForAttribute()}
+                       context={null}>
+                    {this.state.error}
+                </label>
+            );
         } else {
             return null;
         }
@@ -64,8 +77,8 @@ export class Error extends React.Component {
  * Properties type.
  */
 Error.propTypes = {
-    form: React.PropTypes.any,
-    forName: React.PropTypes.string.isRequired
+    context: React.PropTypes.any,
+    htmlFor: React.PropTypes.string.isRequired
 };
 
 /**
