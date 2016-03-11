@@ -1,5 +1,5 @@
 
-Rules.register('myCustomUsernameRule', function() {
+Rules.register('myCustomUsernameRule', function(messages) {
     return {
         check: function check(value) {
             if (!/^[a-z0-9]+$/.test(value)) {
@@ -13,7 +13,10 @@ Rules.register('myCustomUsernameRule', function() {
             }
             return true;
         },
-        messages: {
+        // user defined messages
+        messages: messages,
+        // default messages
+        defaultMessages: {
             letters: 'Username should only contain lower case characters or numbers',
             length: 'Username should be at least 5 characters',
             syntax: 'Username should end with numbers'

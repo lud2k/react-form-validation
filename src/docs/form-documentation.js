@@ -1,7 +1,7 @@
 
 import Code from '../code.js';
 import FormTag from './form-tag.html';
-import FormTagUsage from './form-tag-usage.html';
+import FormTagUsageText from './form-tag-usage.txt';
 
 /**
  * The main page of the website.
@@ -27,12 +27,15 @@ export default class FormDocumentation extends React.Component {
                 <p>
                     <ul>
                         <li>
-                            <b>form</b> (required): A valid form instance object.
+                            <b>context</b> (required): A valid form context object.
                         </li>
                         <li>
                             <b>onSubmit(event, valid, data, form)</b>: If set, this callback will
                             be called when the form is submitted.
                             <ul>
+                                <li>
+                                    <b>event</b> (Event): the JavaScript event
+                                </li>
                                 <li>
                                     <b>valid</b> (boolean): True if the form is valid, false
                                     otherwise
@@ -58,13 +61,24 @@ export default class FormDocumentation extends React.Component {
                             the form is submitted.
                         </li>
                         <li>
+                            <b>scrollToErrorPadding</b> (default: 20): When scrolling to the error
+                            this defines the minimum padding with the window. Useful when you have
+                            part of your page that
+                            is <u>position: fixed</u>.
+                        </li>
+                        <li>
+                            <b>preventSubmit</b> (default: false): Controls whether the form should
+                            be submitted or not when valid. Form submission is always prevented
+                            when the form is not valid.
+                        </li>
+                        <li>
                             <b>...</b>: All other properties set on this component will be
                             transferred, as is, to the original form html tag.
                         </li>
                     </ul>
                 </p>
                 <h3> Usage </h3>
-                <Code value={FormTagUsage} />
+                <Code value={FormTagUsageText} scrollable={false} />
             </div>
         );
     }

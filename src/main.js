@@ -21,8 +21,8 @@ export default class Main extends React.Component {
                         <Link className="link" to="/install">
                             Install
                         </Link>
-                        <Link className="link" to="/example">
-                            Examples
+                        <Link className="link" to="/guide">
+                            Guide
                         </Link>
                         <Link className="link" to="/documentation">
                             Documentation
@@ -37,7 +37,7 @@ export default class Main extends React.Component {
                 </div>
                 <div className="footer-wrapper">
                     <div className="footer">
-                        Created by <a href="https://github.com/lud2k">Ludovic Cabre</a>
+                        Created by <a href="https://github.com/lud2k">Lud2k</a>
                     </div>
                 </div>
             </div>

@@ -23,6 +23,10 @@ ul li {
     padding: 0;
 }
 
+button + button {
+    margin-left: 10px;
+}
+
 /********************************************************************
  * Header
  ********************************************************************/
@@ -59,7 +63,7 @@ ul li {
     height: 50px;
     text-decoration: none;
     line-height: 50px;
-    padding: 0 10px;
+    padding: 0 15px;
 }
 
 .header a:first-child {
@@ -94,11 +98,11 @@ ul li {
  * Content
  ********************************************************************/
 
- .content-wrapper {
+.content-wrapper {
     padding: 50px 0;
 }
 
-.content {
+.content-wrapper > .content {
     margin: 20px auto;
     max-width: 960px;
     padding: 0 20px;
@@ -123,13 +127,19 @@ ul li {
 
 .code .CodeMirror .CodeMirror-scroll {
     height: auto;
+    max-height: none;
+}
+
+.code[data-scrollable=true] .CodeMirror .CodeMirror-scroll {
+    height: auto;
     max-height: 300px;
 }
 
-.inline-code {
+u {
     font-family: monospace;
     background: rgba(0,0,0,0.04);
     padding: 1px 3px;
+    text-decoration: none;
 }
 
 /********************************************************************
@@ -162,6 +172,91 @@ ul li {
 
 .side-content {
     margin-left: 220px;
+}
+
+/********************************************************************
+ * Introduction
+ ********************************************************************/
+
+#introduction .feature:nth-child(3n+1) {
+    clear: both;
+}
+
+#introduction .features {
+    margin-top: 30px;
+}
+
+#introduction .features:after {
+    display: block;
+    content: ' ';
+    clear: both;
+    font-size: 0;
+    height: 0;
+}
+
+#introduction .feature {
+    float: left;
+    width: 33%;
+    display: block;
+    padding: 0 0 20px 0;
+}
+
+#introduction .feature h4 {
+    font-size: 18px;
+    margin: 0 0 8px 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+#introduction .feature p {
+    padding: 0 25px;
+    margin: 0;
+}
+
+/********************************************************************
+ * ComponentSource
+ ********************************************************************/
+
+.component-source {
+    background: #fff;
+    border: 1px solid #f7d87c;
+}
+
+.component-source .tabs {
+    background: #f7d87c;
+    height: 30px;
+    overflow: hidden;
+    line-height: 20px;
+    cursor: pointer;
+    border-bottom: 1px solid #f7d87c;
+}
+
+.component-source .tab {
+    display: block;
+    padding: 3px 10px;
+    float: left;
+    margin: 2px;
+}
+
+.component-source .tab[data-selected=true] {
+    background: #FAEAB7;
+}
+
+.component-source .tab:hover {
+    background: #FCF1CF;
+}
+
+.component-source .content {
+    margin: 0;
+    padding: 0;
+}
+
+.component-source .content.component {
+    padding: 20px;
+}
+
+.component-source .content.source .code {
+    border: 0;
 }
 
 /********************************************************************
@@ -203,6 +298,20 @@ form {
 form .action,
 form .field {
     padding: 5px 0;
+}
+
+form input[type=password],
+form input[type=text] {
+    border: 1px solid #ccc;
+    background: #fff;
+    margin: 0;
+    padding: 3px 4px;
+    width: 200px;
+}
+
+form input[type=password].error,
+form input[type=text].error {
+    background-color: #FEE;
 }
 
 form label.error {
@@ -257,6 +366,61 @@ form h4 {
 #documentation h4 .anchor {
     position: absolute;
     top: -80px
+}
+
+/********************************************************************
+ * Modal
+ ********************************************************************/
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 20;
+}
+
+.modal .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(0,0,0,0.33);
+}
+
+.modal .popup-wrapper {
+    position: relative;
+    z-index: 40;
+    max-width: 600px;
+    margin: 70px auto 30px auto;
+}
+
+.modal .popup {
+    background: #f9f9f9;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+
+.modal .popup > .title {
+    background: #222;
+    padding: 10px 20px;
+    color: #ddd;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.modal .popup > .content {
+    padding: 20px;
+}
+
+.modal .popup > .content p:first-child {
+    margin-top: 0;
+}
+
+.modal .popup > .actions {
+    padding: 10px 20px;
+    text-align: right;
 }
 
 /********************************************************************

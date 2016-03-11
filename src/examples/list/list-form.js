@@ -1,27 +1,7 @@
 
 import { Context, Error, Hint, Rules, Form, Input } from 'react-form-validation';
-
-/**
- * Friend item form.
- */
-export default class FriendForm extends React.Component {
-    render() {
-        var prefix = `friend[${this.props.index}]`;
-        return (
-            <div className="fieldset friend">
-                <b>Friend {this.props.index + 1}</b>
-                <div className="field">
-                    Name: <Input type="text" name={prefix + 'name'} />
-                    <Error forName={prefix + 'name'} />
-                </div>
-                <div className="field">
-                    Age: <Input type="text" name={prefix + 'age'} />
-                    <Error forName={prefix + 'age'} />
-                </div>
-            </div>
-        );
-    }
-}
+import FriendForm from './friend-form.js';
+import Utils from '../../utils.js';
 
 /**
  * List example form.
@@ -34,7 +14,7 @@ export default class ListForm extends React.Component {
         super(props);
 
         this.state = {
-            form: new Context({
+            context: new Context({
                 fields: {
                     friend: {
                         name: Rules.required(),
@@ -56,9 +36,9 @@ export default class ListForm extends React.Component {
     }
 
     /**
-     * Renders the form.
+     * Renders the friends forms.
      */
-    renderFriendFields(form) {
+    renderFriendForms() {
         var ret = [];
         for (var i=0; i<this.state.nbFriends; i++) {
             ret.push(<FriendForm key={i} index={i} />);
@@ -70,14 +50,17 @@ export default class ListForm extends React.Component {
      * Renders the form.
      */
     render() {
-        var form = this.state.form;
         return (
-            <Form form={form} onSubmit={this.props.formSubmitted}>
+            <Form context={this.state.context} onSubmit={Utils.onFormSubmitted}>
                 <h4>Friend List</h4>
-                { this.renderFriendFields(form) }
+                { this.renderFriendForms() }
                 <div className="actions">
                     <button type="button" onClick={this.onClickAddFriend.bind(this)}>Add Friend</button>
-                    <button>Validate</button>
+                    <button type="submit">Submit</button>
+                    <button type="button"
+                            onClick={Utils.onClickShowData.bind(this, this.state.context)}>
+                        Show Data
+                    </button>
                 </div>
             </Form>
         );

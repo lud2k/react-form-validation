@@ -1,8 +1,10 @@
 <Hint
-    name="field_name"              // name of a field (required)
-    form="form_instance"           // form instance (required)
-    text="text to display"         // text to display (optional, defaults to tag's content if not set)
-    display="pristine|valid|error" // when to display this hint (optional)
+    // required
+    htmlFor="field_name"              // name of a field
+    // optional
+    context="context"           // context instance
+    text="text to display"         // text to display (defaults to tag's content if not set)
+    display="pristine|valid|error" // when to display this hint
 >
     html to display                // only used if the text property isn't set
 </Hint>

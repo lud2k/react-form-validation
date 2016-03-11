@@ -3,7 +3,7 @@ import React from 'react';
 import { Context, Error, Rules, Form, Input } from 'react-form-validation';
 
 /**
- * Simple login form.
+ * A component.
  */
 export default class LoginForm extends React.Component {
     /**
@@ -12,8 +12,9 @@ export default class LoginForm extends React.Component {
     constructor(props) {
         super(props);
 
+        // create a form context and save it in the state.
         this.state = {
-            form: new Context({
+            context: new Context({
                 fields: {
                     email: Rules.required().email(),
                     password: Rules.required()
@@ -23,19 +24,26 @@ export default class LoginForm extends React.Component {
     }
 
     /**
+     * Called when the user submits the form.
+     */
+    onSubmit(event, valid, data, form) {
+        // do something with the form data.
+    }
+
+    /**
      * Renders the form.
      */
     render() {
         return (
-            <Form form={this.state.form} onSubmit={this.props.formSubmitted}>
+            <Form context={this.state.context} onSubmit={this.onSubmit.bind(this)}>
                 <h4>Login</h4>
                 <div className="field">
                     Email: <Input type="text" name="email" />
-                    <Error forName="email" />
+                    <Error htmlFor="email" />
                 </div>
                 <div className="field">
                     Password: <Input type="password" name="password" />
-                    <Error forName="password" />
+                    <Error htmlFor="password" />
                 </div>
                 <div className="actions">
                     <button>Login</button>

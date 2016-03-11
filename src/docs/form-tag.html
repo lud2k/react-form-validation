@@ -1,7 +1,11 @@
 <Form
-    form="form_instance" // form instance (required)
+    // required
+    context="context" // context instance
+    // optional
     onSubmit="function(event, valid, data, form)" // called when the form is submitted
     scrollToError="boolean" // should scroll to error (default: true)
+    scrollToErrorPadding="integer" // padding between error and window edge
+    preventSubmit="boolean" // prevent or not form submission (default: false)
     ... // other properties are passed to the html form tag
 >
     // code

@@ -14,11 +14,6 @@ export default class Install extends React.Component {
         return (
             <div id="install" className="content">
                 <div className="section">
-                    <h2> Introduction </h2>
-                    /!\ Work in progress.<br />
-                    Feedback always appreciated.
-                </div>
-                <div className="section">
                     <h2> Install </h2>
                     <h3> NPM </h3>
                     <Code>
@@ -44,7 +39,7 @@ export default class Install extends React.Component {
                         that object (<i>window.FormValidation.Field</i>).
                     </p>
                     <Code mode="xml">
-                        {'<script type="text/javascript" src="{path_to_library}/dist/react-form-validation.js"></script>'}
+                        {'<script type="text/javascript" src="{path_to_library}/dist/react-form-validation.min.js"></script>'}
                     </Code>
                 </div>
             </div>

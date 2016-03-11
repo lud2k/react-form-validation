@@ -43,10 +43,11 @@ export default class Code extends React.Component {
      * Renders an empty div in which CodeMirror will render pretty code.
      */
     render() {
-        return <div className="code" ref="root" />;
+        return <div className="code" ref="root" data-scrollable={this.props.scrollable} />;
     }
 }
 
 Code.defaultProps = {
-    mode: 'javascript'
+    mode: 'jsx',
+    scrollable: false
 };

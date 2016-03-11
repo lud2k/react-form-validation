@@ -13,10 +13,25 @@ export default class SelectDocumentation extends React.Component {
         return (
             <div className="documentation">
                 <h2> &lt;Select&gt; Component </h2>
-                <div className="paragraph">
+                <p>
                     The <i>Select</i> component behaves the same way as the select html tag.
-                </div>
+                </p>
                 <Code value={SelectTag} />
+                <h3> Properties </h3>
+                <p>
+                    <ul>
+                        <li>
+                            <b>name</b> (required): The name of the input.
+                        </li>
+                        <li>
+                            <b>context</b> (optional): A valid form context object.
+                        </li>
+                        <li>
+                            <b>...</b>: All other properties set on this component will be
+                            transferred, as is, to the original select html tag.
+                        </li>
+                    </ul>
+                </p>
             </div>
         );
     }

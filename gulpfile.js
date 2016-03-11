@@ -35,15 +35,17 @@ gulp.task('copy', ['clean'], function() {
 });
 
 /**
- * Converts the example js files into javascript text.
+ * Copies all the JavaScript files to text files so that they can be imported as text.
  */
 gulp.task('textify', ['clean'], function() {
-    return gulp.src(['src/**/*-form.js', 'src/**/*.code.js'])
+    return gulp.src(['src/**/*.js'])
         .pipe(rename(function(path) {
             path.extname = '.txt';
         }))
+        .on('error', function(error) {
+            console.error('failed to textify code', error);
+        })
         .pipe(gulp.dest('dist/js'));
-
 });
 
 /**
