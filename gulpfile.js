@@ -59,7 +59,7 @@ gulp.task('test', function() {
     require('babel-register')();
 
     return gulp.src(['test/**/*-test.js'])
-        .pipe(mocha({reporter: 'nyan'}));
+        .pipe(mocha());
 });
 
 /**
