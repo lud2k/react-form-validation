@@ -1,95 +1,95 @@
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _errorJs = require('./error.js');
+var _error = require('./error.js');
 
 Object.defineProperty(exports, 'Error', {
   enumerable: true,
   get: function get() {
-    return _errorJs.Error;
+    return _error.Error;
   }
 });
 
-var _fieldJs = require('./field.js');
+var _field = require('./field.js');
 
 Object.defineProperty(exports, 'Field', {
   enumerable: true,
   get: function get() {
-    return _fieldJs.Field;
+    return _field.Field;
   }
 });
 
-var _formJs = require('./form.js');
+var _form = require('./form.js');
 
 Object.defineProperty(exports, 'Form', {
   enumerable: true,
   get: function get() {
-    return _formJs.Form;
+    return _form.Form;
   }
 });
 
-var _hintJs = require('./hint.js');
+var _hint = require('./hint.js');
 
 Object.defineProperty(exports, 'Hint', {
   enumerable: true,
   get: function get() {
-    return _hintJs.Hint;
+    return _hint.Hint;
   }
 });
 
-var _inputJs = require('./input.js');
+var _input = require('./input.js');
 
 Object.defineProperty(exports, 'Input', {
   enumerable: true,
   get: function get() {
-    return _inputJs.Input;
+    return _input.Input;
   }
 });
 
-var _contextJs = require('./context.js');
+var _context = require('./context.js');
 
 Object.defineProperty(exports, 'Context', {
   enumerable: true,
   get: function get() {
-    return _contextJs.Context;
+    return _context.Context;
   }
 });
 
-var _rulesJs = require('./rules.js');
+var _rules = require('./rules.js');
 
 Object.defineProperty(exports, 'Rules', {
   enumerable: true,
   get: function get() {
-    return _rulesJs.Rules;
+    return _rules.Rules;
   }
 });
 
-var _selectJs = require('./select.js');
+var _select = require('./select.js');
 
 Object.defineProperty(exports, 'Select', {
   enumerable: true,
   get: function get() {
-    return _selectJs.Select;
+    return _select.Select;
   }
 });
 
-var _utilsJs = require('./utils.js');
+var _utils = require('./utils.js');
 
 Object.defineProperty(exports, 'Utils', {
   enumerable: true,
   get: function get() {
-    return _utilsJs.Utils;
+    return _utils.Utils;
   }
 });
 
-var _errorsJs = require('./errors.js');
+var _errors = require('./errors.js');
 
 Object.defineProperty(exports, 'FieldValueError', {
   enumerable: true,
   get: function get() {
-    return _errorsJs.FieldValueError;
+    return _errors.FieldValueError;
   }
 });

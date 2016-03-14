@@ -1,10 +1,11 @@
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.Rules = undefined;
 
-var _errorsJs = require('./errors.js');
+var _errors = require('./errors.js');
 
 var EMAIL_REGEXP = new RegExp('^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]' + '{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$');
 var URL_REGEXP = new RegExp('^(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?' + '(\/|\/([\w#!:.?+=&%@!\-\/]))?');
@@ -84,7 +85,7 @@ Rules.prototype.validate = function (value, context) {
         }
     } catch (e) {
         // if OptionalRuleError is thrown then the rule is valid. Rule validations stops.
-        if (!(e instanceof _errorsJs.OptionalRuleError)) {
+        if (!(e instanceof _errors.OptionalRuleError)) {
             throw e;
         }
     }
@@ -99,7 +100,7 @@ Rules.register('onlyIf', function (fn) {
         check: function check(value, context) {
             var res = fn(value, context);
             if (!res) {
-                throw new _errorsJs.OptionalRuleError();
+                throw new _errors.OptionalRuleError();
             }
             return true;
         }
@@ -113,7 +114,7 @@ Rules.register('optional', function () {
     return {
         check: function check(value) {
             if (value === undefined || value === '') {
-                throw new _errorsJs.OptionalRuleError();
+                throw new _errors.OptionalRuleError();
             }
             return true;
         }
@@ -289,7 +290,7 @@ Rules.register('minAge', function (minAge, message) {
 Rules.register('noError', function (message) {
     return {
         check: function check(value) {
-            return !(value instanceof _errorsJs.FieldValueError);
+            return !(value instanceof _errors.FieldValueError);
         },
         defaultMessage: 'This field is invalid.',
         message: message

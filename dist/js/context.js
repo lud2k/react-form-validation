@@ -1,27 +1,28 @@
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.Context = undefined;
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+var _fieldState = require('./field-state.js');
 
-var _fieldStateJs = require('./field-state.js');
+var _rules = require('./rules.js');
 
-var _rulesJs = require('./rules.js');
+var _validationContext = require('./validation-context.js');
 
-var _validationContextJs = require('./validation-context.js');
+var _errors = require('./errors.js');
 
-var _errorsJs = require('./errors.js');
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
  * Context class.
  * Manages the state of all the components.
  */
 
-var Context = (function () {
+var Context = exports.Context = function () {
     /**
      * Constructor.
      */
@@ -37,6 +38,7 @@ var Context = (function () {
     _createClass(Context, [{
         key: 'normalizeConfig',
 
+
         /**
          * The config object can be written in different ways. This function normalizes it so that it
          * is easier to use later.
@@ -44,7 +46,7 @@ var Context = (function () {
         value: function normalizeConfig(config) {
             for (var key in config) {
                 if (config.hasOwnProperty(key)) {
-                    if (config[key] instanceof _rulesJs.Rules) {
+                    if (config[key] instanceof _rules.Rules) {
                         // replace by an object with rules inside
                         config[key] = {
                             rules: config[key]
@@ -61,13 +63,15 @@ var Context = (function () {
         /**
          * Registers a component.
          */
+
     }, {
         key: 'register',
         value: function register(component) {
-            this.fields.push(new _fieldStateJs.FieldState(component, { validated: false }));
+            this.fields.push(new _fieldState.FieldState(component, { validated: false }));
         }
     }, {
         key: 'unregister',
+
 
         /**
          * Unregisters a component.
@@ -84,6 +88,7 @@ var Context = (function () {
     }, {
         key: 'addListener',
 
+
         /**
          * Registers a listener.
          */
@@ -92,6 +97,7 @@ var Context = (function () {
         }
     }, {
         key: 'removeListener',
+
 
         /**
          * Unregisters a listener.
@@ -105,6 +111,7 @@ var Context = (function () {
         }
     }, {
         key: 'getField',
+
 
         /**
          * Returns the information that this class stores about a component.
@@ -121,6 +128,7 @@ var Context = (function () {
     }, {
         key: 'getFieldState',
 
+
         /**
          * Returns a field's state.
          */
@@ -132,6 +140,7 @@ var Context = (function () {
         }
     }, {
         key: 'getFieldByName',
+
 
         /**
          * Returns the information that this class stores about a component by looking for its name.
@@ -149,6 +158,7 @@ var Context = (function () {
     }, {
         key: 'getFieldStateByName',
 
+
         /**
          * Returns a field's state by looking for its name.
          */
@@ -161,6 +171,7 @@ var Context = (function () {
     }, {
         key: 'getFieldsData',
 
+
         /**
          * Returns the values of all the fields.
          */
@@ -171,10 +182,10 @@ var Context = (function () {
                     return component.getValue();
                 } catch (e) {
                     // return errors as FieldValueError
-                    if (e instanceof _errorsJs.FieldValueError) {
+                    if (e instanceof _errors.FieldValueError) {
                         return e;
                     } else {
-                        return new _errorsJs.FieldValueError('exception', e);
+                        return new _errors.FieldValueError('exception', e);
                     }
                 }
             };
@@ -231,6 +242,7 @@ var Context = (function () {
         }
     }, {
         key: 'refineData',
+
 
         /**
          * Processes extract form data to have a better formated object.
@@ -294,6 +306,7 @@ var Context = (function () {
     }, {
         key: 'getRulesForField',
 
+
         /**
          * Returns the rules that apply for a given field.
          */
@@ -321,6 +334,7 @@ var Context = (function () {
         /**
          * Validates a field.
          */
+
     }, {
         key: 'validateField',
         value: function validateField(field, data, force) {
@@ -341,7 +355,7 @@ var Context = (function () {
                 });
 
                 // validate field value
-                var result = rules.validate(state.value, new _validationContextJs.ValidationContext(data, field));
+                var result = rules.validate(state.value, new _validationContext.ValidationContext(data, field));
                 if (result !== true) {
                     state.fields.forEach(function (field) {
                         field.state.valid = false;
@@ -363,6 +377,7 @@ var Context = (function () {
         /**
          * Validates all the fields or the field given as parameter.
          */
+
     }, {
         key: 'validate',
         value: function validate(target, force) {
@@ -399,6 +414,4 @@ var Context = (function () {
     }]);
 
     return Context;
-})();
-
-exports.Context = Context;
+}();
