@@ -14,10 +14,23 @@ export class Select extends Field {
     }
 
     /**
+     * Called when the component is updated.
+     */
+    componentDidUpdate(prevProps) {
+        // is the value forced and it was changed?
+        if (prevProps.hasOwnProperty('value') && this.props.value != prevProps.value) {
+            super.validateField(false);
+        }
+    }
+
+    /**
      * Called when the value of the input has changed.
      */
     onChange(event) {
-        super.validateField(false);
+        // is value forced?
+        if (!this.props.hasOwnProperty('value')) {
+            super.validateField(false);
+        }
 
         // call parent prop
         if (this.props.onChange) {

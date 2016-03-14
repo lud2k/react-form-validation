@@ -103,12 +103,27 @@ var Input = (function (_Field) {
         }
 
         /**
+         * Called when the component is updated.
+         */
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps) {
+            // is the value forced and it was changed?
+            if (prevProps.hasOwnProperty('value') && this.props.value != prevProps.value) {
+                _get(Object.getPrototypeOf(Input.prototype), 'validateField', this).call(this, false);
+            }
+        }
+
+        /**
          * Called when the value of the input has changed.
          */
     }, {
         key: 'onChange',
         value: function onChange(event) {
-            _get(Object.getPrototypeOf(Input.prototype), 'validateField', this).call(this, false);
+            // is value forced?
+            if (!this.props.hasOwnProperty('value')) {
+                _get(Object.getPrototypeOf(Input.prototype), 'validateField', this).call(this, false);
+            }
 
             // call parent prop
             if (this.props.onChange) {
