@@ -29,8 +29,16 @@ import ErrorComponentDocumentation from './docs/error-documentation.js';
 import HintComponentDocumentation from './docs/hint-documentation.js';
 import SelectComponentDocumentation from './docs/select-documentation.js';
 
+// create history
+var history = createHashHistory({queryKey: false});
+history.listen(function (location) {
+    try {
+        window.ga('send', 'pageview', location.pathname);
+    } catch(e) {}
+});
+
 ReactDOM.render((
-    <Router history={createHashHistory({queryKey: false})}>
+    <Router history={history}>
         <Route path="/" component={Main}>
             <IndexRoute component={Introduction}/>
             <Route path="intro" component={Introduction} />

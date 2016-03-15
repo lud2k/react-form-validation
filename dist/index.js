@@ -3917,7 +3917,15 @@ var _docsSelectDocumentationJs = require('./docs/select-documentation.js');
 
 var _docsSelectDocumentationJs2 = _interopRequireDefault(_docsSelectDocumentationJs);
 
-_reactDom2['default'].render(React.createElement(_reactRouter.Router, { history: (0, _historyLibCreateHashHistory2['default'])({ queryKey: false }) }, React.createElement(_reactRouter.Route, { path: '/', component: _mainJs2['default'] }, React.createElement(_reactRouter.IndexRoute, { component: _introductionJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'intro', component: _introductionJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'install', component: _installJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'guide', component: _guideJs2['default'] }, React.createElement(_reactRouter.IndexRoute, { component: _examplesBasicExampleJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'basic', component: _examplesBasicExampleJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'hints', component: _examplesHintsExampleJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'errors', component: _examplesErrorsExampleJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'lists', component: _examplesListExampleJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'naming', component: _examplesNamingExampleJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'custom-field', component: _examplesCustomFieldExampleJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'custom-rule', component: _examplesCustomRuleExampleJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'wysiwyg', component: _examplesWysiwygExampleJs2['default'] })), React.createElement(_reactRouter.Route, { path: 'documentation', component: _documentationJs2['default'] }, React.createElement(_reactRouter.IndexRoute, { component: _docsContextDocumentationJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'context-class', component: _docsContextDocumentationJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'rules-class', component: _docsRulesDocumentationJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'field-class', component: _docsFieldDocumentationJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'form-component', component: _docsFormDocumentationJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'input-component', component: _docsInputDocumentationJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'select-component', component: _docsSelectDocumentationJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'error-component', component: _docsErrorDocumentationJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'hint-component', component: _docsHintDocumentationJs2['default'] })))), document.getElementById('main'));
+// create history
+var history = (0, _historyLibCreateHashHistory2['default'])({ queryKey: false });
+history.listen(function (location) {
+    try {
+        window.ga('send', 'pageview', location.pathname);
+    } catch (e) {}
+});
+
+_reactDom2['default'].render(React.createElement(_reactRouter.Router, { history: history }, React.createElement(_reactRouter.Route, { path: '/', component: _mainJs2['default'] }, React.createElement(_reactRouter.IndexRoute, { component: _introductionJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'intro', component: _introductionJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'install', component: _installJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'guide', component: _guideJs2['default'] }, React.createElement(_reactRouter.IndexRoute, { component: _examplesBasicExampleJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'basic', component: _examplesBasicExampleJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'hints', component: _examplesHintsExampleJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'errors', component: _examplesErrorsExampleJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'lists', component: _examplesListExampleJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'naming', component: _examplesNamingExampleJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'custom-field', component: _examplesCustomFieldExampleJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'custom-rule', component: _examplesCustomRuleExampleJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'wysiwyg', component: _examplesWysiwygExampleJs2['default'] })), React.createElement(_reactRouter.Route, { path: 'documentation', component: _documentationJs2['default'] }, React.createElement(_reactRouter.IndexRoute, { component: _docsContextDocumentationJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'context-class', component: _docsContextDocumentationJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'rules-class', component: _docsRulesDocumentationJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'field-class', component: _docsFieldDocumentationJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'form-component', component: _docsFormDocumentationJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'input-component', component: _docsInputDocumentationJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'select-component', component: _docsSelectDocumentationJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'error-component', component: _docsErrorDocumentationJs2['default'] }), React.createElement(_reactRouter.Route, { path: 'hint-component', component: _docsHintDocumentationJs2['default'] })))), document.getElementById('main'));
 
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./docs/context-documentation.js":4,"./docs/error-documentation.js":9,"./docs/field-documentation.js":11,"./docs/form-documentation.js":12,"./docs/hint-documentation.js":15,"./docs/input-documentation.js":17,"./docs/rules-documentation.js":19,"./docs/select-documentation.js":23,"./documentation.js":25,"./examples/basic/example.js":26,"./examples/custom-field/example.js":33,"./examples/custom-rule/example.js":38,"./examples/errors/example.js":39,"./examples/hints/example.js":42,"./examples/list/example.js":45,"./examples/naming/example.js":56,"./examples/wysiwyg/example.js":65,"./guide.js":69,"./install.js":71,"./introduction.js":72,"./main.js":73,"history/lib/createHashHistory":84,"react-router":135}],69:[function(require,module,exports){
@@ -6682,28 +6690,29 @@ module.exports = warning;
 },{"oMfpAn":77}],103:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.Context = undefined;
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+var _fieldState = require('./field-state.js');
 
-var _fieldStateJs = require('./field-state.js');
+var _rules = require('./rules.js');
 
-var _rulesJs = require('./rules.js');
+var _validationContext = require('./validation-context.js');
 
-var _validationContextJs = require('./validation-context.js');
+var _errors = require('./errors.js');
 
-var _errorsJs = require('./errors.js');
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
  * Context class.
  * Manages the state of all the components.
  */
 
-var Context = (function () {
+var Context = exports.Context = function () {
     /**
      * Constructor.
      */
@@ -6719,6 +6728,7 @@ var Context = (function () {
     _createClass(Context, [{
         key: 'normalizeConfig',
 
+
         /**
          * The config object can be written in different ways. This function normalizes it so that it
          * is easier to use later.
@@ -6726,7 +6736,7 @@ var Context = (function () {
         value: function normalizeConfig(config) {
             for (var key in config) {
                 if (config.hasOwnProperty(key)) {
-                    if (config[key] instanceof _rulesJs.Rules) {
+                    if (config[key] instanceof _rules.Rules) {
                         // replace by an object with rules inside
                         config[key] = {
                             rules: config[key]
@@ -6743,13 +6753,15 @@ var Context = (function () {
         /**
          * Registers a component.
          */
+
     }, {
         key: 'register',
         value: function register(component) {
-            this.fields.push(new _fieldStateJs.FieldState(component, { validated: false }));
+            this.fields.push(new _fieldState.FieldState(component, { validated: false }));
         }
     }, {
         key: 'unregister',
+
 
         /**
          * Unregisters a component.
@@ -6766,6 +6778,7 @@ var Context = (function () {
     }, {
         key: 'addListener',
 
+
         /**
          * Registers a listener.
          */
@@ -6774,6 +6787,7 @@ var Context = (function () {
         }
     }, {
         key: 'removeListener',
+
 
         /**
          * Unregisters a listener.
@@ -6787,6 +6801,7 @@ var Context = (function () {
         }
     }, {
         key: 'getField',
+
 
         /**
          * Returns the information that this class stores about a component.
@@ -6803,6 +6818,7 @@ var Context = (function () {
     }, {
         key: 'getFieldState',
 
+
         /**
          * Returns a field's state.
          */
@@ -6814,6 +6830,7 @@ var Context = (function () {
         }
     }, {
         key: 'getFieldByName',
+
 
         /**
          * Returns the information that this class stores about a component by looking for its name.
@@ -6831,6 +6848,7 @@ var Context = (function () {
     }, {
         key: 'getFieldStateByName',
 
+
         /**
          * Returns a field's state by looking for its name.
          */
@@ -6843,6 +6861,7 @@ var Context = (function () {
     }, {
         key: 'getFieldsData',
 
+
         /**
          * Returns the values of all the fields.
          */
@@ -6853,10 +6872,10 @@ var Context = (function () {
                     return component.getValue();
                 } catch (e) {
                     // return errors as FieldValueError
-                    if (e instanceof _errorsJs.FieldValueError) {
+                    if (e instanceof _errors.FieldValueError) {
                         return e;
                     } else {
-                        return new _errorsJs.FieldValueError('exception', e);
+                        return new _errors.FieldValueError('exception', e);
                     }
                 }
             };
@@ -6913,6 +6932,7 @@ var Context = (function () {
         }
     }, {
         key: 'refineData',
+
 
         /**
          * Processes extract form data to have a better formated object.
@@ -6976,6 +6996,7 @@ var Context = (function () {
     }, {
         key: 'getRulesForField',
 
+
         /**
          * Returns the rules that apply for a given field.
          */
@@ -7003,6 +7024,7 @@ var Context = (function () {
         /**
          * Validates a field.
          */
+
     }, {
         key: 'validateField',
         value: function validateField(field, data, force) {
@@ -7023,7 +7045,7 @@ var Context = (function () {
                 });
 
                 // validate field value
-                var result = rules.validate(state.value, new _validationContextJs.ValidationContext(data, field));
+                var result = rules.validate(state.value, new _validationContext.ValidationContext(data, field));
                 if (result !== true) {
                     state.fields.forEach(function (field) {
                         field.state.valid = false;
@@ -7045,6 +7067,7 @@ var Context = (function () {
         /**
          * Validates all the fields or the field given as parameter.
          */
+
     }, {
         key: 'validate',
         value: function validate(target, force) {
@@ -7081,36 +7104,35 @@ var Context = (function () {
     }]);
 
     return Context;
-})();
-
-exports.Context = Context;
+}();
 },{"./errors.js":105,"./field-state.js":106,"./rules.js":112,"./validation-context.js":115}],104:[function(require,module,exports){
 (function (global){
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.Error = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _utilsJs = require('./utils.js');
+var _utils = require('./utils.js');
 
-var Error = (function (_React$Component) {
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Error = exports.Error = function (_React$Component) {
     _inherits(Error, _React$Component);
 
     /**
@@ -7120,22 +7142,21 @@ var Error = (function (_React$Component) {
     function Error(props, context) {
         _classCallCheck(this, Error);
 
-        _get(Object.getPrototypeOf(Error.prototype), 'constructor', this).call(this, props, context);
-        this.state = this.getFieldState();
-    }
+        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Error).call(this, props, context));
 
-    /**
-     * Properties type.
-     */
+        _this.state = _this.getFieldState();
+        return _this;
+    }
 
     /**
      * Called when the component is going to be mounted.
      */
 
+
     _createClass(Error, [{
         key: 'componentWillMount',
         value: function componentWillMount() {
-            var form = _utilsJs.Utils.getForm(this);
+            var form = _utils.Utils.getForm(this);
             if (form) {
                 form.addListener(this);
             }
@@ -7144,10 +7165,11 @@ var Error = (function (_React$Component) {
         /**
          * Called when the component is going to unmount.
          */
+
     }, {
         key: 'componentWillUnmount',
         value: function componentWillUnmount() {
-            var form = _utilsJs.Utils.getForm(this);
+            var form = _utils.Utils.getForm(this);
             if (form) {
                 form.removeListener(this);
             }
@@ -7156,6 +7178,7 @@ var Error = (function (_React$Component) {
         /**
          * Called by the listener mixin when the form is validated.
          */
+
     }, {
         key: 'formDidValidate',
         value: function formDidValidate(result) {
@@ -7164,7 +7187,7 @@ var Error = (function (_React$Component) {
     }, {
         key: 'getFieldState',
         value: function getFieldState() {
-            var form = _utilsJs.Utils.getForm(this),
+            var form = _utils.Utils.getForm(this),
                 fieldState = form.getFieldStateByName(this.props.htmlFor);
             return {
                 error: fieldState ? fieldState.error : undefined,
@@ -7175,6 +7198,7 @@ var Error = (function (_React$Component) {
         /**
          * Returns the htmlFor attribute.
          */
+
     }, {
         key: 'htmlForAttribute',
         value: function htmlForAttribute() {
@@ -7184,11 +7208,12 @@ var Error = (function (_React$Component) {
         /**
          * Renders the input.
          */
+
     }, {
         key: 'render',
         value: function render() {
             if (this.state.valid === false) {
-                return _react2['default'].createElement(
+                return _react2.default.createElement(
                     'label',
                     _extends({ className: 'error' }, this.props, {
                         htmlFor: this.htmlForAttribute(),
@@ -7202,19 +7227,23 @@ var Error = (function (_React$Component) {
     }]);
 
     return Error;
-})(_react2['default'].Component);
+}(_react2.default.Component);
 
-exports.Error = Error;
+/**
+ * Properties type.
+ */
+
+
 Error.propTypes = {
-    context: _react2['default'].PropTypes.any,
-    htmlFor: _react2['default'].PropTypes.string.isRequired
+    context: _react2.default.PropTypes.any,
+    htmlFor: _react2.default.PropTypes.string.isRequired
 };
 
 /**
  * Context types.
  */
 Error.contextTypes = {
-    form: _react2['default'].PropTypes.any
+    form: _react2.default.PropTypes.any
 };
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./utils.js":114}],105:[function(require,module,exports){
@@ -7224,11 +7253,12 @@ Error.contextTypes = {
  * An error that can be thrown by a Field if the value of the field is invalid.
  * This can be used in the rules to show errors.
  */
-Object.defineProperty(exports, '__esModule', {
+
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var FieldValueError =
 /**
@@ -7237,20 +7267,18 @@ var FieldValueError =
  * @param code (string) a summary of the error as code.
  * @param error (any) some additional data that can be useful in validation.
  */
-function FieldValueError(code, error) {
+exports.FieldValueError = function FieldValueError(code, error) {
   _classCallCheck(this, FieldValueError);
 
   this.code = code;
   this.error = error;
-}
+};
 
 /**
  * An error that can be thrown by a Rule when rule execution should stop.
  * The field is marked as valid even if a later rule would have failed.
  */
-;
 
-exports.FieldValueError = FieldValueError;
 
 var OptionalRuleError =
 /**
@@ -7259,14 +7287,12 @@ var OptionalRuleError =
  * @param code (string) a summary of the error as code.
  * @param error (any) some additional data that can be useful in validation.
  */
-function OptionalRuleError(code, error) {
+exports.OptionalRuleError = function OptionalRuleError(code, error) {
   _classCallCheck(this, OptionalRuleError);
 
   this.code = code;
   this.error = error;
 };
-
-exports.OptionalRuleError = OptionalRuleError;
 },{}],106:[function(require,module,exports){
 'use strict';
 
@@ -7274,15 +7300,16 @@ exports.OptionalRuleError = OptionalRuleError;
  * Field class.
  * Represents a field stored in the form context.
  */
-Object.defineProperty(exports, '__esModule', {
+
+Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var FieldState = (function () {
+var FieldState = exports.FieldState = function () {
     function FieldState(component, state) {
         _classCallCheck(this, FieldState);
 
@@ -7294,6 +7321,7 @@ var FieldState = (function () {
      * Returns the name of this field.
      */
 
+
     _createClass(FieldState, [{
         key: 'getName',
         value: function getName() {
@@ -7303,6 +7331,7 @@ var FieldState = (function () {
         /**
          * Returns the component.
          */
+
     }, {
         key: 'getComponent',
         value: function getComponent() {
@@ -7312,6 +7341,7 @@ var FieldState = (function () {
         /**
          * Returns the rules specified on the component.
          */
+
     }, {
         key: 'getRules',
         value: function getRules() {
@@ -7321,6 +7351,7 @@ var FieldState = (function () {
         /**
          * Returns a field's state.
          */
+
     }, {
         key: 'getState',
         value: function getState() {
@@ -7329,32 +7360,31 @@ var FieldState = (function () {
     }]);
 
     return FieldState;
-})();
-
-exports.FieldState = FieldState;
+}();
 },{}],107:[function(require,module,exports){
 (function (global){
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.Field = undefined;
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _utilsJs = require('./utils.js');
+var _utils = require('./utils.js');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 /**
  * This Field class registers the component as a field in the parent form.
@@ -7370,18 +7400,14 @@ var _utilsJs = require('./utils.js');
  *   - getValue(), should return the value of the current component.
  */
 
-var Field = (function (_React$Component) {
+var Field = exports.Field = function (_React$Component) {
     _inherits(Field, _React$Component);
 
     function Field() {
         _classCallCheck(this, Field);
 
-        _get(Object.getPrototypeOf(Field.prototype), 'constructor', this).apply(this, arguments);
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(Field).apply(this, arguments));
     }
-
-    /**
-     * Context types.
-     */
 
     _createClass(Field, [{
         key: 'componentWillMount',
@@ -7390,7 +7416,7 @@ var Field = (function (_React$Component) {
          * When the component will mount register it in the form.
          */
         value: function componentWillMount() {
-            var form = _utilsJs.Utils.getForm(this);
+            var form = _utils.Utils.getForm(this);
             if (form) {
                 form.register(this);
             }
@@ -7399,10 +7425,11 @@ var Field = (function (_React$Component) {
         /**
          * When the component is removed, unregister it from the form.
          */
+
     }, {
         key: 'componentWillUnmount',
         value: function componentWillUnmount() {
-            var form = _utilsJs.Utils.getForm(this);
+            var form = _utils.Utils.getForm(this);
             if (form) {
                 form.unregister(this);
             }
@@ -7411,10 +7438,11 @@ var Field = (function (_React$Component) {
         /**
          * Can be called to tell the form that the component's value has changed.
          */
+
     }, {
         key: 'validateField',
         value: function validateField(force) {
-            var form = _utilsJs.Utils.getForm(this);
+            var form = _utils.Utils.getForm(this);
             if (form) {
                 form.validate(this, force);
             }
@@ -7422,55 +7450,56 @@ var Field = (function (_React$Component) {
     }]);
 
     return Field;
-})(_react2['default'].Component);
+}(_react2.default.Component);
 
-exports.Field = Field;
+/**
+ * Context types.
+ */
+
+
 Field.contextTypes = {
-    form: _react2['default'].PropTypes.any
+    form: _react2.default.PropTypes.any
 };
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./utils.js":114}],108:[function(require,module,exports){
 (function (global){
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.Form = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _utilsJs = require('./utils.js');
+var _utils = require('./utils.js');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 /**
  * Form component.
  */
 
-var Form = (function (_React$Component) {
+var Form = exports.Form = function (_React$Component) {
     _inherits(Form, _React$Component);
 
     function Form() {
         _classCallCheck(this, Form);
 
-        _get(Object.getPrototypeOf(Form.prototype), 'constructor', this).apply(this, arguments);
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(Form).apply(this, arguments));
     }
-
-    /**
-     * Properties type.
-     */
 
     _createClass(Form, [{
         key: 'onSubmit',
@@ -7492,13 +7521,14 @@ var Form = (function (_React$Component) {
 
             // scroll to error
             if (this.props.scrollToError !== false) {
-                _utilsJs.Utils.scrollToFirstError(this.refs.form, this.props.scrollToErrorPadding || 20);
+                _utils.Utils.scrollToFirstError(this.refs.form, this.props.scrollToErrorPadding || 20);
             }
         }
 
         /**
          * Returns the form context.
          */
+
     }, {
         key: 'getChildContext',
         value: function getChildContext() {
@@ -7510,10 +7540,11 @@ var Form = (function (_React$Component) {
         /**
          * Renders the component.
          */
+
     }, {
         key: 'render',
         value: function render() {
-            return _react2['default'].createElement(
+            return _react2.default.createElement(
                 'form',
                 _extends({}, this.props, { noValidate: true, context: null, ref: 'form',
                     onSubmit: this.onSubmit.bind(this) }),
@@ -7523,48 +7554,53 @@ var Form = (function (_React$Component) {
     }]);
 
     return Form;
-})(_react2['default'].Component);
+}(_react2.default.Component);
 
-exports.Form = Form;
+/**
+ * Properties type.
+ */
+
+
 Form.propTypes = {
-    context: _react2['default'].PropTypes.any.required,
-    preventSubmit: _react2['default'].PropTypes.bool
+    context: _react2.default.PropTypes.any.required,
+    preventSubmit: _react2.default.PropTypes.bool
 };
 
 /**
  * Context types.
  */
 Form.childContextTypes = {
-    form: _react2['default'].PropTypes.any
+    form: _react2.default.PropTypes.any
 };
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./utils.js":114}],109:[function(require,module,exports){
 (function (global){
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.Hint = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _utilsJs = require('./utils.js');
+var _utils = require('./utils.js');
 
-var Hint = (function (_React$Component) {
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Hint = exports.Hint = function (_React$Component) {
     _inherits(Hint, _React$Component);
 
     /**
@@ -7574,26 +7610,25 @@ var Hint = (function (_React$Component) {
     function Hint(props, context) {
         _classCallCheck(this, Hint);
 
-        _get(Object.getPrototypeOf(Hint.prototype), 'constructor', this).call(this, props, context);
-        var form = _utilsJs.Utils.getForm(this);
-        this.state = {
-            state: form.getFieldStateByName(this.props.htmlFor),
-            display: this.parseDisplayString(this.props.display)
-        };
-    }
+        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Hint).call(this, props, context));
 
-    /**
-     * Properties type.
-     */
+        var form = _utils.Utils.getForm(_this);
+        _this.state = {
+            state: form.getFieldStateByName(_this.props.htmlFor),
+            display: _this.parseDisplayString(_this.props.display)
+        };
+        return _this;
+    }
 
     /**
      * Called when the component is going to be mounted.
      */
 
+
     _createClass(Hint, [{
         key: 'componentWillMount',
         value: function componentWillMount() {
-            var form = _utilsJs.Utils.getForm(this);
+            var form = _utils.Utils.getForm(this);
             if (form) {
                 form.addListener(this);
             }
@@ -7602,10 +7637,11 @@ var Hint = (function (_React$Component) {
         /**
          * Called when the component is going to unmount.
          */
+
     }, {
         key: 'componentWillUnmount',
         value: function componentWillUnmount() {
-            var form = _utilsJs.Utils.getForm(this);
+            var form = _utils.Utils.getForm(this);
             if (form) {
                 form.removeListener(this);
             }
@@ -7614,6 +7650,7 @@ var Hint = (function (_React$Component) {
         /**
          * Called when the component's props have changed.
          */
+
     }, {
         key: 'componentWillReceiveProps',
         value: function componentWillReceiveProps(newProps) {
@@ -7627,6 +7664,7 @@ var Hint = (function (_React$Component) {
         /**
          * Converts the display property to an object.
          */
+
     }, {
         key: 'parseDisplayString',
         value: function parseDisplayString(display) {
@@ -7640,10 +7678,11 @@ var Hint = (function (_React$Component) {
         /**
          * Called by the listener mixin when the form is validated.
          */
+
     }, {
         key: 'formDidValidate',
         value: function formDidValidate(result) {
-            var form = _utilsJs.Utils.getForm(this);
+            var form = _utils.Utils.getForm(this);
             this.setState({
                 state: form.getFieldStateByName(this.props.htmlFor)
             });
@@ -7652,6 +7691,7 @@ var Hint = (function (_React$Component) {
         /**
          * Returns the htmlFor attribute.
          */
+
     }, {
         key: 'htmlForAttribute',
         value: function htmlForAttribute() {
@@ -7661,13 +7701,14 @@ var Hint = (function (_React$Component) {
         /**
          * Renders the input.
          */
+
     }, {
         key: 'render',
         value: function render() {
             var display = this.state.display,
                 state = this.state.state;
             if (display.error && state.valid === false || display.pristine && state.validated !== true || display.valid && state.valid === true) {
-                return _react2['default'].createElement(
+                return _react2.default.createElement(
                     'label',
                     _extends({ className: 'hint' }, this.props, {
                         htmlFor: this.htmlForAttribute(),
@@ -7681,14 +7722,18 @@ var Hint = (function (_React$Component) {
     }]);
 
     return Hint;
-})(_react2['default'].Component);
+}(_react2.default.Component);
 
-exports.Hint = Hint;
+/**
+ * Properties type.
+ */
+
+
 Hint.propTypes = {
-    display: _react2['default'].PropTypes.string,
-    text: _react2['default'].PropTypes.string,
-    context: _react2['default'].PropTypes.any,
-    htmlFor: _react2['default'].PropTypes.string.isRequired
+    display: _react2.default.PropTypes.string,
+    text: _react2.default.PropTypes.string,
+    context: _react2.default.PropTypes.any,
+    htmlFor: _react2.default.PropTypes.string.isRequired
 };
 
 /**
@@ -7702,124 +7747,119 @@ Hint.defaultProps = {
  * Context types.
  */
 Hint.contextTypes = {
-    form: _react2['default'].PropTypes.any
+    form: _react2.default.PropTypes.any
 };
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./utils.js":114}],110:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _errorJs = require('./error.js');
+var _error = require('./error.js');
 
 Object.defineProperty(exports, 'Error', {
   enumerable: true,
   get: function get() {
-    return _errorJs.Error;
+    return _error.Error;
   }
 });
 
-var _fieldJs = require('./field.js');
+var _field = require('./field.js');
 
 Object.defineProperty(exports, 'Field', {
   enumerable: true,
   get: function get() {
-    return _fieldJs.Field;
+    return _field.Field;
   }
 });
 
-var _formJs = require('./form.js');
+var _form = require('./form.js');
 
 Object.defineProperty(exports, 'Form', {
   enumerable: true,
   get: function get() {
-    return _formJs.Form;
+    return _form.Form;
   }
 });
 
-var _hintJs = require('./hint.js');
+var _hint = require('./hint.js');
 
 Object.defineProperty(exports, 'Hint', {
   enumerable: true,
   get: function get() {
-    return _hintJs.Hint;
+    return _hint.Hint;
   }
 });
 
-var _inputJs = require('./input.js');
+var _input = require('./input.js');
 
 Object.defineProperty(exports, 'Input', {
   enumerable: true,
   get: function get() {
-    return _inputJs.Input;
+    return _input.Input;
   }
 });
 
-var _contextJs = require('./context.js');
+var _context = require('./context.js');
 
 Object.defineProperty(exports, 'Context', {
   enumerable: true,
   get: function get() {
-    return _contextJs.Context;
+    return _context.Context;
   }
 });
 
-var _rulesJs = require('./rules.js');
+var _rules = require('./rules.js');
 
 Object.defineProperty(exports, 'Rules', {
   enumerable: true,
   get: function get() {
-    return _rulesJs.Rules;
+    return _rules.Rules;
   }
 });
 
-var _selectJs = require('./select.js');
+var _select = require('./select.js');
 
 Object.defineProperty(exports, 'Select', {
   enumerable: true,
   get: function get() {
-    return _selectJs.Select;
+    return _select.Select;
   }
 });
 
-var _utilsJs = require('./utils.js');
+var _utils = require('./utils.js');
 
 Object.defineProperty(exports, 'Utils', {
   enumerable: true,
   get: function get() {
-    return _utilsJs.Utils;
+    return _utils.Utils;
   }
 });
 
-var _errorsJs = require('./errors.js');
+var _errors = require('./errors.js');
 
 Object.defineProperty(exports, 'FieldValueError', {
   enumerable: true,
   get: function get() {
-    return _errorsJs.FieldValueError;
+    return _errors.FieldValueError;
   }
 });
 },{"./context.js":103,"./error.js":104,"./errors.js":105,"./field.js":107,"./form.js":108,"./hint.js":109,"./input.js":111,"./rules.js":112,"./select.js":113,"./utils.js":114}],111:[function(require,module,exports){
 (function (global){
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.Input = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
 var _react = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
 
@@ -7829,22 +7869,26 @@ var _reactDom = (typeof window !== "undefined" ? window['ReactDOM'] : typeof glo
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _fieldJs = require('./field.js');
+var _field = require('./field.js');
 
-var _utilsJs = require('./utils.js');
+var _utils = require('./utils.js');
 
-var Input = (function (_Field) {
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Input = exports.Input = function (_Field) {
     _inherits(Input, _Field);
 
     function Input() {
         _classCallCheck(this, Input);
 
-        _get(Object.getPrototypeOf(Input.prototype), 'constructor', this).apply(this, arguments);
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(Input).apply(this, arguments));
     }
-
-    /**
-     * Properties type.
-     */
 
     _createClass(Input, [{
         key: 'componentWillMount',
@@ -7855,7 +7899,7 @@ var Input = (function (_Field) {
         value: function componentWillMount() {
             _get(Object.getPrototypeOf(Input.prototype), 'componentWillMount', this).call(this);
 
-            var form = _utilsJs.Utils.getForm(this);
+            var form = _utils.Utils.getForm(this);
             if (form) {
                 form.addListener(this);
             }
@@ -7864,12 +7908,13 @@ var Input = (function (_Field) {
         /**
          * Called when the component is going to unmount.
          */
+
     }, {
         key: 'componentWillUnmount',
         value: function componentWillUnmount() {
             _get(Object.getPrototypeOf(Input.prototype), 'componentWillUnmount', this).call(this);
 
-            var form = _utilsJs.Utils.getForm(this);
+            var form = _utils.Utils.getForm(this);
             if (form) {
                 form.removeListener(this);
             }
@@ -7878,12 +7923,13 @@ var Input = (function (_Field) {
         /**
          * Called to check if the field is checked.
          */
+
     }, {
         key: 'isChecked',
         value: function isChecked() {
             var type = this.props.type;
             if (type === 'checkbox' || type === 'radio') {
-                var element = _reactDom2['default'].findDOMNode(this);
+                var element = _reactDom2.default.findDOMNode(this);
                 return element.checked;
             }
         }
@@ -7891,6 +7937,7 @@ var Input = (function (_Field) {
         /**
          * Called to check if the field is a list.
          */
+
     }, {
         key: 'isList',
         value: function isList() {
@@ -7901,6 +7948,7 @@ var Input = (function (_Field) {
         /**
          * Returns the value of the input.
          */
+
     }, {
         key: 'getValue',
         value: function getValue() {
@@ -7908,12 +7956,29 @@ var Input = (function (_Field) {
         }
 
         /**
+         * Called when the component is updated.
+         */
+
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps) {
+            // is the value forced and it was changed?
+            if (prevProps.hasOwnProperty('value') && this.props.value != prevProps.value) {
+                _get(Object.getPrototypeOf(Input.prototype), 'validateField', this).call(this, false);
+            }
+        }
+
+        /**
          * Called when the value of the input has changed.
          */
+
     }, {
         key: 'onChange',
         value: function onChange(event) {
-            _get(Object.getPrototypeOf(Input.prototype), 'validateField', this).call(this, false);
+            // is value forced?
+            if (!this.props.hasOwnProperty('value')) {
+                _get(Object.getPrototypeOf(Input.prototype), 'validateField', this).call(this, false);
+            }
 
             // call parent prop
             if (this.props.onChange) {
@@ -7925,6 +7990,7 @@ var Input = (function (_Field) {
          * Called when the field looses focus.
          * This forces validation of the field.
          */
+
     }, {
         key: 'onBlur',
         value: function onBlur(event) {
@@ -7939,10 +8005,11 @@ var Input = (function (_Field) {
         /**
          * Called by the listener mixin after the form is validated.
          */
+
     }, {
         key: 'formDidValidate',
         value: function formDidValidate() {
-            var form = _utilsJs.Utils.getForm(this);
+            var form = _utils.Utils.getForm(this);
             this.setState({
                 fieldState: form.getFieldState(this)
             });
@@ -7951,6 +8018,7 @@ var Input = (function (_Field) {
         /**
          * Returns the component's className.
          */
+
     }, {
         key: 'className',
         value: function className(fieldState) {
@@ -7970,13 +8038,14 @@ var Input = (function (_Field) {
         /**
          * Renders the input.
          */
+
     }, {
         key: 'render',
         value: function render() {
-            var form = _utilsJs.Utils.getForm(this),
+            var form = _utils.Utils.getForm(this),
                 fieldState = form.getFieldState(this);
 
-            return _react2['default'].createElement('input', _extends({}, this.props, { ref: 'input', context: null,
+            return _react2.default.createElement('input', _extends({}, this.props, { ref: 'input', context: null,
                 id: this.props.name + '-field',
                 className: this.className(fieldState),
                 onChange: this.onChange.bind(this),
@@ -7985,29 +8054,34 @@ var Input = (function (_Field) {
     }]);
 
     return Input;
-})(_fieldJs.Field);
+}(_field.Field);
 
-exports.Input = Input;
+/**
+ * Properties type.
+ */
+
+
 Input.propTypes = {
-    context: _react2['default'].PropTypes.any,
-    name: _react2['default'].PropTypes.string.isRequired
+    context: _react2.default.PropTypes.any,
+    name: _react2.default.PropTypes.string.isRequired
 };
 
 /**
  * Context types.
  */
 Input.contextTypes = {
-    form: _react2['default'].PropTypes.any
+    form: _react2.default.PropTypes.any
 };
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./field.js":107,"./utils.js":114}],112:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.Rules = undefined;
 
-var _errorsJs = require('./errors.js');
+var _errors = require('./errors.js');
 
 var EMAIL_REGEXP = new RegExp('^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]' + '{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$');
 var URL_REGEXP = new RegExp('^(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?' + '(\/|\/([\w#!:.?+=&%@!\-\/]))?');
@@ -8087,7 +8161,7 @@ Rules.prototype.validate = function (value, context) {
         }
     } catch (e) {
         // if OptionalRuleError is thrown then the rule is valid. Rule validations stops.
-        if (!(e instanceof _errorsJs.OptionalRuleError)) {
+        if (!(e instanceof _errors.OptionalRuleError)) {
             throw e;
         }
     }
@@ -8102,7 +8176,7 @@ Rules.register('onlyIf', function (fn) {
         check: function check(value, context) {
             var res = fn(value, context);
             if (!res) {
-                throw new _errorsJs.OptionalRuleError();
+                throw new _errors.OptionalRuleError();
             }
             return true;
         }
@@ -8116,7 +8190,7 @@ Rules.register('optional', function () {
     return {
         check: function check(value) {
             if (value === undefined || value === '') {
-                throw new _errorsJs.OptionalRuleError();
+                throw new _errors.OptionalRuleError();
             }
             return true;
         }
@@ -8292,7 +8366,7 @@ Rules.register('minAge', function (minAge, message) {
 Rules.register('noError', function (message) {
     return {
         check: function check(value) {
-            return !(value instanceof _errorsJs.FieldValueError);
+            return !(value instanceof _errors.FieldValueError);
         },
         defaultMessage: 'This field is invalid.',
         message: message
@@ -8304,21 +8378,16 @@ exports.Rules = Rules;
 (function (global){
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.Select = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
 var _react = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
 
@@ -8328,22 +8397,26 @@ var _reactDom = (typeof window !== "undefined" ? window['ReactDOM'] : typeof glo
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _fieldJs = require('./field.js');
+var _field = require('./field.js');
 
-var _utilsJs = require('./utils.js');
+var _utils = require('./utils.js');
 
-var Select = (function (_Field) {
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Select = exports.Select = function (_Field) {
     _inherits(Select, _Field);
 
     function Select() {
         _classCallCheck(this, Select);
 
-        _get(Object.getPrototypeOf(Select.prototype), 'constructor', this).apply(this, arguments);
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(Select).apply(this, arguments));
     }
-
-    /**
-     * Properties type.
-     */
 
     _createClass(Select, [{
         key: 'getValue',
@@ -8356,12 +8429,29 @@ var Select = (function (_Field) {
         }
 
         /**
+         * Called when the component is updated.
+         */
+
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps) {
+            // is the value forced and it was changed?
+            if (prevProps.hasOwnProperty('value') && this.props.value != prevProps.value) {
+                _get(Object.getPrototypeOf(Select.prototype), 'validateField', this).call(this, false);
+            }
+        }
+
+        /**
          * Called when the value of the input has changed.
          */
+
     }, {
         key: 'onChange',
         value: function onChange(event) {
-            _get(Object.getPrototypeOf(Select.prototype), 'validateField', this).call(this, false);
+            // is value forced?
+            if (!this.props.hasOwnProperty('value')) {
+                _get(Object.getPrototypeOf(Select.prototype), 'validateField', this).call(this, false);
+            }
 
             // call parent prop
             if (this.props.onChange) {
@@ -8373,6 +8463,7 @@ var Select = (function (_Field) {
          * Called when the field looses focus.
          * This forces validation of the field.
          */
+
     }, {
         key: 'onBlur',
         value: function onBlur(event) {
@@ -8387,6 +8478,7 @@ var Select = (function (_Field) {
         /**
          * Returns the component's className.
          */
+
     }, {
         key: 'rootClassName',
         value: function rootClassName(fieldState) {
@@ -8406,13 +8498,14 @@ var Select = (function (_Field) {
         /**
          * Renders the select.
          */
+
     }, {
         key: 'render',
         value: function render() {
-            var form = _utilsJs.Utils.getForm(this),
+            var form = _utils.Utils.getForm(this),
                 fieldState = form.getFieldState(this);
 
-            return _react2['default'].createElement(
+            return _react2.default.createElement(
                 'select',
                 _extends({}, this.props, { ref: 'input', context: null,
                     id: this.props.name + '-field',
@@ -8425,19 +8518,23 @@ var Select = (function (_Field) {
     }]);
 
     return Select;
-})(_fieldJs.Field);
+}(_field.Field);
 
-exports.Select = Select;
+/**
+ * Properties type.
+ */
+
+
 Select.propTypes = {
-    context: _react2['default'].PropTypes.any,
-    name: _react2['default'].PropTypes.string.isRequired
+    context: _react2.default.PropTypes.any,
+    name: _react2.default.PropTypes.string.isRequired
 };
 
 /**
  * Context types.
  */
 Select.contextTypes = {
-    form: _react2['default'].PropTypes.any
+    form: _react2.default.PropTypes.any
 };
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./field.js":107,"./utils.js":114}],114:[function(require,module,exports){
@@ -8447,15 +8544,16 @@ Select.contextTypes = {
  * Utils class.
  * A bunch of reusable static functions.
  */
-Object.defineProperty(exports, '__esModule', {
+
+Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Utils = (function () {
+var Utils = exports.Utils = function () {
     function Utils() {
         _classCallCheck(this, Utils);
     }
@@ -8482,6 +8580,7 @@ var Utils = (function () {
          * @param ele element to find th error in.
          * @param padding spacing minimum with the window edge.
          */
+
     }, {
         key: 'scrollToFirstError',
         value: function scrollToFirstError(ele, padding) {
@@ -8497,9 +8596,7 @@ var Utils = (function () {
     }]);
 
     return Utils;
-})();
-
-exports.Utils = Utils;
+}();
 },{}],115:[function(require,module,exports){
 'use strict';
 
@@ -8507,15 +8604,16 @@ exports.Utils = Utils;
  * ValidationContext class.
  * Simplifies access to data during validation.
  */
-Object.defineProperty(exports, '__esModule', {
+
+Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var ValidationContext = (function () {
+var ValidationContext = exports.ValidationContext = function () {
     function ValidationContext(data, field) {
         _classCallCheck(this, ValidationContext);
 
@@ -8527,6 +8625,7 @@ var ValidationContext = (function () {
      * Returns the value a field from its name.
      * It searches the closest field with the given name.
      */
+
 
     _createClass(ValidationContext, [{
         key: 'getFieldValue',
@@ -8547,6 +8646,7 @@ var ValidationContext = (function () {
         /**
          * Returns the raw data from the form.
          */
+
     }, {
         key: 'getData',
         value: function getData() {
@@ -8555,9 +8655,7 @@ var ValidationContext = (function () {
     }]);
 
     return ValidationContext;
-})();
-
-exports.ValidationContext = ValidationContext;
+}();
 },{}],116:[function(require,module,exports){
 "use strict";
 
