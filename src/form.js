@@ -54,7 +54,7 @@ export class Form extends React.Component {
  * Properties type.
  */
 Form.propTypes = {
-    context: React.PropTypes.any.required,
+    context: React.PropTypes.any.isRequired,
     preventSubmit: React.PropTypes.bool
 };
 

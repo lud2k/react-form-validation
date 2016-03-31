@@ -375,6 +375,17 @@ var Context = exports.Context = function () {
         }
 
         /**
+         * Returns the data in the form.
+         */
+
+    }, {
+        key: 'getData',
+        value: function getData() {
+            var data = this.getFieldsData();
+            return this.refineData(data);
+        }
+
+        /**
          * Validates all the fields or the field given as parameter.
          */
 

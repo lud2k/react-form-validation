@@ -37,6 +37,9 @@ gulp.task('browserify', ['clean'], function() {
         .pipe(gulp.dest('dist'));
 });
 
+/**
+ * Makes the javascript file smaller.
+ */
 gulp.task('minify', ['browserify'], function() {
     return gulp.src('dist/react-form-validation.js')
         .pipe(minify())

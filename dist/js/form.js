@@ -97,7 +97,7 @@ var Form = exports.Form = function (_React$Component) {
 
 
 Form.propTypes = {
-    context: _react2.default.PropTypes.any.required,
+    context: _react2.default.PropTypes.any.isRequired,
     preventSubmit: _react2.default.PropTypes.bool
 };
 

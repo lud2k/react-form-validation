@@ -376,6 +376,17 @@ var Context = exports.Context = function () {
         }
 
         /**
+         * Returns the data in the form.
+         */
+
+    }, {
+        key: 'getData',
+        value: function getData() {
+            var data = this.getFieldsData();
+            return this.refineData(data);
+        }
+
+        /**
          * Validates all the fields or the field given as parameter.
          */
 
@@ -975,7 +986,7 @@ var Form = exports.Form = function (_React$Component) {
 
 
 Form.propTypes = {
-    context: _react2.default.PropTypes.any.required,
+    context: _react2.default.PropTypes.any.isRequired,
     preventSubmit: _react2.default.PropTypes.bool
 };
 

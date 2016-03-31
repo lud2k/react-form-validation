@@ -319,6 +319,14 @@ export class Context {
     }
 
     /**
+     * Returns the data in the form.
+     */
+    getData() {
+        var data = this.getFieldsData();
+        return this.refineData(data);
+    }
+
+    /**
      * Validates all the fields or the field given as parameter.
      */
     validate(target, force) {
